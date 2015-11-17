@@ -69,6 +69,11 @@ import say.swing.JFontChooser;
 
 //public final class ApplicationFrame extends JFrame implements ActionListener, SingleInstanceListener {
 public final class ApplicationFrame extends JFrame implements ActionListener {
+	
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Static reference for child dialogs.
@@ -94,17 +99,17 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
     /**
      * HashMap that stores the ids and names of any default plugins found
      */
-    private HashMap pluginNames = null;
+    private HashMap<String, String> pluginNames = null;
 
     /**
      * HashMap that stores the ids and names of any import plugins found
      */
-    private HashMap importPluginNames = null;
+    private HashMap<String, String> importPluginNames = null;
 
     /**
      * HashMap that stores the ids and names of any tool plugins found
      */
-    private HashMap toolPluginNames = null;
+    private HashMap<String, String> toolPluginNames = null;
 
 	/**
 	 * The height the application should open its main window with.
@@ -240,7 +245,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 	private FilterPanel digitalObjectFilter = new FilterPanel("Filter search results");
 
 
-	private Hashtable<Class, DomainTableWorkSurface> worksurfaces = new Hashtable<Class, DomainTableWorkSurface>();
+	private Hashtable<Class<?>, DomainTableWorkSurface> worksurfaces = new Hashtable<Class<?>, DomainTableWorkSurface>();
 
     private ApplicationFrame() {
 		super();
@@ -1300,11 +1305,11 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 		return currentUser.getRepository();
 	}
 
-	public DomainTableWorkSurface getWorkSurface(Class clazz) {
+	public DomainTableWorkSurface getWorkSurface(Class<?> clazz) {
 		return worksurfaces.get(clazz);
 	}
 
-	public boolean hasWorkSurface(Class clazz) {
+	public boolean hasWorkSurface(Class<?> clazz) {
 		if (getWorkSurface(clazz) == null) {
 			return false;
 		} else {
@@ -1332,9 +1337,11 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 		return issueReportingURL;
 	}
 
+	/*
 	public void setIssueReportingURL() {
 		this.issueReportingURL = issueReportingURL;
 	}
+	*/
 
 	public static String gatherSystemInformation() {
 		String returnString = "";
@@ -1368,7 +1375,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 	 * Set the filter field and button visibility based on the selected class
 	 * @param clazz - the selected class
 	 */
-	public void setButtonVisiblity(Class clazz) {
+	public void setButtonVisiblity(Class<?> clazz) {
 		resourcesFilter.setVisible(false);
 		namesFilter.setVisible(false);
 		subjectsFilter.setVisible(false);
@@ -1440,7 +1447,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
         }
 	}
 
-	public JTextField getFilterField(Class clazz) {
+	public JTextField getFilterField(Class<?> clazz) {
 		if (clazz == Resources.class) {
 			return resourcesFilter.getFilterField();
 
@@ -1540,14 +1547,14 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
      * @param menu The JMenu to add the plugin items to
      * @param pnames HashMap containing the names of the plugins
      */
-    private void addPluginMenuItems(JMenu menu, HashMap pnames) {
+    private void addPluginMenuItems(JMenu menu, HashMap<String, String> pnames) {
         // interate through the plugin names and add them to the menu
-        Iterator iter = pnames.entrySet().iterator();
+        Iterator<HashMap.Entry<String, String>> iter = pnames.entrySet().iterator();
 
         while (iter.hasNext()) {
-            Map.Entry pairs = (Map.Entry)iter.next();
-            String id = (String)pairs.getKey();
-            String name = (String)pairs.getValue();
+            Map.Entry<String, String> pairs = iter.next();
+            String id = pairs.getKey();
+            String name = pairs.getValue();
 
             if(name.indexOf("::") == -1) { // just a regular name so add plain entry
                 // create a concret action now
@@ -1597,5 +1604,19 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
      */
     public void getToolPluginNames() {
         toolPluginNames = ATPluginFactory.getInstance().getPluginNamesByCategory(ATPlugin.TOOL_CATEGORY);
+    }
+
+    /**
+     * Method to set the set the "enableSpellCheck" static field.
+     */
+    public void setEnableSpellCheck(Boolean value) {
+    	enableSpellCheck = value;
+    }
+
+    /**
+     * Method to set the set the "enableSpellCheckHighlight" static field.
+     */
+    public void setEnableSpellCheckHighlight(Boolean value) {
+    	enableSpellCheckHighlight = value;
     }
 }

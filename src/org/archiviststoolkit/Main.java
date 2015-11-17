@@ -114,11 +114,11 @@ public final class Main {
         // set the directory containing the dictionary files if
         // spell check is enable
         if(userPrefs.getEnableSpellCheck()) {
-            mainFrame.enableSpellCheck = loadSpellCheckerDictionary();
-            mainFrame.enableSpellCheckHighlight = userPrefs.getEnableSpellCheckHighlighting();
+            mainFrame.setEnableSpellCheck(loadSpellCheckerDictionary());
+            mainFrame.setEnableSpellCheckHighlight(userPrefs.getEnableSpellCheckHighlighting());
         } else if(userPrefs.getSpellCheckSet()) {
             // user wants to disable spell check functionality
-            mainFrame.enableSpellCheck = false;
+            mainFrame.setEnableSpellCheck(false);
         }
 
         // set properties of UI components including fonts

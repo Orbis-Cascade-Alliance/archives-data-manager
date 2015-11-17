@@ -151,11 +151,11 @@ public class ATPluginFactory {
      *
      * @return HashMap containing the names and ids of all the plugins found
      */
-    public HashMap getPluginNamesByCategory(String inCategory) {
+    public HashMap<String, String> getPluginNamesByCategory(String inCategory) {
         HashMap<String, String> pluginNames = new HashMap<String, String>();
 
         try {
-            Iterator it = pluginManager.getRegistry().getPluginDescriptors().iterator();
+            Iterator<PluginDescriptor> it = pluginManager.getRegistry().getPluginDescriptors().iterator();
 
             while (it.hasNext()) {
                 PluginDescriptor pluginDescriptor = (PluginDescriptor) it.next();
