@@ -31,7 +31,7 @@ public class ApplicationAboutDialog extends JFrame {
 	
 	public ApplicationAboutDialog() {
 		initComponents();
-		setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/launchIcon16x16.gif")).getImage());
+		setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/ADM_launchIcon16x16.gif")).getImage());
 	}
 
 	private void viewLicesnseAgreementMouseClicked(MouseEvent e) {
@@ -80,7 +80,7 @@ public class ApplicationAboutDialog extends JFrame {
                     }));
 
                 //---- label1 ----
-                label1.setIcon(new ImageIcon(getClass().getResource("/org/archiviststoolkit/resources/images/ATLogo.jpg")));
+                label1.setIcon(new ImageIcon(getClass().getResource("/org/archiviststoolkit/resources/images/ADMLogo.jpg")));
                 contentPanel.add(label1, cc.xy(1, 1));
 
                 //---- viewLicesnseAgreement ----

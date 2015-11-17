@@ -314,7 +314,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 			title += " - WARNING: This is an pre-release version of the Archivists' Toolkit. Please use this version for testing purposes only.";
 		}
 		this.setTitle(title);
-		this.setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/launchIcon16x16.gif")).getImage());
+		this.setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/ADM_launchIcon16x16.gif")).getImage());
 
 		workSurfaceContainer = new WorkSurfaceContainer();
 
@@ -438,7 +438,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 		aboutAction = new ConcreteAction(resourceBundle.getString("archiviststoolkit.action.about.name"));
 		aboutAction.addActionListener(this);
 
-		homeAction = new ConcreteAction("Archivists' Toolkit Website");
+		homeAction = new ConcreteAction("Archives Data Manager Website");
 		homeAction.addActionListener(this);
 
 		reportBugAction = new ConcreteAction("Report bug");
@@ -759,7 +759,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 			doAbout();
 
 		} else if (actionEvent.getSource() == this.homeAction) {
-			launchBrowser("http://archiviststoolkit.org/");
+			launchBrowser("https://www.orbiscascade.org");
 
 		} else if (actionEvent.getSource() == this.requestFeatureAction) {
 			launchBrowser("http://sourceforge.net/tracker/?group_id=92345&atid=600425");
@@ -1338,7 +1338,7 @@ public final class ApplicationFrame extends JFrame implements ActionListener {
 
 	public static String gatherSystemInformation() {
 		String returnString = "";
-		returnString = "AT Version: " + ApplicationFrame.getInstance().getAtVersionNumber();
+		returnString = "ADM Version: " + ApplicationFrame.getInstance().getAtVersionNumber();
 		returnString += "\nJava Version: " + System.getProperty("java.version");
 		returnString += "\nOperating System: " + System.getProperty("os.name");
 		returnString += "\nOS Version: " + System.getProperty("os.version");

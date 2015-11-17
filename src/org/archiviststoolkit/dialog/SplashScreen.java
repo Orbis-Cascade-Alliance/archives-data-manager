@@ -37,7 +37,7 @@ public class SplashScreen extends JFrame {
 //				getString("archiviststoolkit.releasenumber"));
 		version.setText("version " + ApplicationFrame.getInstance().getAtVersionNumber());
 		setMessageText(initialMessageText);
-		setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/launchIcon16x16.gif")).getImage());
+		setIconImage(new ImageIcon(this.getClass().getResource("/org/archiviststoolkit/resources/images/ADM_launchIcon16x16.gif")).getImage());
 	}
 
 	private void viewLicesnseAgreementMouseClicked(MouseEvent e) {
@@ -97,7 +97,7 @@ public class SplashScreen extends JFrame {
 				}));
 
 			//---- label1 ----
-			label1.setIcon(new ImageIcon(getClass().getResource("/org/archiviststoolkit/resources/images/ATLogo.jpg")));
+			label1.setIcon(new ImageIcon(getClass().getResource("/org/archiviststoolkit/resources/images/ADMLogo.jpg")));
 			label1.setBorder(null);
 			panel1.add(label1, cc.xy(1, 1));
 
