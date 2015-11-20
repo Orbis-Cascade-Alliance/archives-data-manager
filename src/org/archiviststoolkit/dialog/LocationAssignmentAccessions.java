@@ -39,12 +39,15 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 /**
  * @author Lee Mandell
  */
 public class LocationAssignmentAccessions extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public LocationAssignmentAccessions(Dialog owner, AccessionFields parentEditor) {
         super(owner);
@@ -87,7 +90,7 @@ public class LocationAssignmentAccessions extends JDialog {
                 DomainAccessObject access = DomainAccessObjectFactory.getInstance().getDomainAccessObject(Locations.class);
                 access.add(instance);
                 if (!dialogForLinking) {
-                    setSelectedLocation(instance);
+//                    setSelectedLocation(instance);
                     status = javax.swing.JOptionPane.OK_OPTION;
                     this.setVisible(false);
                 } else {
@@ -482,14 +485,14 @@ public class LocationAssignmentAccessions extends JDialog {
      * The status of the editor.
      */
     protected int status = 0;
-    FilterList textFilteredIssues;
-    EventTableModel lookupTableModel;
+    FilterList<?> textFilteredIssues;
+    EventTableModel<?> lookupTableModel;
     private AccessionFields parentEditor;
     //	private boolean selectOnly;
     boolean dialogForLinking;
-    private Locations selectedLocation;
+//    private Locations selectedLocation;
 
-    public void setMainHeaderByClass(Class clazz) {
+    public void setMainHeaderByClass(Class<?> clazz) {
         StandardEditor.setMainHeaderColorAndTextByClass(clazz, mainHeaderPanel, mainHeaderLabel);
     }
 
@@ -503,24 +506,24 @@ public class LocationAssignmentAccessions extends JDialog {
         return (status);
     }
 
-    private void initLookup() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void initLookup() {
         // update the location list from the database so that
         // any edits made will show up correctly.
         LocationsUtils.initLocationLookupList();
 
-        SortedList sortedLocations = LocationsUtils.getLocationsGlazedList();
-        textFilteredIssues = new FilterList(sortedLocations, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
+        SortedList<?> sortedLocations = LocationsUtils.getLocationsGlazedList();
+        textFilteredIssues = new FilterList(sortedLocations, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
         lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Locations.class));
         locationLookupTable.setModel(lookupTableModel);
-        TableComparatorChooser tableSorter = new TableComparatorChooser(locationLookupTable, sortedLocations, true);
         filterField.requestFocusInWindow();
     }
 
     private void addSelectedLocations() {
         if (!dialogForLinking) {
-            int selectedRow = locationLookupTable.getSelectedRow();
-            Locations location = (Locations) lookupTableModel.getElementAt(selectedRow);
-            setSelectedLocation(location);
+//            int selectedRow = locationLookupTable.getSelectedRow();
+//            Locations location = (Locations) lookupTableModel.getElementAt(selectedRow);
+//            setSelectedLocation(location);
             status = javax.swing.JOptionPane.OK_OPTION;
             this.setVisible(false);
         } else {
@@ -547,7 +550,9 @@ public class LocationAssignmentAccessions extends JDialog {
         return (Locations) lookupTableModel.getElementAt(locationLookupTable.getSelectedRow());
     }
 
+    /*
     private void setSelectedLocation(Locations selectedLocation) {
         this.selectedLocation = selectedLocation;
     }
+    */
 }
