@@ -36,9 +36,12 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class LocationAssignmentResources extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public LocationAssignmentResources(Dialog owner) {
         super(owner);
@@ -91,7 +94,8 @@ public class LocationAssignmentResources extends JDialog {
     if (containerList.getSelectedIndex() == -1) {
       JOptionPane.showMessageDialog(this, "You must select a container first.");
     } else {
-      Object[] selectedContainers = containerList.getSelectedValues();
+//      Object[] selectedContainers = containerList.getSelectedValues();
+      Object[] selectedContainers = containerList.getSelectedValuesList().toArray();
 
       int response = JOptionPane.showConfirmDialog(this,
               "Are you sure you want to remove " + selectedContainers.length + " linked location(s)",
@@ -122,7 +126,7 @@ public class LocationAssignmentResources extends JDialog {
         contentPane = new JPanel();
         label3 = new JLabel();
         scrollPane1 = new JScrollPane();
-        containerList = new JList();
+        containerList = new JList<Object>();
         separator5 = new JSeparator();
         label1 = new JLabel();
         panel1 = new JPanel();
@@ -362,7 +366,7 @@ public class LocationAssignmentResources extends JDialog {
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	public JList getContainerList() {
+	public JList<Object> getContainerList() {
 		return containerList;
 	}
 
@@ -374,7 +378,8 @@ public class LocationAssignmentResources extends JDialog {
         } else {
             int selectedRow = locationLookupTable.getSelectedRow();
             Locations selectedLocation = (Locations)lookupTableModel.getElementAt(selectedRow);
-            Object[] selectedContainers = containerList.getSelectedValues();
+//            Object[] selectedContainers = containerList.getSelectedValues();
+            Object[] selectedContainers = containerList.getSelectedValuesList().toArray();
             for (Object o: selectedContainers) {
                 ((ContainerGroup)o).setLocations(selectedLocation);
             }
@@ -408,7 +413,7 @@ public class LocationAssignmentResources extends JDialog {
     private JPanel contentPane;
     private JLabel label3;
     private JScrollPane scrollPane1;
-    private JList containerList;
+    private JList<Object> containerList;
     private JSeparator separator5;
     private JLabel label1;
     private JPanel panel1;
@@ -427,19 +432,19 @@ public class LocationAssignmentResources extends JDialog {
      * The status of the editor.
      */
     protected int status = 0;
-	FilterList textFilteredIssues;
-	EventTableModel lookupTableModel;
+	FilterList<?> textFilteredIssues;
+	EventTableModel<?> lookupTableModel;
 
     public void assignContainerListValues(Collection<ContainerGroup> values) {
 		containerList.setListData(values.toArray());
     }
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initLookup() {
-		SortedList sortedLocations = LocationsUtils.getLocationsGlazedList();
-		textFilteredIssues = new FilterList(sortedLocations, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
+		SortedList<?> sortedLocations = LocationsUtils.getLocationsGlazedList();
+		textFilteredIssues = new FilterList(sortedLocations, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
 		lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Locations.class));
 		locationLookupTable.setModel(lookupTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(locationLookupTable, sortedLocations, true);
 		filterField.requestFocusInWindow();
 	}
     /**
