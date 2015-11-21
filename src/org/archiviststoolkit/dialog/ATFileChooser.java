@@ -20,7 +20,6 @@
 
 package org.archiviststoolkit.dialog;
 
-import org.archiviststoolkit.importer.ImportUtils;
 import org.archiviststoolkit.util.UserPreferences;
 import org.archiviststoolkit.swing.SimpleFileFilter;
 import org.archiviststoolkit.swing.ImportOptions;
@@ -32,6 +31,11 @@ import java.awt.*;
 import java.io.File;
 
 public class ATFileChooser extends JFileChooser {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructs a <code>JFileChooser</code> pointing to the user's
 	 * default directory. This default depends on the operating system.

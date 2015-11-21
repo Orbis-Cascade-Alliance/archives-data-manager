@@ -34,7 +34,7 @@ import java.util.Vector;
 import java.beans.IntrospectionException;
 import java.awt.*;
 
-public class QueryField implements Comparable {
+public class QueryField implements Comparable<Object> {
 
 	QueryEditorPanel valueComponent;
 
@@ -44,7 +44,7 @@ public class QueryField implements Comparable {
 
 	String displayFieldName;
 
-	public QueryField(DatabaseFields field, Class clazz) {
+	public QueryField(DatabaseFields field, Class<?> clazz) {
 		this.fieldName = field.getFieldName();
 		this.displayFieldName = field.getFieldLabel();
 		this.tableName = clazz.getName();
@@ -71,14 +71,14 @@ public class QueryField implements Comparable {
 			setValueComponent(new QueryEditorDateTimePanel());
 		} else {
 			try {
-				Class fieldType = ATBeanUtils.getPropertyType(clazz, fieldName);
+				Class<?> fieldType = ATBeanUtils.getPropertyType(clazz, fieldName);
 				if (fieldType == String.class) {
 					ATFieldInfo fieldInfo = ATFieldInfo.getFieldInfo(this.tableName + "." + this.fieldName);
 					Vector<LookupListItems> values = LookupListUtils.getLookupListValues2(fieldInfo.getLookupList());
 					if (values.size() == 0) {
 						setValueComponent(new QueryEditorTextPanel());
 					} else {
-						JComboBox comboBox = new JComboBox(new DefaultComboBoxModel(values));
+						JComboBox<LookupListItems> comboBox = new JComboBox<LookupListItems>(new DefaultComboBoxModel<LookupListItems>(values));
 						comboBox.setOpaque(false);
                         comboBox.setMaximumSize(new Dimension(110, 32767)); // set the size so that it shows up properly in subject search
                         comboBox.setMinimumSize(new Dimension(110, 27));

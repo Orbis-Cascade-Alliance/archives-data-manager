@@ -27,12 +27,10 @@ import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.exceptions.DuplicateLinkException;
-import org.archiviststoolkit.exceptions.DeleteException;
 import org.archiviststoolkit.editor.*;
 import org.archiviststoolkit.swing.StandardEditor;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.util.StringHelper;
-import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.LockMode;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
@@ -40,9 +38,13 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class AccessionLookup extends JDialog {
+
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public static final String PARENT_EDITOR_TYPE_ASSESSMENTS = "assessment";
 
@@ -334,14 +336,13 @@ public class AccessionLookup extends JDialog {
 
 	private void initLookup() {
 		try {
-			EventList eventList = new BasicEventList();
+			EventList<Object> eventList = new BasicEventList<Object>();
             eventList.addAll(new DomainAccessObjectImpl(Accessions.class).findAll(LockMode.READ));
-			SortedList sortedItems = new SortedList(eventList);
+			SortedList<Object> sortedItems = new SortedList<Object>(eventList);
 
-		    textFilteredIssues = new FilterList(sortedItems, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
-		    lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Accessions.class));
+		    textFilteredIssues = new FilterList<Object>(sortedItems, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
+		    lookupTableModel = new EventTableModel<Object>(textFilteredIssues, new DomainTableFormat(Accessions.class));
 		    lookupTable.setModel(lookupTableModel);
-		    TableComparatorChooser tableSorter = new TableComparatorChooser(lookupTable, sortedItems, true);
 		    filterField.requestFocusInWindow();
 		} catch (LookupException e) {
 			new ErrorDialog("", StringHelper.getStackTrace(e)).showDialog();
@@ -394,8 +395,8 @@ public class AccessionLookup extends JDialog {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     protected int status = 0;
-	FilterList textFilteredIssues;
-	EventTableModel lookupTableModel;
+	FilterList<Object> textFilteredIssues;
+	EventTableModel<?> lookupTableModel;
     private Accessions selectedAccession;
 	private DomainEditorFields parentEditorFields;
 	private String parentEditorType;

@@ -7,12 +7,10 @@ package org.archiviststoolkit.dialog;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.ArchDescription;
 import org.archiviststoolkit.model.AccessionsResourcesCommon;
-import org.archiviststoolkit.model.ResourcesCommon;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 
@@ -22,6 +20,11 @@ import java.awt.*;
  * @author Nathan Stevens
  */
 public class ATDebugEditorFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+	
     public ATDebugEditorFields() {
         super();
         initComponents();
@@ -35,9 +38,11 @@ public class ATDebugEditorFields extends DomainEditorFields {
     public void setModel(DomainObject domainObject, InfiniteProgressPanel progressPanel) {
         super.setModel(domainObject, null);
 
+        /*
         if(domainObject instanceof ResourcesCommon) {
             ResourcesCommon rc = (ResourcesCommon)domainObject;
         }
+        */
     }
 
     private void initComponents() {

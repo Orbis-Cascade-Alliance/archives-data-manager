@@ -34,7 +34,7 @@ import org.archiviststoolkit.util.FuzzyStringMatcher;
 import com.ibm.icu.text.Normalizer;
 //import com.ibm.icu.text.Normalizer;
 
-public class DomainFilterator implements TextFilterator {
+public class DomainFilterator implements TextFilterator<Object> {
 
 	public void getFilterStrings(List list, Object o) {
 

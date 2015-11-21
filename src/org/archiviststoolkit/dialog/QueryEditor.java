@@ -42,17 +42,21 @@ import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.MatchMode;
 
 public class QueryEditor extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final String SELECT_A_FIELD = "Select a field";
 
-	public QueryEditor(Frame owner, Class clazz) {
+	public QueryEditor(Frame owner, Class<?> clazz) {
 		super(owner);
 		this.setClazz(clazz);
 		initComponents();
 		init();
 	}
 
-	public QueryEditor(Dialog owner, Class clazz) {
+	public QueryEditor(Dialog owner, Class<?> clazz) {
 		super(owner);
 		this.setClazz(clazz);
 		initComponents();
@@ -248,6 +252,7 @@ public class QueryEditor extends JDialog {
 		return bucket4;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner non-commercial license
@@ -261,10 +266,10 @@ public class QueryEditor extends JDialog {
         panel1 = new JPanel();
         searchEditorLabel = new JLabel();
         contentPane = new JPanel();
-        fieldSelector1 = new JComboBox();
+        fieldSelector1 = new JComboBox<Object>();
         placeHolder1 = new QueryEditorTextPanel();
-        boolean1 = new JComboBox();
-        fieldSelector2 = new JComboBox();
+        boolean1 = new JComboBox<Object>();
+        fieldSelector2 = new JComboBox<Object>();
         placeHolder2 = new QueryEditorTextPanel();
         includeComponents = new JCheckBox();
         buttonBar2 = new JPanel();
@@ -966,10 +971,10 @@ public class QueryEditor extends JDialog {
     private JPanel panel1;
     private JLabel searchEditorLabel;
     private JPanel contentPane;
-    private JComboBox fieldSelector1;
+    private JComboBox<Object> fieldSelector1;
     private QueryEditorTextPanel placeHolder1;
-    private JComboBox boolean1;
-    private JComboBox fieldSelector2;
+    private JComboBox<Object> boolean1;
+    private JComboBox<Object> fieldSelector2;
     private QueryEditorTextPanel placeHolder2;
     private JCheckBox includeComponents;
     private JPanel buttonBar2;
@@ -983,7 +988,7 @@ public class QueryEditor extends JDialog {
     private JButton lookupName;
     private JButton clearName;
     private JLabel label2;
-    private JComboBox function;
+    private JComboBox<?> function;
     private JLabel label5;
     private JTextField subject;
     private JButton lookupSubject;
@@ -1013,7 +1018,7 @@ public class QueryEditor extends JDialog {
     private JLabel label9;
     private JTextField noteText;
     private JLabel label7;
-    private JComboBox instanceType;
+    private JComboBox<?> instanceType;
     private JCheckBox includeComponentsRelatedSearch;
     private JPanel buttonBar;
     private JButton cancelButton;
@@ -1033,7 +1038,7 @@ public class QueryEditor extends JDialog {
 	private QueryEditorPanel currentValue2Component;
 	private CellConstraints value2CellConstraints;
 
-	private Class clazz;
+	private Class<?> clazz;
 
 	private Names selectedName = null;
 	private Subjects selectedSubject = null;
@@ -1045,11 +1050,11 @@ public class QueryEditor extends JDialog {
 
 	private Boolean alternateQuery = false;
 
-	public JComboBox getFieldSelector1() {
+	public JComboBox<Object> getFieldSelector1() {
 		return fieldSelector1;
 	}
 
-	public void setFieldSelector1(JComboBox fieldSelector) {
+	public void setFieldSelector1(JComboBox<Object> fieldSelector) {
 		this.fieldSelector1 = fieldSelector;
 	}
 
@@ -1100,17 +1105,17 @@ public class QueryEditor extends JDialog {
 //		}
 //	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setFieldValues(ArrayList fieldValues1, ArrayList fieldValues2, ArrayList sortFieldValues) {
 //        this.fieldValues1 = fieldValues;
 		fieldValues1.add(0, SELECT_A_FIELD);
 		fieldValues2.add(0, SELECT_A_FIELD);
-		fieldSelector1.setModel(new DefaultComboBoxModel(fieldValues1.toArray()));
-		fieldSelector2.setModel(new DefaultComboBoxModel(fieldValues2.toArray()));
+		fieldSelector1.setModel(new DefaultComboBoxModel<Object>(fieldValues1.toArray()));
+		fieldSelector2.setModel(new DefaultComboBoxModel<Object>(fieldValues2.toArray()));
 //		sortFieldSelector.setModel(new DefaultComboBoxModel(sortFieldValues.toArray()));
 	}
 
 	private void createPopupValues() {
-
 		ArrayList<QueryField> fieldValues1 = new ArrayList<QueryField>();
 		ArrayList<QueryField> fieldValues2 = new ArrayList<QueryField>();
 		ArrayList<QueryField> sortFieldValues = new ArrayList<QueryField>();
@@ -1264,7 +1269,7 @@ public class QueryEditor extends JDialog {
 										String secondPropertyName,
 										String targetProperty,
 										String value,
-										Class targetClass) {
+										Class<?> targetClass) {
 		createAndAddBucketPair(criterionList, firstPropertyName, secondPropertyName, targetProperty, value, targetClass, false);
 	}
 
@@ -1273,7 +1278,7 @@ public class QueryEditor extends JDialog {
 										String secondPropertyName,
 										String targetProperty,
 										String value,
-										Class targetClass,
+										Class<?> targetClass,
 										boolean resourcesOnly) {
 		CriteriaRelationshipPairs pair;
 		pair = new CriteriaRelationshipPairs(Restrictions.ilike(targetProperty, value, MatchMode.START), firstPropertyName);
@@ -1287,11 +1292,11 @@ public class QueryEditor extends JDialog {
 		return bucket1.getText().length() > 0 || bucket2.getText().length() > 0 || bucket3.getText().length() > 0 || bucket4.getText().length() > 0;
 	}
 
-	public Class getClazz() {
+	public Class<?> getClazz() {
 		return clazz;
 	}
 
-	public void setClazz(Class clazz) {
+	public void setClazz(Class<?> clazz) {
 		this.clazz = clazz;
 	}
 

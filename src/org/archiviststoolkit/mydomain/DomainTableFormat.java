@@ -37,10 +37,10 @@ import org.apache.commons.beanutils.BeanUtils;
  * Date: Jun 8, 2006
  * Time: 9:15:11 PM
  */
-public class DomainTableFormat implements AdvancedTableFormat {
+public class DomainTableFormat implements AdvancedTableFormat<Object> {
 
 
-	public DomainTableFormat(Class clazz) {
+	public DomainTableFormat(Class<?> clazz) {
 		this.clazz = clazz;
 		columnNames = new ArrayList<String>();
 		getMethods = new ArrayList<Method>();

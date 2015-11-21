@@ -26,11 +26,14 @@ import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import org.apache.log4j.Logger;
 import org.archiviststoolkit.Main;
-import org.archiviststoolkit.model.ModelUtil;
 import org.archiviststoolkit.exceptions.DuplicateLinkException;
 import org.archiviststoolkit.util.StringHelper;
 
 public class ErrorDialog extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = Logger.getLogger(Main.class.getPackage().getName());
 

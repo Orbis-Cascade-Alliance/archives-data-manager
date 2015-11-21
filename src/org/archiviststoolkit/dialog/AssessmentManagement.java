@@ -41,9 +41,13 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class AssessmentManagement extends GeneralAdminDialog implements ActionListener {
+
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = Logger.getLogger(Main.class.getPackage().getName());
     private DomainObject currentSearchResultObject;
@@ -235,7 +239,7 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
                     InfiniteProgressPanel monitor = ATProgressUtil.createModalProgressMonitor(getThisAsJDialog(), 0);
                     monitor.start("Performing search...");
                     try {
-                        Collection results = access.findByQueryEditorLongSession(searchDialog, monitor);
+                        Collection<?> results = access.findByQueryEditorLongSession(searchDialog, monitor);
                         updateListWithNewResultSet(monitor, results);
                         monitor.close();
                     } catch (LookupException e) {
@@ -256,9 +260,9 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
      * @param resultSet The new result to update the table with
      */
 
-    protected synchronized void updateListWithNewResultSet(InfiniteProgressPanel monitor, Collection resultSet) {
+    protected synchronized void updateListWithNewResultSet(InfiniteProgressPanel monitor, Collection<?> resultSet) {
         // create assessment search objects now
-        final Collection newResultSet = getAssessmentsResultSet(monitor, resultSet, true);
+        final Collection<AssessmentsSearchResult> newResultSet = getAssessmentsResultSet(monitor, resultSet, true);
 
         // update the content table with any results that were found
 		if (!SwingUtilities.isEventDispatchThread()) {
@@ -302,7 +306,7 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
             return;
         }
 
-        Collection resultSet = null;
+        Collection<?> resultSet = null;
 
         try {
             if (sortField == null) {
@@ -333,14 +337,14 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
      * @param removeInActive boolean specifying whether to allow inatice records to be displayed in table
      * @return Collection containing AssessmentsSearchResult
      */
-    protected Collection getAssessmentsResultSet(InfiniteProgressPanel monitor, Collection resultSet, boolean removeInActive) {
+    protected Collection<AssessmentsSearchResult> getAssessmentsResultSet(InfiniteProgressPanel monitor, Collection<?> resultSet, boolean removeInActive) {
         int count = 0;
         int size = resultSet.size();
 
         Collection<AssessmentsSearchResult> newResultSet = new ArrayList<AssessmentsSearchResult>();
 
         // interate through the results set
-        for (Iterator resultIterator = resultSet.iterator(); resultIterator.hasNext();) {
+        for (Iterator<?> resultIterator = resultSet.iterator(); resultIterator.hasNext();) {
             // check to see if the cancel button was pressed
             if (monitor != null && monitor.isProcessCancelled()) {
                 break;
@@ -742,7 +746,7 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
 	FilterList<DomainObject> textFilteredIssues;
-	EventTableModel lookupTableModel;
+	EventTableModel<DomainObject> lookupTableModel;
 
 	public DomainSortableTable getContentTable() {
 		return contentTable;
@@ -799,11 +803,10 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
 
 
 	private void initLookup() {
-		SortedList sortedLocations = new SortedList(contentTable.getEventList());
-		textFilteredIssues = new FilterList<DomainObject>(sortedLocations, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
-		lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(AssessmentsSearchResult.class));
+		SortedList<DomainObject> sortedLocations = new SortedList<DomainObject>(contentTable.getEventList());
+		textFilteredIssues = new FilterList<DomainObject>(sortedLocations, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
+		lookupTableModel = new EventTableModel<DomainObject>(textFilteredIssues, new DomainTableFormat(AssessmentsSearchResult.class));
 		contentTable.setModel(lookupTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(contentTable, sortedLocations, true);
 		filterField.requestFocusInWindow();
 	}
 
@@ -827,7 +830,7 @@ public class AssessmentManagement extends GeneralAdminDialog implements ActionLi
 					try {
                         // decide on what records to return based whether we are printing the screen
                         String reportTitle = reportDestinationProperties.getSelectedReport().getReportTitle();
-                        ArrayList setForPrinting;
+                        ArrayList<?> setForPrinting;
 
                         if(reportTitle.equals("Print Screen")) {
                             ReportDestinationProperties reportDestinationProperties2 = new ReportDestinationProperties(AssessmentsSearchResult.class, parent, true);

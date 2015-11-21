@@ -22,7 +22,6 @@ package org.archiviststoolkit.dialog;
 
 import com.jgoodies.validation.ValidationResult;
 import com.jgoodies.validation.util.ValidationUtils;
-import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.validators.ATAbstractValidator;
 import org.archiviststoolkit.model.Locations;
 import org.archiviststoolkit.structure.ATFieldInfo;

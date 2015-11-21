@@ -35,9 +35,12 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class ResourceLookup extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String PARENT_EDITOR_TYPE_ACCESSIONS = "accessions";
 	public static final String PARENT_EDITOR_TYPE_RESOURCES = "resources";
@@ -495,12 +498,12 @@ public class ResourceLookup extends JDialog {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initLookup() {
-		SortedList sortedItems = Resources.getResourcesGlazedList();
-		textFilteredIssues = new FilterList(sortedItems, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
+		SortedList<?> sortedItems = Resources.getResourcesGlazedList();
+		textFilteredIssues = new FilterList(sortedItems, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
 		lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Resources.class));
 		lookupTable.setModel(lookupTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(lookupTable, sortedItems, true);
 		filterField.requestFocusInWindow();
 	}
 
@@ -557,8 +560,8 @@ public class ResourceLookup extends JDialog {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     protected int status = 0;
-	FilterList textFilteredIssues;
-	EventTableModel lookupTableModel;
+	FilterList<?> textFilteredIssues;
+	EventTableModel<?> lookupTableModel;
     private Resources selectedResource;
 	private DomainEditorFields parentEditorFields;
 	private String parentEditorType;

@@ -31,6 +31,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QueryEditorIntegerPanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Boolean returnLongValues = false;
 
@@ -63,7 +67,7 @@ public class QueryEditorIntegerPanel extends QueryEditorPanel {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		comparator = new JComboBox();
+		comparator = new JComboBox<Object>();
 		startInteger = ATBasicComponentFactory.createUnboundIntegerField(false);
 		label2 = new JLabel();
 		endInteger = ATBasicComponentFactory.createUnboundIntegerField(false);
@@ -86,7 +90,7 @@ public class QueryEditorIntegerPanel extends QueryEditorPanel {
 		((FormLayout) getLayout()).setColumnGroups(new int[][]{{3, 7}});
 
 		//---- comparator ----
-		comparator.setModel(new DefaultComboBoxModel(new String[]{
+		comparator.setModel(new DefaultComboBoxModel<Object>(new String[]{
 				"Equals",
 				"Is between",
 				"Is greater than",
@@ -112,13 +116,13 @@ public class QueryEditorIntegerPanel extends QueryEditorPanel {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JComboBox comparator;
+	private JComboBox<Object> comparator;
 	private JFormattedTextField startInteger;
 	private JLabel label2;
 	private JFormattedTextField endInteger;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+	public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 		Number startNumberValue;
 		Number endNumberValue;
 		if (returnLongValues) {

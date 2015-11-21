@@ -39,15 +39,18 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class DigitalObjectLookup extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public static final String PARENT_EDITOR_TYPE_ASSESSMENTS = "assessment";
     public static final String PARENT_EDITOR_TYPE_RESOURCES = "resources";
 
     // list to store the digital object returned from the database
-    private EventList eventList = null;
+    private EventList<Object> eventList = null;
 
     // Method to set the parent resource when link digital objects to resources
     private Resources parentResource = null;
@@ -366,9 +369,10 @@ public class DigitalObjectLookup extends JDialog {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
+    @SuppressWarnings("unchecked")
 	private void initLookup() {
 		try {
-			eventList = new BasicEventList();
+			eventList = new BasicEventList<Object>();
 
             if (parentEditorType.equals(PARENT_EDITOR_TYPE_ASSESSMENTS)) {
                 eventList.addAll(new DigitalObjectDAO().findAll(LockMode.READ));
@@ -376,12 +380,11 @@ public class DigitalObjectLookup extends JDialog {
                 eventList.addAll(new DigitalObjectDAO().findAllUnlinked(LockMode.READ));
             }
 
-            SortedList sortedItems = new SortedList(eventList);
+            SortedList<Object> sortedItems = new SortedList<Object>(eventList);
 
-		    textFilteredIssues = new FilterList(sortedItems, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
-		    lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(DigitalObjects.class));
+		    textFilteredIssues = new FilterList<Object>(sortedItems, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
+		    lookupTableModel = new EventTableModel<Object>(textFilteredIssues, new DomainTableFormat(DigitalObjects.class));
 		    lookupTable.setModel(lookupTableModel);
-		    TableComparatorChooser tableSorter = new TableComparatorChooser(lookupTable, sortedItems, true);
 		    filterField.requestFocusInWindow();
 		} catch (LookupException e) {
 			new ErrorDialog("", StringHelper.getStackTrace(e)).showDialog();
@@ -465,8 +468,8 @@ public class DigitalObjectLookup extends JDialog {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
     protected int status = 0;
-	FilterList textFilteredIssues;
-	EventTableModel lookupTableModel;
+	FilterList<Object> textFilteredIssues;
+	EventTableModel<Object> lookupTableModel;
     private DigitalObjects selectedDigitalObject;
 	private DomainEditorFields parentEditorFields;
 	private String parentEditorType;

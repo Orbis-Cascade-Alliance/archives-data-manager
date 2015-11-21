@@ -24,11 +24,14 @@ import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.report.*;
-import org.archiviststoolkit.swing.ATBasicComponentFactory;
 
 import java.util.Vector;
 
 public class ReportDialogFields extends JPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private ReportDialog parentDialog;
 
@@ -74,6 +77,7 @@ public class ReportDialogFields extends JPanel {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initOutputComboBoxes() {
 		outputOptionsAll = new DefaultComboBoxModel(ReportFactory.getInstance().getOutputOptionList());
 		outputOptionsFindingAid = new DefaultComboBoxModel(ReportFactory.getInstance().getOutputOptionListFindingAids());
@@ -83,7 +87,7 @@ public class ReportDialogFields extends JPanel {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner non-commercial license
         label1 = new JLabel();
-        reportList = new JComboBox();
+        reportList = new JComboBox<ATReport>();
         reportHeaderPanel = new JPanel();
         label2 = new JLabel();
         reportHeader = new JTextField();
@@ -93,7 +97,7 @@ public class ReportDialogFields extends JPanel {
         includeDaos = new JCheckBox();
         useDOIDAsHREF = new JCheckBox();
         label3 = new JLabel();
-        outputOptions = new JComboBox();
+        outputOptions = new JComboBox<Object>();
         label4 = new JLabel();
         scrollPane1 = new JScrollPane();
         reportDescription = new JTextArea();
@@ -234,7 +238,7 @@ public class ReportDialogFields extends JPanel {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner non-commercial license
     private JLabel label1;
-    private JComboBox reportList;
+    private JComboBox<ATReport> reportList;
     private JPanel reportHeaderPanel;
     private JLabel label2;
     private JTextField reportHeader;
@@ -244,26 +248,27 @@ public class ReportDialogFields extends JPanel {
     private JCheckBox includeDaos;
     private JCheckBox useDOIDAsHREF;
     private JLabel label3;
-    private JComboBox outputOptions;
+    private JComboBox<Object> outputOptions;
     private JLabel label4;
     private JScrollPane scrollPane1;
     private JTextArea reportDescription;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private DefaultComboBoxModel reportListWithPrintScreen;
-	private DefaultComboBoxModel reportListWithoutPrintScreen;
+	private DefaultComboBoxModel<ATReport> reportListWithPrintScreen;
+	private DefaultComboBoxModel<ATReport> reportListWithoutPrintScreen;
 
-	private DefaultComboBoxModel outputOptionsAll;
-	private DefaultComboBoxModel outputOptionsFindingAid;
+	private DefaultComboBoxModel<Object> outputOptionsAll;
+	private DefaultComboBoxModel<Object> outputOptionsFindingAid;
 
 
 	public void setReportList(Vector<ATReport> reportList) {
-		reportListWithPrintScreen = new DefaultComboBoxModel(reportList);
+		reportListWithPrintScreen = new DefaultComboBoxModel<ATReport>(reportList);
+		@SuppressWarnings("unchecked")
 		Vector<ATReport> clone = (Vector<ATReport>)reportList.clone();
 		if (clone.size() > 0) {
 			clone.remove(0);
 		}
-		reportListWithoutPrintScreen = new DefaultComboBoxModel(clone);
+		reportListWithoutPrintScreen = new DefaultComboBoxModel<ATReport>(clone);
 	}
 
 	public void assignReportList(boolean includePrintScreen) {

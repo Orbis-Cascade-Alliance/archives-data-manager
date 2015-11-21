@@ -49,6 +49,10 @@ import java.util.ArrayList;
  * @author Lee Mandell
  */
 public class BatchLocationCreation extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final int WARNING_MESSAGE_THRESHOLD = 500;
 
@@ -106,7 +110,7 @@ public class BatchLocationCreation extends JDialog {
         label10 = new JLabel();
         coordinate3End = new JTextField();
         label11 = new JLabel();
-        repository = new JComboBox(new DefaultComboBoxModel(Repositories.getRepositoryList()));
+        repository = new JComboBox<Repositories>(new DefaultComboBoxModel<Repositories>(Repositories.getRepositoryList()));
         buttonBar = new JPanel();
         generateButton = new JButton();
         doneButton = new JButton();
@@ -763,7 +767,7 @@ public class BatchLocationCreation extends JDialog {
     private JLabel label10;
     private JTextField coordinate3End;
     private JLabel label11;
-    public JComboBox repository;
+    public JComboBox<Repositories> repository;
     private JPanel buttonBar;
     private JButton generateButton;
     private JButton doneButton;

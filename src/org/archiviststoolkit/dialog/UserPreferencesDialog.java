@@ -35,8 +35,13 @@ import org.archiviststoolkit.hibernate.SessionFactory;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 
 public class UserPreferencesDialog extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     // hash map that contains the stored locations
-    private HashMap savedConnections = new HashMap();
+    private HashMap<String, DatabaseConnectionInformation> savedConnections = new HashMap<String, DatabaseConnectionInformation>();
 
     // use this to prevent any update events when the list connections is being loaded
     private boolean loadingConnections = true;
@@ -81,7 +86,7 @@ public class UserPreferencesDialog extends JDialog {
             savedConnections.put(selectedUrl, dbInfo);
             connectionUrl.addItem(selectedUrl);
         } else { // update the information for already stored connection information
-            DatabaseConnectionInformation dbInfo = (DatabaseConnectionInformation) savedConnections.get(selectedUrl);
+            DatabaseConnectionInformation dbInfo = savedConnections.get(selectedUrl);
             dbInfo.setDatabaseURL(selectedUrl);
             dbInfo.setUsername(getUserName());
             dbInfo.setPassword(new String(getPassword()));
@@ -97,19 +102,20 @@ public class UserPreferencesDialog extends JDialog {
      * and loads it into the drop down menu.
      */
     private void loadDatabaseConnectionInformation() {
-        HashMap info = DatabaseConnectionUtils.loadDatabaseConnectionInformation();
+        @SuppressWarnings("unchecked")
+		HashMap<String, DatabaseConnectionInformation> info = DatabaseConnectionUtils.loadDatabaseConnectionInformation();
         if (info != null) {
             savedConnections = info;
 
-            Map sortedMap = new TreeMap(savedConnections);
-            Collection c = sortedMap.values();
+            Map<String, DatabaseConnectionInformation> sortedMap = new TreeMap<String, DatabaseConnectionInformation>(savedConnections);
+            Collection<DatabaseConnectionInformation> c = sortedMap.values();
 
             //obtain an Iterator for Collection
-            Iterator itr = c.iterator();
+            Iterator<DatabaseConnectionInformation> itr = c.iterator();
 
             //iterate through HashMap and ad to combo box
             while (itr.hasNext()) {
-                DatabaseConnectionInformation dbInfo = (DatabaseConnectionInformation) itr.next();
+                DatabaseConnectionInformation dbInfo = itr.next();
                 connectionUrl.addItem(dbInfo.toString());
             }
 
@@ -128,7 +134,7 @@ public class UserPreferencesDialog extends JDialog {
 
         String selectedUrl = (String) connectionUrl.getSelectedItem();
         if (savedConnections.containsKey(selectedUrl)) {
-            DatabaseConnectionInformation dbInfo = (DatabaseConnectionInformation) savedConnections.get(selectedUrl);
+            DatabaseConnectionInformation dbInfo = savedConnections.get(selectedUrl);
             userName.setText(dbInfo.getUsername());
             password.setText(dbInfo.getPassword());
             databaseTypes.setSelectedItem(dbInfo.getDatabaseType());
@@ -214,7 +220,7 @@ public class UserPreferencesDialog extends JDialog {
         panel1 = new JPanel();
         contentPanel = new JPanel();
         label1 = new JLabel();
-        connectionUrl = new JComboBox();
+        connectionUrl = new JComboBox<String>();
         label2 = new JLabel();
         userName = new JTextField();
         label3 = new JLabel();
@@ -449,7 +455,7 @@ public class UserPreferencesDialog extends JDialog {
         this.setVisible(false);
     }
 
-    public JComboBox getConnectionUrl() {
+    public JComboBox<String> getConnectionUrl() {
         return connectionUrl;
     }
 
@@ -464,13 +470,13 @@ public class UserPreferencesDialog extends JDialog {
     private JPanel panel1;
     private JPanel contentPanel;
     private JLabel label1;
-    private JComboBox connectionUrl;
+    private JComboBox<String> connectionUrl;
     private JLabel label2;
     private JTextField userName;
     private JLabel label3;
     private JPasswordField password;
     private JLabel label4;
-    private JComboBox databaseTypes;
+    private JComboBox<?> databaseTypes;
     private JPanel buttonBar;
     private JButton openDBFileButton;
     private JButton saveButton;

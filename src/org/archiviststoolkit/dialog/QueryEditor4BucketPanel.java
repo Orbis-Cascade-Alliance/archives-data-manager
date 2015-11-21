@@ -19,29 +19,26 @@
 package org.archiviststoolkit.dialog;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Conjunction;
-import org.hibernate.Criteria;
 import org.archiviststoolkit.model.Accessions;
 import org.archiviststoolkit.model.Resources;
 import org.archiviststoolkit.hibernate.ATSearchCriterion;
 import org.archiviststoolkit.util.StringHelper;
 
 public class QueryEditor4BucketPanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private Class clazz;
-
-    public QueryEditor4BucketPanel(Class clazz) {
+    public QueryEditor4BucketPanel(Class<?> clazz) {
         initComponents();
-        this.clazz = clazz;
     }
 
     private void initComponents() {
@@ -108,7 +105,7 @@ public class QueryEditor4BucketPanel extends QueryEditorPanel {
     private JTextField bucket4;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+    public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 
 		String humanReadableSearchString = "";
 		if (clazz == Accessions.class) {

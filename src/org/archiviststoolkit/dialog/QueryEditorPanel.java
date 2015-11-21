@@ -20,13 +20,16 @@
 
 package org.archiviststoolkit.dialog;
 
-import org.hibernate.criterion.Criterion;
 import org.archiviststoolkit.hibernate.ATSearchCriterion;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 import javax.swing.*;
 
 public abstract class QueryEditorPanel extends JPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public static final String BEGINS_WITH = "Begins with";
     public static final String CONTAINS = "Contains";
@@ -38,13 +41,13 @@ public abstract class QueryEditorPanel extends JPanel {
 	public static final Boolean RETURN_LONG_VALUES = true;
 	public static final Boolean RETURN_INTEGER_VALUES = false;
 
-    public abstract ATSearchCriterion getQueryCriterion(Class clazz, String field);
+    public abstract ATSearchCriterion getQueryCriterion(Class<?> clazz, String field);
 
 	public abstract void requestInitialFocus();
 
 	public abstract boolean validDataEntered();
 
-	protected String getFieldLabel(Class clazz, String field) {
+	protected String getFieldLabel(Class<?> clazz, String field) {
 		//strip out auditInfo if it is there
 		field = field.replace("auditInfo.", "");
 		ATFieldInfo fieldInfo = ATFieldInfo.getFieldInfo(clazz, field);

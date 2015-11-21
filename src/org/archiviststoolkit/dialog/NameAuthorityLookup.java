@@ -40,9 +40,12 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 public class NameAuthorityLookup extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor used when linking names to archDescription records
@@ -145,11 +148,11 @@ public class NameAuthorityLookup extends JDialog {
         label4 = new JLabel();
         label3 = new JLabel();
         label_function = new JLabel();
-        function = new JComboBox();
+        function = new JComboBox<Object>();
         label_role = new JLabel();
-        role = new JComboBox();
+        role = new JComboBox<Object>();
         label_form = new JLabel();
-        form = new JComboBox();
+        form = new JComboBox<Object>();
         buttonBarLinking = new JPanel();
         linkButton = new JButton();
         createName = new JButton();
@@ -436,7 +439,7 @@ public class NameAuthorityLookup extends JDialog {
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
 
-	public void setMainHeaderByClass(Class clazz) {
+	public void setMainHeaderByClass(Class<?> clazz) {
 		StandardEditor.setMainHeaderColorAndTextByClass(clazz, mainHeaderPanel, mainHeaderLabel);
 	}
 
@@ -477,6 +480,7 @@ public class NameAuthorityLookup extends JDialog {
 	}
 
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void functionActionPerformed(ActionEvent e) {
 		String selectedFunction = function.getSelectedItem().toString();
 		if (selectedFunction.equalsIgnoreCase("subject")) {
@@ -511,7 +515,6 @@ public class NameAuthorityLookup extends JDialog {
 	}
 
 	private void createNameActionPerformed(ActionEvent e) {
-		NameEnabledEditor parentEditor = this.parentEditor;
 		DomainEditor dialog = null;
 		try {
 			dialog = DomainEditorFactory.getInstance().createDomainEditorWithParent(Names.class, this, false);
@@ -549,12 +552,12 @@ public class NameAuthorityLookup extends JDialog {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initLookup() {
-		SortedList sortedNames = Names.getNamesGlazedList();
-		textFilteredIssues = new FilterList(sortedNames, new TextComponentMatcherEditor(nameLookup, new DomainFilterator()));
+		SortedList<?> sortedNames = Names.getNamesGlazedList();
+		textFilteredIssues = new FilterList(sortedNames, new TextComponentMatcherEditor<Object>(nameLookup, new DomainFilterator()));
 		namesTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Names.class));
 		namesLookupTable.setModel(namesTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(namesLookupTable, sortedNames, true);
 		nameLookup.requestFocusInWindow();
 	}
 
@@ -575,11 +578,11 @@ public class NameAuthorityLookup extends JDialog {
     private JLabel label4;
     private JLabel label3;
     private JLabel label_function;
-    private JComboBox function;
+    private JComboBox<Object> function;
     private JLabel label_role;
-    private JComboBox role;
+    private JComboBox<Object> role;
     private JLabel label_form;
-    private JComboBox form;
+    private JComboBox<Object> form;
     private JPanel buttonBarLinking;
     private JButton linkButton;
     private JButton createName;
@@ -596,9 +599,9 @@ public class NameAuthorityLookup extends JDialog {
 
 	private Names nameModel = null;
 	private NameEnabledEditor parentEditor;
-	FilterList textFilteredIssues;
-	EventTableModel namesTableModel;
-	Vector nameLinkFunctionvalues;
+	FilterList<?> textFilteredIssues;
+	EventTableModel<?> namesTableModel;
+	Vector<String> nameLinkFunctionvalues;
 	boolean dialogForLinking;
 
 	/**
@@ -626,7 +629,8 @@ public class NameAuthorityLookup extends JDialog {
 		return (status);
 	}
 
-    private void resetPopupsAndFilter() {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void resetPopupsAndFilter() {
         form.setVisible(false);
         form.setModel(new DefaultComboBoxModel(LookupListUtils.getLookupListValues(LookupListUtils.LIST_NAME_NAME_LINK_FORM)));
         label_form.setVisible(false);
@@ -641,7 +645,7 @@ public class NameAuthorityLookup extends JDialog {
         this.repaint();
     }
 
-    public void setFunctionLookupvalues(Class clazz) throws UnsupportedDomainObjectModelException {
+    public void setFunctionLookupvalues(Class<?> clazz) throws UnsupportedDomainObjectModelException {
 		if (clazz == Accessions.class) {
 			nameLinkFunctionvalues = LookupListUtils.getLookupListValues(LookupListUtils.LIST_NAME_NAME_LINK_FUNCTION);
 

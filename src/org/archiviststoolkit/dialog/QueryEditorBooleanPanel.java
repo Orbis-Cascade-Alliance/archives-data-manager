@@ -28,6 +28,11 @@ import org.hibernate.criterion.Expression;
 import org.archiviststoolkit.hibernate.ATSearchCriterion;
 
 public class QueryEditorBooleanPanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+
+	private static final long serialVersionUID = 1L;
 	public QueryEditorBooleanPanel() {
 		initComponents();
 	}
@@ -83,7 +88,7 @@ public class QueryEditorBooleanPanel extends QueryEditorPanel {
 	private JRadioButton radioButtonFalse;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+	public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 
 		Criterion criteria = null;
 		String humanReadableSearchString = getFieldLabel(clazz, field) + " is ";

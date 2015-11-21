@@ -16,11 +16,23 @@
 
 package org.archiviststoolkit.mydomain;
 
-//==============================================================================
-// Import Declarations
-//==============================================================================
+import java.awt.Component;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
+import java.util.logging.Logger;
 
-import com.jgoodies.validation.ValidationResult;
+import javax.swing.ProgressMonitor;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.dialog.ErrorDialog;
@@ -31,25 +43,44 @@ import org.archiviststoolkit.exceptions.ValidationException;
 import org.archiviststoolkit.hibernate.ATSearchCriterion;
 import org.archiviststoolkit.hibernate.AuditInterceptor;
 import org.archiviststoolkit.hibernate.SessionFactory;
-import org.archiviststoolkit.model.*;
+import org.archiviststoolkit.model.Accessions;
+import org.archiviststoolkit.model.DigitalObjects;
+import org.archiviststoolkit.model.Locations;
+import org.archiviststoolkit.model.Names;
+import org.archiviststoolkit.model.Resources;
+import org.archiviststoolkit.model.ResourcesComponents;
+import org.archiviststoolkit.model.ResourcesComponentsSearchResult;
+import org.archiviststoolkit.model.Subjects;
+import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.model.validators.ATValidator;
 import org.archiviststoolkit.model.validators.ValidatorFactory;
 import org.archiviststoolkit.structure.DatabaseTables;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.util.NameUtils;
 import org.archiviststoolkit.util.StringHelper;
-import org.hibernate.*;
-import org.hibernate.criterion.*;
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
+import org.hibernate.FlushMode;
+import org.hibernate.HibernateException;
+import org.hibernate.LockMode;
+import org.hibernate.ObjectNotFoundException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.List;
-import java.util.logging.Logger;
+//==============================================================================
+// Import Declarations
+//==============================================================================
+
+import com.jgoodies.validation.ValidationResult;
 
 /**
  * Default implementation of a DomainAccessObject specific to
@@ -70,7 +101,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
     /**
      * Class which this DOA implementation refers to.
      */
-    private Class persistentClass = null;
+    private Class<?> persistentClass = null;
 
     /**
      * listeners who are interested in this class changing.
@@ -88,7 +119,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @param clazz the class to build to
      */
 
-    public DomainAccessObjectImpl(final Class clazz) {
+    public DomainAccessObjectImpl(final Class<?> clazz) {
         this.persistentClass = clazz;
     }
 
@@ -174,11 +205,11 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws PersistenceException fails if we cannot persist the instance
      */
 
-    public final void addGroup(final Collection collection, Component parent) throws PersistenceException {
+    public final void addGroup(final Collection<?> collection, Component parent) throws PersistenceException {
         Session session = SessionFactory.getInstance().openSession(new AuditInterceptor(ApplicationFrame.getInstance().getCurrentUser()));
         DomainObject domainObject = null;
         try {
-            Iterator iterator = collection.iterator();
+            Iterator<?> iterator = collection.iterator();
             int numberOfRecords = collection.size();
 
             ProgressMonitor monitor = new ProgressMonitor(parent, "Saving Records", null, 0, numberOfRecords);
@@ -323,7 +354,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws PersistenceException fails if we cannot delete the instance
      */
 
-    public void deleteGroup(final Collection collection) throws PersistenceException {
+    public void deleteGroup(final Collection<?> collection) throws PersistenceException {
 
         Session session = SessionFactory.getInstance().openSession();
         DomainObject domainObject = null;
@@ -645,36 +676,36 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException fails if we cannot execute the lookup
      */
 
-    public Collection findAll(String... sortFields) throws LookupException {
+	public Collection<?> findAll(String... sortFields) throws LookupException {
         return findAll(null, sortFields);
     }
 
-    public Collection findAll(LockMode lockmode, String... sortFields) throws LookupException {
+    public Collection<?> findAll(LockMode lockmode, String... sortFields) throws LookupException {
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
-        List completeList = (List) findAllCommon(session, lockmode, sortFields);
+        List<?> completeList = (List<?>) findAllCommon(session, lockmode, sortFields);
 //		SessionFactory.getInstance().closeSession(session);
         return completeList;
     }
 
-    public Collection findAllLongSession(String... sortFields) throws LookupException {
+    public Collection<?> findAllLongSession(String... sortFields) throws LookupException {
         longSession = SessionFactory.getInstance().openSession(new AuditInterceptor(ApplicationFrame.getInstance().getCurrentUser()), getPersistentClass());
         return findAllCommon(longSession, sortFields);
 
     }
 
-    public Collection findAllLongSession(Boolean alwaysApplyFilters, String... sortFields) throws LookupException {
+    public Collection<?> findAllLongSession(Boolean alwaysApplyFilters, String... sortFields) throws LookupException {
         longSession = SessionFactory.getInstance().openSession(new AuditInterceptor(ApplicationFrame.getInstance().getCurrentUser()),
                 getPersistentClass(), alwaysApplyFilters);
         return findAllCommon(longSession, sortFields);
 
     }
 
-    private Collection findAllCommon(Session session, String... sortFields) throws LookupException {
+    private Collection<?> findAllCommon(Session session, String... sortFields) throws LookupException {
         return findAllCommon(session, null, sortFields);
     }
 
-    private Collection findAllCommon(Session session, LockMode lockmode, String... sortFields) throws LookupException {
-        List completeList;
+    private Collection<?> findAllCommon(Session session, LockMode lockmode, String... sortFields) throws LookupException {
+        List<?> completeList;
         Transaction tx = null;
         try {
             session.setFlushMode(FlushMode.MANUAL);
@@ -724,8 +755,8 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @return the collection of domain objects
      * @throws LookupException if we failed to find the objects.
      */
-    public final Collection findByQuery(final String queryString) throws LookupException {
-        List list;
+    public final Collection<?> findByQuery(final String queryString) throws LookupException {
+        List<?> list;
 
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
         try {
@@ -754,7 +785,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @param progressPanel The progress panel
      * @return The result that were found or an empty string
      */
-    public final Collection findByQueryEditorLongSession(QueryEditor editor, InfiniteProgressPanel progressPanel) {
+    public final Collection<?> findByQueryEditorLongSession(QueryEditor editor, InfiniteProgressPanel progressPanel) {
 
         Criteria criteria = processQueryEditorCriteria(getLongSession(), editor.getClazz(), editor);
         return criteria.list();
@@ -766,7 +797,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @param editor an AT query editor
      * @return the collection of domain objects
      */
-    public final Collection findByQueryEditor(final QueryEditor editor, InfiniteProgressPanel progressPanel) {
+    public final Collection<?> findByQueryEditor(final QueryEditor editor, InfiniteProgressPanel progressPanel) {
 
         boolean includeComponents = false;
         if (persistentClass == Resources.class && editor.getIncludeComponents()) {
@@ -784,7 +815,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
                 criteria.add(Restrictions.isNull("parent"));
             }
 
-            Collection collection = criteria.list();
+            Collection<?> collection = criteria.list();
             SessionFactory.getInstance().closeSession(session);
             return collection;
 
@@ -802,7 +833,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
 
             Criteria criteria = session.createCriteria(editor.getClazz());
             criteria.add(comparison1.getCiterion());
-            Collection collection = criteria.list();
+            Collection<?> collection = criteria.list();
 
             if (comparison2.getCiterion() == null) {
                 addContextInfo(contextMap, collection, comparison1.getContext());
@@ -810,10 +841,10 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
                 humanReadableSearchString = comparison1.getSearchString();
             } else {
                 // we have a boolean search
-                Set returnCollection = new HashSet(collection);
+                Set<Object> returnCollection = new HashSet<Object>(collection);
                 criteria = session.createCriteria(editor.getClazz());
                 criteria.add(comparison2.getCiterion());
-                Collection collection2 = criteria.list();
+                Collection<?> collection2 = criteria.list();
                 if (editor.getChosenBoolean1().equalsIgnoreCase("and")) {
                     returnCollection.retainAll(collection2);
                     humanReadableSearchString = comparison1.getSearchString() + " and " + comparison2.getSearchString();
@@ -838,7 +869,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
             session = SessionFactory.getInstance().openSession(ResourcesComponents.class);
             criteria = session.createCriteria(ResourcesComponents.class);
             criteria.add(comparison1.getCiterion());
-            Collection components = criteria.list();
+            Collection<?> components = criteria.list();
             addContextInfo(contextMap, components, comparison1.getContext());
             ResourcesComponents component;
             if (comparison2.getCiterion() == null) {
@@ -859,10 +890,10 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
 
                 criteria = session.createCriteria(ResourcesComponents.class);
                 criteria.add(comparison2.getCiterion());
-                Collection components2 = criteria.list();
+                Collection<?> components2 = criteria.list();
                 addContextInfo(contextMap, components2, comparison2.getContext());
 
-                Set returnCollection = new HashSet(components);
+                Set<Object> returnCollection = new HashSet<Object>(components);
                 if (editor.getChosenBoolean1().equalsIgnoreCase("and")) {
                     returnCollection.retainAll(components2);
                 } else {
@@ -899,13 +930,13 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         }
     }
 
-    private void addResourcesCommonToComponetResultSet(Collection collection,
+    private void addResourcesCommonToComponetResultSet(Collection<?> collection,
                                                        Collection<ResourcesComponentsSearchResult> resourcesAndComponetsResults,
                                                        HashMap<DomainObject, String> contextMap) {
         addResourcesCommonToComponetResultSet(collection, resourcesAndComponetsResults, contextMap, null);
     }
 
-    private void addResourcesCommonToComponetResultSet(Collection collection,
+    private void addResourcesCommonToComponetResultSet(Collection<?> collection,
                                                        Collection<ResourcesComponentsSearchResult> resourcesAndComponetsResults,
                                                        HashMap<DomainObject, String> contextMap,
                                                        HashMap<ResourcesComponents, Resources> componentParentResourceMap) {
@@ -950,7 +981,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         return true; // just return true to allow user to access the resource
     }
 
-    private Criteria processQueryEditorCriteria(Session session, Class clazz, QueryEditor editor) {
+    private Criteria processQueryEditorCriteria(Session session, Class<?> clazz, QueryEditor editor) {
         Criteria criteria = session.createCriteria(clazz);
         ATSearchCriterion comparison1 = editor.getCriterion1();
         ATSearchCriterion comparison2 = editor.getCriterion2();
@@ -973,13 +1004,14 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
 
 
     //todo this method is a mess. There must be an easier way.
-    private Collection findByQueryEditorAlt(QueryEditor editor, InfiniteProgressPanel progressPanel) {
+    private Collection<?> findByQueryEditorAlt(QueryEditor editor, InfiniteProgressPanel progressPanel) {
         Session session;
         Criteria criteria;
-        Set returnCollection = new HashSet();
-        Set subsequentCollections = null;
-        Set returnComponentCollection = new HashSet();
-        Set subsequentComponentCollections = null;
+//        Set<Object> returnCollection = new HashSet<Object>();
+        Set<Object> returnCollection = new HashSet<Object>();
+        Set<Object> subsequentCollections = null;
+        Set<Object> returnComponentCollection = new HashSet<Object>();
+        Set<Object> subsequentComponentCollections = null;
         HashMap<ResourcesComponents, Resources> componentParentResourceMap = new HashMap<ResourcesComponents, Resources>();
         HashMap<DomainObject, String> contextMap = new HashMap<DomainObject, String>();
         boolean includeComponents = false;
@@ -995,7 +1027,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
                 includeComponents = true;
             }
             boolean firstPass = true;
-            subsequentCollections = new HashSet();
+            subsequentCollections = new HashSet<Object>();
             humanReadableSearchString = "";
             for (QueryEditor.CriteriaRelationshipPairs criteriaPair : editor.getAltFormCriteria()) {
                 session = SessionFactory.getInstance().openSession(null, getPersistentClass(), true);
@@ -1007,9 +1039,9 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
                 }
 
                 if (firstPass) {
-                    returnCollection = new HashSet(criteria.list());
+                    returnCollection = new HashSet<Object>((Collection<?>) criteria.list());
                 } else {
-                    subsequentCollections = new HashSet(criteria.list());
+                    subsequentCollections = new HashSet<Object>((Collection<?>) criteria.list());
                 }
                 if (includeComponents) {
                     addContextInfo(contextMap, criteria.list(), criteriaPair.getContext());
@@ -1017,13 +1049,13 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
                 SessionFactory.getInstance().closeSession(session);
 
                 if (persistentClass == Resources.class && !criteriaPair.getResourceOnly() && includeComponents) {
-                    subsequentComponentCollections = new HashSet();
+                    subsequentComponentCollections = new HashSet<Object>();
                     session = SessionFactory.getInstance().openSession(ResourcesComponents.class);
                     criteria = processCriteria(session, ResourcesComponents.class, criteriaPair, false);
                     ResourcesDAO resourceDao = new ResourcesDAO();
                     Resources resource;
                     progressPanel.setTextLine("Searching for components that match the criteria", 2);
-                    Collection components = criteria.list();
+                    Collection<?> components = criteria.list();
                     int numberOfComponents = components.size();
                     int count = 1;
                     for (Object object : components) {
@@ -1072,7 +1104,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         }
     }
 
-    private void addContextInfo(HashMap<DomainObject, String> contextMap, Collection resultSet, String context) {
+    private void addContextInfo(HashMap<DomainObject, String> contextMap, Collection<?> resultSet, String context) {
         for (Object o : resultSet) {
             addContextInfo(contextMap, (DomainObject) o, context);
         }
@@ -1086,11 +1118,11 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         }
     }
 
-    private Criteria processCriteria(Session session, Class clazz, QueryEditor.CriteriaRelationshipPairs criteriaPair) {
+    private Criteria processCriteria(Session session, Class<?> clazz, QueryEditor.CriteriaRelationshipPairs criteriaPair) {
         return processCriteria(session, clazz, criteriaPair, true);
     }
 
-    private Criteria processCriteria(Session session, Class clazz, QueryEditor.CriteriaRelationshipPairs criteriaPair, boolean appendToHumanReadableSearchScreen) {
+    private Criteria processCriteria(Session session, Class<?> clazz, QueryEditor.CriteriaRelationshipPairs criteriaPair, boolean appendToHumanReadableSearchScreen) {
         Criteria criteria;
         Conjunction junction;
         Criteria addedCriteria;
@@ -1120,8 +1152,8 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @return the collection of domain objects
      * @throws LookupException if we failed to find the objects.
      */
-    public final Collection findByExample(final Object instance) throws LookupException {
-        List results;
+    public final Collection<?> findByExample(final Object instance) throws LookupException {
+        List<?> results;
 
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
         try {
@@ -1161,7 +1193,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException if we failed to execute the query
      */
 
-    public Collection findByPropertyValue(String propertyName, Object value) throws LookupException {
+    public Collection<?> findByPropertyValue(String propertyName, Object value) throws LookupException {
 
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
         return session.createCriteria(this.getPersistentClass())
@@ -1177,7 +1209,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException if we failed to execute the query
      */
 
-    public Collection findByPropertyValues(String propertyName, Object[] values) throws LookupException {
+    public Collection<?> findByPropertyValues(String propertyName, Object[] values) throws LookupException {
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
         return session.createCriteria(this.getPersistentClass())
                 .add(Restrictions.in(propertyName, values)).list();
@@ -1192,7 +1224,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException if we failed to execute the query
      */
 
-    public Collection findByPropertyValuesLongSession(String propertyName, Object[] values) throws LookupException {
+    public Collection<?> findByPropertyValuesLongSession(String propertyName, Object[] values) throws LookupException {
         longSession = SessionFactory.getInstance().openSession(new AuditInterceptor(ApplicationFrame.getInstance().getCurrentUser()));
         return longSession.createCriteria(this.getPersistentClass())
                 .add(Restrictions.in(propertyName, values)).list();
@@ -1248,7 +1280,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         ATValidator validator;
         ValidationResult validationResult;
 
-        Collection records = session.createCriteria(this.getPersistentClass())
+        Collection<?> records = session.createCriteria(this.getPersistentClass())
                 .add(Expression.eq(propertyName, oldValue)).list();
         int updatedEntities = records.size();
         int count = 1;
@@ -1302,8 +1334,8 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException fails if we cannot execute the named query
      */
 
-    public final Collection findByNamedQuery(final String queryName, final Object propertyObject) throws LookupException {
-        List filteredList;
+    public final Collection<?> findByNamedQuery(final String queryName, final Object propertyObject) throws LookupException {
+        List<?> filteredList;
 
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
         try {
@@ -1334,8 +1366,8 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
      * @throws LookupException fails if we cannot execute the query
      */
 
-    public final Collection findByNamedQuery(final String queryName) throws LookupException {
-        List filteredList;
+    public final Collection<?> findByNamedQuery(final String queryName) throws LookupException {
+        List<?> filteredList;
 
         Session session = SessionFactory.getInstance().openSession(getPersistentClass());
 
@@ -1370,7 +1402,7 @@ public class DomainAccessObjectImpl implements DomainAccessObject, DomainAccessL
         this.notifyListeners(event);
     }
 
-    protected Class getPersistentClass() {
+    protected Class<?> getPersistentClass() {
         return persistentClass;
     }
 

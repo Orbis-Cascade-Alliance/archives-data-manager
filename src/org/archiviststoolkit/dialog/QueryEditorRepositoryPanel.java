@@ -19,7 +19,6 @@
 package org.archiviststoolkit.dialog;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import com.jgoodies.forms.factories.*;
@@ -31,6 +30,11 @@ import org.archiviststoolkit.hibernate.ATSearchCriterion;
 import org.archiviststoolkit.util.StringHelper;
 
 public class QueryEditorRepositoryPanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public QueryEditorRepositoryPanel() {
 		initComponents();
 		initComparatorComboBox();
@@ -39,8 +43,8 @@ public class QueryEditorRepositoryPanel extends QueryEditorPanel {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		comparator = new JComboBox();
-		repositoryList = new JComboBox();
+		comparator = new JComboBox<Object>();
+		repositoryList = new JComboBox<Object>();
 		CellConstraints cc = new CellConstraints();
 
 		//======== this ========
@@ -66,11 +70,11 @@ public class QueryEditorRepositoryPanel extends QueryEditorPanel {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JComboBox comparator;
-	private JComboBox repositoryList;
+	private JComboBox<Object> comparator;
+	private JComboBox<Object> repositoryList;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+	public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 
 		Criterion criteria = null;
 		String comparatorString = (String) comparator.getSelectedItem();
@@ -96,10 +100,11 @@ public class QueryEditorRepositoryPanel extends QueryEditorPanel {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initComparatorComboBox() {
 		String [] values = {QueryEditorPanel.EQUALS,
 				QueryEditorPanel.NOT_EQUALS};
-		comparator.setModel(new DefaultComboBoxModel(values));
+		comparator.setModel(new DefaultComboBoxModel<Object>(values));
 		repositoryList.setModel(new DefaultComboBoxModel(Repositories.getRepositoryList()));
 	}
 

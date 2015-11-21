@@ -28,6 +28,11 @@ import com.centerkey.utils.BareBonesBrowserLaunch;
 import org.archiviststoolkit.ApplicationFrame;
 
 public class ApplicationAboutDialog extends JFrame {
+
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	public ApplicationAboutDialog() {
 		initComponents();

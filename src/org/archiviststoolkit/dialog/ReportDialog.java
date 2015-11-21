@@ -34,6 +34,11 @@ import org.archiviststoolkit.exceptions.ReportCompilationException;
 import net.sf.jasperreports.engine.JRException;
 
 public class ReportDialog extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private String reportDistination;
 
     public ReportDialog(Frame owner) {
@@ -337,7 +342,7 @@ public class ReportDialog extends JDialog {
 		return fields;
 	}
 
-	public void setFields(ReportDialogFields fields, Class clazz) {
+	public void setFields(ReportDialogFields fields, Class<?> clazz) {
 		this.fields = fields;
 		fields.setParentDialog(this);
 		mainPanel.add(fields, BorderLayout.CENTER);

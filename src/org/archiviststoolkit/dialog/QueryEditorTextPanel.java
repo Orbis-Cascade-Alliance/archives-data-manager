@@ -23,7 +23,6 @@ import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.hibernate.SessionFactory;
 import org.archiviststoolkit.hibernate.ATSearchCriterion;
 import org.archiviststoolkit.model.LookupListItems;
-import org.archiviststoolkit.structure.ATFieldInfo;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.MatchMode;
@@ -34,13 +33,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class QueryEditorTextPanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public QueryEditorTextPanel() {
 		initComponents();
 		initComparatorComboBox(false);
 	}
 
-	public QueryEditorTextPanel(JComboBox comboBox) {
+	public QueryEditorTextPanel(JComboBox<?> comboBox) {
 		initComponents();
 		initComparatorComboBox(true);
 		this.setComboBox(comboBox);
@@ -49,7 +52,7 @@ public class QueryEditorTextPanel extends QueryEditorPanel {
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		comparator = new JComboBox();
+		comparator = new JComboBox<Object>();
 		value = new JTextField();
 		CellConstraints cc = new CellConstraints();
 
@@ -101,11 +104,11 @@ public class QueryEditorTextPanel extends QueryEditorPanel {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JComboBox comparator;
+	private JComboBox<Object> comparator;
 	private JTextField value;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private void setComboBox(JComboBox comboBox) {
+	private void setComboBox(JComboBox<?> comboBox) {
 		FormLayout formLayout = (FormLayout) this.getLayout();
 		CellConstraints cc = formLayout.getConstraints(value);
 		this.valueComboBox = comboBox;
@@ -115,9 +118,9 @@ public class QueryEditorTextPanel extends QueryEditorPanel {
 	}
 
 	private boolean useComboBox = false;
-	private JComboBox valueComboBox;
+	private JComboBox<?> valueComboBox;
 
-	public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+	public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 
 		String humanReadableSearchString = "";
 		String stringValue;
@@ -225,7 +228,7 @@ public class QueryEditorTextPanel extends QueryEditorPanel {
 					QueryEditorPanel.NOT_EQUALS,
 					QueryEditorPanel.EMPTY,
 					QueryEditorPanel.NOT_EMPTY};
-			comparator.setModel(new DefaultComboBoxModel(values));
+			comparator.setModel(new DefaultComboBoxModel<Object>(values));
 		} else {
 			String[] values = {QueryEditorPanel.CONTAINS,
 					QueryEditorPanel.BEGINS_WITH,
@@ -233,7 +236,7 @@ public class QueryEditorTextPanel extends QueryEditorPanel {
 					QueryEditorPanel.NOT_EQUALS,
 					QueryEditorPanel.EMPTY,
 					QueryEditorPanel.NOT_EMPTY};
-			comparator.setModel(new DefaultComboBoxModel(values));
+			comparator.setModel(new DefaultComboBoxModel<Object>(values));
 		}
 	}
 

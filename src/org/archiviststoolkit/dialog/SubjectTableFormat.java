@@ -23,7 +23,7 @@ package org.archiviststoolkit.dialog;
 import ca.odell.glazedlists.gui.TableFormat;
 import org.archiviststoolkit.model.Subjects;
 
-public class SubjectTableFormat implements TableFormat {
+public class SubjectTableFormat implements TableFormat<Object> {
 
 	public int getColumnCount() {
 		return 2;

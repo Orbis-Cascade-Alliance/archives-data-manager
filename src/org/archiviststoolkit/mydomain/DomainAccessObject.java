@@ -71,7 +71,7 @@ public interface DomainAccessObject {
 	 * @param collection the collection to delete
 	 * @throws PersistenceException we could not persist the changes.
 	 */
-	void addGroup(Collection collection, Component parent) throws PersistenceException;
+	void addGroup(Collection<?> collection, Component parent) throws PersistenceException;
 
 	/**
 	 * Update an instance within this domain access object.
@@ -108,7 +108,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException	  we could not lookup the reference instances.
 	 */
 
-	void deleteGroup(Collection collection) throws PersistenceException, LookupException;
+	void deleteGroup(Collection<?> collection) throws PersistenceException, LookupException;
 
 	/**
 	 * Remove an instance from the control of the domain access object.
@@ -173,7 +173,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the lookup
 	 */
 	//todo make these collections typed
-	Collection findAll(String... sortField) throws LookupException;
+	Collection<?> findAll(String... sortField) throws LookupException;
 
 	/**
 	 * Get a collection of all objects under the control of this domain access object.
@@ -182,7 +182,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the lookup
 	 */
 
-	Collection findAll(LockMode lockmode, String... sortField) throws LookupException;
+	Collection<?> findAll(LockMode lockmode, String... sortField) throws LookupException;
 
 	/**
 	 * Get a collection of all objects under the control of this domain access object.
@@ -191,9 +191,9 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the lookup
 	 */
 
-	Collection findAllLongSession(String... sortField) throws LookupException;
+	Collection<?> findAllLongSession(String... sortField) throws LookupException;
 
-	Collection findAllLongSession(Boolean alwaysApplyFilters, String... sortField) throws LookupException;
+	Collection<?> findAllLongSession(Boolean alwaysApplyFilters, String... sortField) throws LookupException;
 
 	/**
 	 * Find a collection of objects by a query string.
@@ -202,7 +202,7 @@ public interface DomainAccessObject {
 	 * @return a collection of domain objects.
 	 * @throws LookupException we couldnt find what you were looking for.
 	 */
-	Collection findByQuery(String queryString) throws LookupException;
+	Collection<?> findByQuery(String queryString) throws LookupException;
 
 	/**
 	 * Find a collection of objects by a query string.
@@ -211,7 +211,7 @@ public interface DomainAccessObject {
 	 * @return a collection of domain objects.
 	 * @throws LookupException we couldnt find what you were looking for.
 	 */
-	Collection findByQueryEditor(QueryEditor editor, InfiniteProgressPanel progressPanel) throws LookupException;
+	Collection<?> findByQueryEditor(QueryEditor editor, InfiniteProgressPanel progressPanel) throws LookupException;
 
     /**
 	 * Find a collection of objects by a query string.
@@ -220,7 +220,7 @@ public interface DomainAccessObject {
 	 * @return a collection of domain objects.
 	 * @throws LookupException we couldnt find what you were looking for.
 	 */
-	Collection findByQueryEditorLongSession(QueryEditor editor, InfiniteProgressPanel progressPanel) throws LookupException;
+	Collection<?> findByQueryEditorLongSession(QueryEditor editor, InfiniteProgressPanel progressPanel) throws LookupException;
 
 	/**
 	 * Find instances through a named query with parameters.
@@ -231,7 +231,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByNamedQuery(String namedQuery, Object propertyObject) throws LookupException;
+	Collection<?> findByNamedQuery(String namedQuery, Object propertyObject) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.
@@ -241,7 +241,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByNamedQuery(String namedQuery) throws LookupException;
+	Collection<?> findByNamedQuery(String namedQuery) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.
@@ -251,7 +251,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByExample(Object instance) throws LookupException;
+	Collection<?> findByExample(Object instance) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.
@@ -262,7 +262,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByPropertyValue(String propertyName, Object value) throws LookupException;
+	Collection<?> findByPropertyValue(String propertyName, Object value) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.
@@ -273,7 +273,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByPropertyValues(String propertyName, Object[] values) throws LookupException;
+	Collection<?> findByPropertyValues(String propertyName, Object[] values) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.
@@ -284,7 +284,7 @@ public interface DomainAccessObject {
 	 * @throws LookupException if we failed to execute the query
 	 */
 
-	Collection findByPropertyValuesLongSession(String propertyName, Object[] values) throws LookupException;
+	Collection<?> findByPropertyValuesLongSession(String propertyName, Object[] values) throws LookupException;
 
 	/**
 	 * Find instances through a named query without parameters.

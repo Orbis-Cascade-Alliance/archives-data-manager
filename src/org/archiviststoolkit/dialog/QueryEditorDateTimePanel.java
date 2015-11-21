@@ -34,6 +34,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class QueryEditorDateTimePanel extends QueryEditorPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public QueryEditorDateTimePanel() {
 		initComponents();
 		setVisibleComponents();
@@ -59,7 +64,7 @@ public class QueryEditorDateTimePanel extends QueryEditorPanel {
 		shortFormat.setLenient(false);
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
-		comparator = new JComboBox();
+		comparator = new JComboBox<Object>();
 		startDate = ATBasicComponentFactory.createUnboundDateField();
 		label2 = new JLabel();
 		endDate = ATBasicComponentFactory.createUnboundDateField();
@@ -82,7 +87,7 @@ public class QueryEditorDateTimePanel extends QueryEditorPanel {
 		((FormLayout) getLayout()).setColumnGroups(new int[][]{{3, 7}});
 
 		//---- comparator ----
-		comparator.setModel(new DefaultComboBoxModel(new String[]{
+		comparator.setModel(new DefaultComboBoxModel<Object>(new String[]{
 				"Equals",
 				"Is between",
 				"Is greater than",
@@ -108,29 +113,26 @@ public class QueryEditorDateTimePanel extends QueryEditorPanel {
 
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
-	private JComboBox comparator;
+	private JComboBox<Object> comparator;
 	private JFormattedTextField startDate;
 	private JLabel label2;
 	private JFormattedTextField endDate;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	public ATSearchCriterion getQueryCriterion(Class clazz, String field) {
+	public ATSearchCriterion getQueryCriterion(Class<?> clazz, String field) {
 		Calendar startDateValue = Calendar.getInstance();
 		startDateValue.setTime((Date) startDate.getValue());
 		Calendar startDateValuePlusOne = Calendar.getInstance();
 		startDateValuePlusOne.setTime((Date) startDate.getValue());
 		startDateValuePlusOne.add(Calendar.DATE, 1);
-		String startDateStringValue = startDateValue.toString();
 
 		Calendar endDateValue = Calendar.getInstance();
 		Calendar endDateValuePlusOne = null;
-		String endDateStringValue = "";
 		if ((Date) endDate.getValue() != null) {
 			endDateValue.setTime((Date) endDate.getValue());
 			endDateValuePlusOne = Calendar.getInstance();
 			endDateValuePlusOne.setTime((Date) endDate.getValue());
 			endDateValuePlusOne.add(Calendar.DATE, 1);
-			endDateStringValue = endDateValue.toString();
 		}
 
 

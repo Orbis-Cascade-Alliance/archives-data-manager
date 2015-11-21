@@ -21,7 +21,6 @@ package org.archiviststoolkit.dialog;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.*;
 
@@ -31,6 +30,11 @@ import com.centerkey.utils.BareBonesBrowserLaunch;
 import org.archiviststoolkit.ApplicationFrame;
 
 public class SplashScreen extends JFrame {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public SplashScreen(String initialMessageText) {
 		initComponents();
 //		version.setText("version " + ResourceBundle.getBundle("org.archiviststoolkit.resources.messages.messages").
@@ -146,11 +150,6 @@ public class SplashScreen extends JFrame {
 		center();
 		setVisible(true);
 	}
-
-
-	// PRIVATE//
-	private MediaTracker fMediaTracker;
-	private Image fImage;
 
 
 	/**

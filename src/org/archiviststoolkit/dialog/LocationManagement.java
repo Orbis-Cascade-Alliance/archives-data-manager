@@ -20,7 +20,6 @@ package org.archiviststoolkit.dialog;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Collection;
 import java.util.ArrayList;
 import java.sql.SQLException;
 import javax.swing.*;
@@ -30,12 +29,9 @@ import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.model.Locations;
 import org.archiviststoolkit.swing.*;
-import org.archiviststoolkit.util.StringHelper;
-import org.archiviststoolkit.report.ReportFactory;
 import org.archiviststoolkit.report.ReportUtils;
 import org.archiviststoolkit.report.ReportDestinationProperties;
 import org.archiviststoolkit.exceptions.*;
-import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.Main;
 import org.hibernate.exception.ConstraintViolationException;
 import org.apache.log4j.Logger;
@@ -43,11 +39,12 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.JRRuntimeException;
 
 public class LocationManagement extends GeneralAdminDialog implements ActionListener {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = Logger.getLogger(Main.class.getPackage().getName());
 
@@ -437,7 +434,7 @@ public class LocationManagement extends GeneralAdminDialog implements ActionList
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
 	FilterList<DomainObject> textFilteredIssues;
-	EventTableModel lookupTableModel;
+	EventTableModel<DomainObject> lookupTableModel;
 
 	public DomainSortableTable getContentTable() {
 		return contentTable;
@@ -492,11 +489,10 @@ public class LocationManagement extends GeneralAdminDialog implements ActionList
 
 
 	private void initLookup() {
-		SortedList sortedLocations = new SortedList(contentTable.getEventList());
-		textFilteredIssues = new FilterList<DomainObject>(sortedLocations, new TextComponentMatcherEditor(filterField, new DomainFilterator()));
-		lookupTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Locations.class));
+		SortedList<DomainObject> sortedLocations = new SortedList<DomainObject>(contentTable.getEventList());
+		textFilteredIssues = new FilterList<DomainObject>(sortedLocations, new TextComponentMatcherEditor<Object>(filterField, new DomainFilterator()));
+		lookupTableModel = new EventTableModel<DomainObject>(textFilteredIssues, new DomainTableFormat(Locations.class));
 		contentTable.setModel(lookupTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(contentTable, sortedLocations, true);
 		filterField.requestFocusInWindow();
 	}
 

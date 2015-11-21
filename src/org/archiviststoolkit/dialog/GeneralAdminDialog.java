@@ -43,6 +43,10 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.apache.log4j.Logger;
 
 public class GeneralAdminDialog extends JDialog implements ActionListener{
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = Logger.getLogger(Main.class.getPackage().getName());
 
@@ -466,8 +470,8 @@ public class GeneralAdminDialog extends JDialog implements ActionListener{
 	protected DomainObject currentDomainObject;
 	protected DomainEditor dialog;
 	protected String sortField = null;
-	protected Class clazz = null;
-    protected Class rdeClazz = null;
+	protected Class<?> clazz = null;
+    protected Class<?> rdeClazz = null;
 	protected java.util.List<DomainObject> currentObjectSublist;
 
 
@@ -488,16 +492,16 @@ public class GeneralAdminDialog extends JDialog implements ActionListener{
      * @param rdeClazz The RDEClazz Either ResourceComponents or DigitalObjects
      * @throws DomainEditorCreationException
      */
-    public void setRDEClazz(Class rdeClazz) throws DomainEditorCreationException {
+    public void setRDEClazz(Class<?> rdeClazz) throws DomainEditorCreationException {
         this.rdeClazz = rdeClazz;
         setClazz(RDEScreen.class, null);
     }
 
-	public void setClazz(Class clazz) throws DomainEditorCreationException {
+	public void setClazz(Class<?> clazz) throws DomainEditorCreationException {
 		setClazz(clazz, null);
 	}
 
-	public void setClazz(Class clazz, String sortField) throws DomainEditorCreationException {
+	public void setClazz(Class<?> clazz, String sortField) throws DomainEditorCreationException {
 		this.clazz = clazz;
 		this.sortField = sortField;
 
@@ -530,7 +534,7 @@ public class GeneralAdminDialog extends JDialog implements ActionListener{
         } catch (PersistenceException e) {
             new ErrorDialog("Error finding all records", e).showDialog();
         }
-        Collection resultSet = null;
+        Collection<?> resultSet = null;
         try {
             if (sortField == null) {
                 resultSet = access.findAllLongSession();
@@ -562,11 +566,11 @@ public class GeneralAdminDialog extends JDialog implements ActionListener{
      *
      * @param resultSet
      */
-    private void cleanDatabaseTableNames(Collection resultSet) {
-        ArrayList results = new ArrayList(resultSet);
+    private void cleanDatabaseTableNames(Collection<?> resultSet) {
+        ArrayList<?> results = new ArrayList<Object>(resultSet);
 
         // now go through list and remove any none AT database tables
-        for (Iterator iterator = results.iterator(); iterator.hasNext();) {
+        for (Iterator<?> iterator = results.iterator(); iterator.hasNext();) {
             DatabaseTables databaseTable = (DatabaseTables) iterator.next();
             if (!databaseTable.getClassName().contains("org.archiviststoolkit")) {
                 resultSet.remove(databaseTable);
@@ -656,7 +660,7 @@ public class GeneralAdminDialog extends JDialog implements ActionListener{
      * Method to return the class this editor is for
      * @return The class this editor is for
      */
-    public Class getClazz() {
+    public Class<?> getClazz() {
         return clazz;
     }
 

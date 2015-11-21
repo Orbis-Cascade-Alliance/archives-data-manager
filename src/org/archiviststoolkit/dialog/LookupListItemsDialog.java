@@ -27,6 +27,10 @@ import org.archiviststoolkit.swing.ATBasicDialog;
 import org.apache.axis.types.NMToken;
 
 public class LookupListItemsDialog extends ATBasicDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     //todo move to editor package
 

@@ -6,7 +6,6 @@ package org.archiviststoolkit.dialog;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.SQLException;
 import java.io.*;
 import java.util.Collection;
 import javax.swing.*;
@@ -14,14 +13,17 @@ import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 //import com.thoughtworks.xstream.XStream;
 import org.archiviststoolkit.mydomain.*;
-import org.hibernate.Session;
-import org.hibernate.LockMode;
 import org.archiviststoolkit.model.*;
 
 /**
  * @author Nathan Stevens
  */
 public class ATDebugDialog extends JFrame {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private DomainTableWorkSurface worksurface;
     private DomainEditor dialog;
     private boolean lockTest = true; // use to test locking of the program when open a resource record
@@ -215,9 +217,11 @@ public class ATDebugDialog extends JFrame {
                 if(record != null) {
                     textArea1.setText("Starting Copy of " + record.toString() + "\n\n");
 
+                    /*
                     try {
                         DomainObject recordCopy = deepCopy(record);
                     } catch (Exception e) { }
+                    */
 
                     textArea1.append("Finish Copy of " + record.toString() + "\n\n");
                 }
@@ -226,6 +230,7 @@ public class ATDebugDialog extends JFrame {
         performer.start();
     }
 
+    /*
     // method to perform a deep copy of an object
     private DomainObject deepCopy(DomainObject domainObject) throws Exception {
         ObjectOutputStream oos = null;
@@ -252,6 +257,7 @@ public class ATDebugDialog extends JFrame {
             ois.close();
         }
     }
+    */
 
     /**
      * Method to open and close a resource record every 10 seconds or so
@@ -264,7 +270,7 @@ public class ATDebugDialog extends JFrame {
                 textArea2.setText("Starting Program Lock Test ...\n\n");
 
                 int count = 1; // the current count of the record opened
-                Collection results = worksurface.getResultSet();
+                Collection<?> results = worksurface.getResultSet();
                 int max = results.size() - 1;
                 int selectedRow = worksurface.getSelectedRow();
 

@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.archiviststoolkit.model.Subjects;
 
-public class SubjectsFilterator implements TextFilterator {
-	public void getFilterStrings(List baseList, Object element) {
+public class SubjectsFilterator implements TextFilterator<Object> {
+	public void getFilterStrings(List<String> baseList, Object element) {
 		 Subjects subject = (Subjects)element;
 
 		 baseList.add(subject.getSubjectTerm());

@@ -38,12 +38,15 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.EventTableModel;
-import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 /**
  * @author Lee Mandell
  */
 public class SubjectTermLookup extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor used when linking names to archDescription records
@@ -83,7 +86,7 @@ public class SubjectTermLookup extends JDialog {
 		this.getRootPane().setDefaultButton(this.linkSubjectButton);
 	}
 
-	public void setMainHeaderByClass(Class clazz) {
+	public void setMainHeaderByClass(Class<?> clazz) {
 		StandardEditor.setMainHeaderColorAndTextByClass(clazz, mainHeaderPanel, mainHeaderLabel);
 	}
 
@@ -488,8 +491,8 @@ public class SubjectTermLookup extends JDialog {
 	 */
 	protected int status = 0;
 	private SubjectEnabledEditorFields parentEditorFields;
-	FilterList textFilteredIssues;
-	EventTableModel subjectsTableModel;
+	FilterList<?> textFilteredIssues;
+	EventTableModel<?> subjectsTableModel;
 	boolean dialogForLinking;
 
 	public final int showDialog() {
@@ -503,12 +506,12 @@ public class SubjectTermLookup extends JDialog {
 		return (status);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initLookup() {
-		SortedList sortedSubjects = Subjects.getSubjectsGlazedList();
-		textFilteredIssues = new FilterList(sortedSubjects, new TextComponentMatcherEditor(subjectLookup, new SubjectsFilterator()));
+		SortedList<?> sortedSubjects = Subjects.getSubjectsGlazedList();
+		textFilteredIssues = new FilterList(sortedSubjects, new TextComponentMatcherEditor<Object>(subjectLookup, new SubjectsFilterator()));
 		subjectsTableModel = new EventTableModel(textFilteredIssues, new DomainTableFormat(Subjects.class));
 		getSubjectLookupTable().setModel(subjectsTableModel);
-		TableComparatorChooser tableSorter = new TableComparatorChooser(getSubjectLookupTable(), sortedSubjects, true);
 		subjectLookup.requestFocusInWindow();
 	}
 
