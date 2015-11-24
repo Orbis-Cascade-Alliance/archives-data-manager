@@ -21,8 +21,12 @@
 package org.archiviststoolkit.exceptions;
 
 public class UnsupportedReportType extends Exception {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
-	public UnsupportedReportType(Class clazz) {
+	public UnsupportedReportType(Class<?> clazz) {
 		super("Report type of " + clazz.getName() + " is not allowed here");
 	}
 

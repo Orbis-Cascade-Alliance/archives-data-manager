@@ -21,15 +21,19 @@
 package org.archiviststoolkit.exceptions;
 
 public class UnsupportedDomainEditorException extends Exception {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public UnsupportedDomainEditorException() {
 	}
 
-	public UnsupportedDomainEditorException(Class clazz) {
+	public UnsupportedDomainEditorException(Class<?> clazz) {
 		super("There is no domain editor for the class " + clazz.getName());
 	}
 
-	public UnsupportedDomainEditorException(Class clazz, Throwable cause) {
+	public UnsupportedDomainEditorException(Class<?> clazz, Throwable cause) {
 		super("There is no domain editor for the class " + clazz.getName(), cause);
 	}
 

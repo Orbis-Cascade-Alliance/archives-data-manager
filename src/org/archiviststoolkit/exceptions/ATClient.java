@@ -7,11 +7,6 @@ import java.net.URL;
 import org.apache.axis.AxisFault;
 import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
-import org.apache.axis.utils.Options;
-import org.archiviststoolkit.ApplicationFrame;
-
-import javax.xml.namespace.QName;
-import javax.xml.rpc.ParameterMode;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ParameterMode;

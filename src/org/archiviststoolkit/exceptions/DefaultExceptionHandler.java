@@ -21,13 +21,8 @@
 package org.archiviststoolkit.exceptions;
 
 import org.archiviststoolkit.dialog.ErrorDialog;
-import org.archiviststoolkit.util.StringHelper;
-import org.archiviststoolkit.Main;
 import org.archiviststoolkit.ApplicationFrame;
-import org.apache.log4j.Logger;
 
-import javax.swing.*;
-import java.awt.*;
 // did you know that you could import inner classes?
 import java.lang.Thread.*;
 
@@ -43,16 +38,6 @@ public class DefaultExceptionHandler implements UncaughtExceptionHandler {
 			new ErrorDialog(ApplicationFrame.getInstance(), e).showDialog();
 		}
 //		logger.error(e.getMessage(), e);
-	}
-
-	private Frame findActiveFrame() {
-		Frame[] frames = JFrame.getFrames();
-		for (int i = 0; i < frames.length; i++) {
-			if (frames[i].isVisible()) {
-				return frames[i];
-			}
-		}
-		return null;
 	}
 }
 

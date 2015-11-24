@@ -23,10 +23,6 @@ package org.archiviststoolkit.exceptions;
 import org.archiviststoolkit.dialog.ErrorDialog;
 import org.archiviststoolkit.util.StringHelper;
 
-import java.util.logging.*;
-import java.io.StringWriter;
-import java.io.PrintWriter;
-
 public class LoggingThreadGroup extends ThreadGroup {
 //  private static Logger logger;
   public LoggingThreadGroup(String name) {

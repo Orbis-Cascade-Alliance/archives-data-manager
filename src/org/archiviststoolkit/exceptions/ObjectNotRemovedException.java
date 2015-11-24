@@ -21,15 +21,19 @@
 package org.archiviststoolkit.exceptions;
 
 public class ObjectNotRemovedException extends Exception {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public ObjectNotRemovedException() {
 	}
 
-	public ObjectNotRemovedException(Class clazz) {
+	public ObjectNotRemovedException(Class<?> clazz) {
 		super("The class " + clazz.getName() + " is not supported here.");
 	}
 
-	public ObjectNotRemovedException(Class clazz, Throwable cause) {
+	public ObjectNotRemovedException(Class<?> clazz, Throwable cause) {
 		super("The class " + clazz.getName() + " is not supported here.", cause);
 	}
 
