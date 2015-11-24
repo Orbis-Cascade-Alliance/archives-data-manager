@@ -33,6 +33,10 @@ import java.awt.*;
 import java.util.Collection;
 
 public abstract class RdePanel extends JPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected RdePanelContainer parentPanel;
 	protected ATFieldInfo fieldInfo;

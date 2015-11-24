@@ -37,6 +37,10 @@ import org.archiviststoolkit.editor.ResourceEditor;
 import org.archiviststoolkit.editor.rde.RapidResourceComponentDataEntryValidator;
 
 public class RapidResourceComponentDataEntry extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private RapidResourceComponentDataEntryValidator validator;
 
@@ -82,7 +86,7 @@ public class RapidResourceComponentDataEntry extends JDialog {
 	private void setInstanceTypeList() {
 		Vector<String> values = LookupListUtils.getLookupListValues(ArchDescriptionInstances.class, ArchDescriptionInstances.PROPERTYNAME_INSTANCE_TYPE);
 		values.remove("Digital object");
-		instanceType.setModel(new DefaultComboBoxModel(values));
+		instanceType.setModel(new DefaultComboBoxModel<String>(values));
 	}
 
 	private void initComponents() {
@@ -138,7 +142,7 @@ public class RapidResourceComponentDataEntry extends JDialog {
 		separator6 = new JSeparator();
 		panel12 = new JPanel();
 		label_resourcesExtentNumber3 = new JLabel();
-		instanceType = new JComboBox();
+		instanceType = new JComboBox<String>();
 		panel7 = new JPanel();
 		label_subjectTermType = new JLabel();
 		container1Type = ATBasicComponentFactory.createUnboundComboBox(LookupListUtils.getLookupListValues(ArchDescriptionAnalogInstances.class, ArchDescriptionAnalogInstances.PROPERTYNAME_CONTAINER1_TYPE));
@@ -813,7 +817,7 @@ public class RapidResourceComponentDataEntry extends JDialog {
 	private JPanel contentPanel;
 	private JPanel panel4;
 	private JLabel label_resourcesLevel;
-	private JComboBox level;
+	private JComboBox<?> level;
 	public JCheckBox internalOnly;
 	public JCheckBox restrictionsApply;
 	private JPanel panel13;
@@ -832,39 +836,39 @@ public class RapidResourceComponentDataEntry extends JDialog {
 	private JLabel label_resourcesExtentNumber;
 	private JFormattedTextField extent;
 	private JLabel label_resourcesExtentNumber2;
-	private JComboBox extentType;
+	private JComboBox<?> extentType;
 	private JSeparator separator3;
 	private JPanel panel9;
 	private JLabel label_resourcesExtentNumber4;
-	public JComboBox noteType1;
+	public JComboBox<?> noteType1;
 	private JScrollPane scrollPane1;
 	private JTextArea note1;
 	private JSeparator separator4;
 	private JPanel panel10;
 	private JLabel label_resourcesExtentNumber6;
-	public JComboBox noteType2;
+	public JComboBox<?> noteType2;
 	private JScrollPane scrollPane2;
 	private JTextArea note2;
 	private JSeparator separator5;
 	private JPanel panel11;
 	private JLabel label_resourcesExtentNumber7;
-	public JComboBox noteType3;
+	public JComboBox<?> noteType3;
 	private JScrollPane scrollPane3;
 	private JTextArea note3;
 	private JSeparator separator6;
 	private JPanel panel12;
 	private JLabel label_resourcesExtentNumber3;
-	private JComboBox instanceType;
+	private JComboBox<String> instanceType;
 	private JPanel panel7;
 	private JLabel label_subjectTermType;
-	private JComboBox container1Type;
+	private JComboBox<?> container1Type;
 	private JLabel label_subjectSource;
 	private JFormattedTextField container1Number;
 	private JLabel label_subjectSource3;
 	private JTextField container1AlphaNum;
 	private JPanel panel8;
 	private JLabel label_subjectTermType2;
-	private JComboBox container2Type;
+	private JComboBox<?> container2Type;
 	private JLabel label_subjectSource2;
 	private JFormattedTextField container2Number;
 	private JLabel label_subjectSource4;

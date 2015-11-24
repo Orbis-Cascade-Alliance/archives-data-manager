@@ -22,13 +22,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.ArrayList;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.structure.DefaultValues;
-import org.archiviststoolkit.structure.DatabaseFields;
 import org.archiviststoolkit.model.ResourcesComponents;
 import org.archiviststoolkit.model.RDEScreenPanelItems;
 import org.archiviststoolkit.exceptions.RDEPopulateException;
@@ -36,6 +34,10 @@ import org.archiviststoolkit.exceptions.RDEPanelCreationException;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 
 public class RdeTextArea extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean sticky = false;
 

@@ -32,12 +32,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.model.Resources;
 import org.archiviststoolkit.model.ResourcesComponents;
 import org.archiviststoolkit.exceptions.RDEPopulateException;
 
 public class RdePanelContainer extends JPanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private String title;
 

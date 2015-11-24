@@ -37,6 +37,10 @@ import org.archiviststoolkit.util.NoteEtcTypesUtils;
 import org.archiviststoolkit.ApplicationFrame;
 
 public class RdeNoteFields extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean noteTypeSticky = false;
 	private boolean noteInternalOnlySticky = false;
@@ -222,7 +226,7 @@ public class RdeNoteFields extends RdePanel {
     // Generated using JFormDesigner non-commercial license
     private JSeparator separator3;
     private JLabel label_Note;
-    public JComboBox noteType;
+    public JComboBox<?> noteType;
     private JCheckBox internalOnly;
     private JLabel label_internalOnly;
     private JScrollPane scrollPane1;

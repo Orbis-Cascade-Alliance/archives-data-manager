@@ -34,11 +34,15 @@ import org.archiviststoolkit.exceptions.RDEPopulateException;
 import org.archiviststoolkit.util.JGoodiesValidationUtils;
 
 public class RapidResourceComponentDataEntry2 extends JDialog {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ResourcesComponents resourceComponent = null;
 
     public RapidResourceComponentDataEntry2(final Dialog owner, Resources resource, RdePanelContainer panels) {
         super(owner);
-        this.resource = resource;
         initComponents();
         this.panels = panels;
         panels.setResource(resource);
@@ -328,8 +332,6 @@ public class RapidResourceComponentDataEntry2 extends JDialog {
     protected int status = 0;
 
     private RdePanelContainer panels;
-
-    private Resources resource;
 
     /**
      * Displays the dialog box representing the editor.

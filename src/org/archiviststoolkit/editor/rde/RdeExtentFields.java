@@ -37,6 +37,10 @@ import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.util.LookupListUtils;
 
 public class RdeExtentFields extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private ATFieldInfo extentNumberFieldInfo;
 	private ATFieldInfo extentMeasurementFieldInfo;
@@ -54,7 +58,7 @@ public class RdeExtentFields extends RdePanel {
 		if (this.extentMeasurementFieldInfo != null) {
 			this.label_extentMeasurement.setText(this.extentMeasurementFieldInfo.getFieldLabel());
 			Vector<LookupListItems> values = LookupListUtils.getLookupListValues2(this.extentMeasurementFieldInfo.getLookupList());
-			this.extentMeasurement.setModel(new DefaultComboBoxModel(values));
+			this.extentMeasurement.setModel(new DefaultComboBoxModel<LookupListItems>(values));
 		}
 	}
 
@@ -153,7 +157,7 @@ public class RdeExtentFields extends RdePanel {
         label_extentNumber = new JLabel();
         extentNumber = ATBasicComponentFactory.createUnboundDoubleField();
         label_extentMeasurement = new JLabel();
-        extentMeasurement = new JComboBox();
+        extentMeasurement = new JComboBox<LookupListItems>();
         CellConstraints cc = new CellConstraints();
 
         //======== this ========
@@ -230,6 +234,6 @@ public class RdeExtentFields extends RdePanel {
     private JLabel label_extentNumber;
     private JFormattedTextField extentNumber;
     private JLabel label_extentMeasurement;
-    private JComboBox extentMeasurement;
+    private JComboBox<LookupListItems> extentMeasurement;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

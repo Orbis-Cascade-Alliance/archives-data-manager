@@ -36,6 +36,10 @@ import org.archiviststoolkit.exceptions.RDEPopulateException;
 import org.archiviststoolkit.exceptions.RDEPanelCreationException;
 
 public class RdeDropDownList extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean sticky = false;
 
@@ -45,7 +49,7 @@ public class RdeDropDownList extends RdePanel {
 		if (fieldInfo != null) {
 			this.label.setText(fieldInfo.getFieldLabel());
 			Vector<LookupListItems> values = LookupListUtils.getLookupListValues2(fieldInfo.getLookupList());
-			this.comboBox.setModel(new DefaultComboBoxModel(values));
+			this.comboBox.setModel(new DefaultComboBoxModel<LookupListItems>(values));
 		}
 	}
 
@@ -117,7 +121,7 @@ public class RdeDropDownList extends RdePanel {
         // Generated using JFormDesigner non-commercial license
         separator3 = new JSeparator();
         label = new JLabel();
-        comboBox = new JComboBox();
+        comboBox = new JComboBox<LookupListItems>();
         CellConstraints cc = new CellConstraints();
 
         //======== this ========
@@ -165,6 +169,6 @@ public class RdeDropDownList extends RdePanel {
     // Generated using JFormDesigner non-commercial license
     private JSeparator separator3;
     private JLabel label;
-    private JComboBox comboBox;
+    private JComboBox<LookupListItems> comboBox;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

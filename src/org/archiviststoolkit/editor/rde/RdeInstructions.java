@@ -19,19 +19,19 @@
 package org.archiviststoolkit.editor.rde;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import javax.swing.*;
-import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.model.ResourcesComponents;
 import org.archiviststoolkit.model.RDEScreenPanelItems;
 import org.archiviststoolkit.exceptions.RDEPopulateException;
 import org.archiviststoolkit.exceptions.RDEPanelCreationException;
 
 public class RdeInstructions extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public RdeInstructions(RdePanelContainer parentPanel) {
 		super(parentPanel);

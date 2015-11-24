@@ -21,7 +21,6 @@ package org.archiviststoolkit.editor.rde;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Collection;
-import java.util.ArrayList;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
@@ -34,6 +33,10 @@ import org.archiviststoolkit.dialog.SubjectTermLookup;
 import org.archiviststoolkit.editor.SubjectEnabledEditorFields;
 
 public class RdeSubjects extends RdePanel implements SubjectEnabledModel, SubjectEnabledEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean sticky = false;
 

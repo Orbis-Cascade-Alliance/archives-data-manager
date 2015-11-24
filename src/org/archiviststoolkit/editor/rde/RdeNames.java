@@ -35,6 +35,10 @@ import org.archiviststoolkit.dialog.NameAuthorityLookup;
 import org.archiviststoolkit.editor.NameEnabledEditor;
 
 public class RdeNames extends RdePanel implements NameEnabledModel, NameEnabledEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean sticky = false;
 

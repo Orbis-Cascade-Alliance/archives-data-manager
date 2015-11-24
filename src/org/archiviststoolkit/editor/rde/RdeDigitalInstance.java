@@ -34,6 +34,10 @@ import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.ApplicationFrame;
 
 public class RdeDigitalInstance extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean typeSticky;
     private boolean titleSticky;
@@ -920,7 +924,7 @@ public class RdeDigitalInstance extends RdePanel {
     private JLabel label1;
     private JPanel panel2;
     private JLabel label_type;
-    private JComboBox objectType;
+    private JComboBox<?> objectType;
     private JLabel label2;
     private JTextField digitalObjectID;
     private JPanel panel14;
@@ -941,24 +945,24 @@ public class RdeDigitalInstance extends RdePanel {
     private JLabel label_uri1;
     private JTextField uri1;
     private JLabel label_useStatement1;
-    private JComboBox useStatement1;
+    private JComboBox<?> useStatement1;
     private JPanel panel5;
     private JLabel label_actuate1;
-    private JComboBox actuate1;
+    private JComboBox<?> actuate1;
     private JLabel label_show1;
-    private JComboBox show1;
+    private JComboBox<?> show1;
     private JPanel fileVersion2;
     private JLabel label_fileVersion2;
     private JPanel panel6;
     private JLabel label_uri2;
     private JTextField uri2;
     private JLabel label_useStatement2;
-    private JComboBox useStatement2;
+    private JComboBox<?> useStatement2;
     private JPanel panel7;
     private JLabel label_actuate2;
-    private JComboBox actuate2;
+    private JComboBox<?> actuate2;
     private JLabel label_show2;
-    private JComboBox show2;
+    private JComboBox<?> show2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
     // Method to check to see if to add a digital instance to resource component

@@ -37,6 +37,10 @@ import org.archiviststoolkit.util.LookupListUtils;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 
 public class RdeAnalogInstance extends RdePanel {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private boolean instanceTypeSticky;
 	private boolean container1TypeSticky;
@@ -50,7 +54,8 @@ public class RdeAnalogInstance extends RdePanel {
     // store the number of containers, and gui components, and stick values in array. This are used
     // for setting default values
     private static final int CONTAINER_COUNT = 3;
-    private JComboBox[] containerTypes;
+    @SuppressWarnings("rawtypes")
+	private JComboBox[] containerTypes;
     private JTextField[] containerIndicators;
     private boolean[] typesSticky;
     private boolean[] indicatorSticky;
@@ -64,7 +69,7 @@ public class RdeAnalogInstance extends RdePanel {
 	private void setInstanceTypeList() {
 		Vector<String> values = LookupListUtils.getLookupListValues(ArchDescriptionInstances.class, ArchDescriptionInstances.PROPERTYNAME_INSTANCE_TYPE);
 		values.remove("Digital object");
-		instanceType.setModel(new DefaultComboBoxModel(values));
+		instanceType.setModel(new DefaultComboBoxModel<String>(values));
 	}
 
 	public void populateComponent(ResourcesComponents component) throws RDEPopulateException {
@@ -251,7 +256,7 @@ public class RdeAnalogInstance extends RdePanel {
         separator6 = new JSeparator();
         panel12 = new JPanel();
         label_instanceType = new JLabel();
-        instanceType = new JComboBox();
+        instanceType = new JComboBox<String>();
         panel7 = new JPanel();
         label_container1Type = new JLabel();
         container1Type = ATBasicComponentFactory.createUnboundComboBox(LookupListUtils.getLookupListValues(ArchDescriptionAnalogInstances.class, ArchDescriptionAnalogInstances.PROPERTYNAME_CONTAINER1_TYPE));
@@ -554,20 +559,20 @@ public class RdeAnalogInstance extends RdePanel {
     private JSeparator separator6;
     private JPanel panel12;
     private JLabel label_instanceType;
-    private JComboBox instanceType;
+    private JComboBox<String> instanceType;
     private JPanel panel7;
     private JLabel label_container1Type;
-    private JComboBox container1Type;
+    private JComboBox<?> container1Type;
     private JLabel label_container1Indicator;
     private JTextField container1Indicator;
     private JPanel panel8;
     private JLabel label_container2Type;
-    private JComboBox container2Type;
+    private JComboBox<?> container2Type;
     private JLabel label_container2Indicator;
     private JTextField container2Indicator;
     private JPanel panel9;
     private JLabel label_container3Type;
-    private JComboBox container3Type;
+    private JComboBox<?> container3Type;
     private JLabel label_container3Indicator;
     private JTextField container3Indicator;
     private JPanel panel14;
@@ -627,7 +632,7 @@ public class RdeAnalogInstance extends RdePanel {
         return false;
     }
 
-    private String getContainerType(JComboBox containerType) {
+    private String getContainerType(JComboBox<?> containerType) {
         if (containerType.getSelectedItem() == null) {
 			return "";
 		} else {
