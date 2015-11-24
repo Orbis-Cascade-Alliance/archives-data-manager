@@ -27,14 +27,18 @@ import org.archiviststoolkit.model.Names;
 import javax.swing.*;
 
 public abstract class NamePrimaryNameFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public NamePrimaryNameFields() {
 		super();
 	}
 
-	protected abstract JComboBox getNameSource();
+	protected abstract JComboBox<?> getNameSource();
 
-	protected abstract JComboBox getNameRule();
+	protected abstract JComboBox<?> getNameRule();
 
 	protected abstract JPanel getRuleSourcePanel();
 

@@ -57,6 +57,10 @@ import org.archiviststoolkit.exceptions.DeleteException;
 import net.antonioshome.swing.treewrapper.TreeWrapper;
 
 public class DigitalObjectTreeViewer extends DomainEditorFields implements MouseListener {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static String ABOVE = "above";
 	private static String BELOW = "below";
@@ -67,7 +71,6 @@ public class DigitalObjectTreeViewer extends DomainEditorFields implements Mouse
 
 
 	private DigitalObjects digObj;
-	private Resources res;
     private DigitalObjects selectedDigitalObject = null;
 
     /**
@@ -768,7 +771,7 @@ public class DigitalObjectTreeViewer extends DomainEditorFields implements Mouse
 		DigitalObjects childDigitalObjectTreeNode;
 
 		//first go through the children to look for the hit
-		Enumeration children = node.children();
+		Enumeration<?> children = node.children();
 		while (children.hasMoreElements()) {
 			childNode = (DefaultMutableTreeNode)children.nextElement();
 			childDigitalObjectTreeNode = (DigitalObjects)childNode.getUserObject();

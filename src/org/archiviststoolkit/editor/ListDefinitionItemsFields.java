@@ -23,15 +23,18 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.model.ListDefinitionItems;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 import org.archiviststoolkit.util.InLineTagsUtils;
 
 public class ListDefinitionItemsFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ListDefinitionItemsFields() {
 		initComponents();
 		initUndo(value);
@@ -44,22 +47,6 @@ public class ListDefinitionItemsFields extends DomainEditorFields {
 	private void insertInlineTagActionPerformed() {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, value,  this.getParentEditor());
 	}
-
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
-	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
-	}
-
-//	public JButton getUndoButton() {
-//		return undoButton;
-//	}
-//
-//	public JButton getRedoButton() {
-//		return redoButton;
-//	}
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -157,6 +144,6 @@ public class ListDefinitionItemsFields extends DomainEditorFields {
     private JScrollPane scrollPane1;
     public JTextArea value;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }

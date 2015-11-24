@@ -20,7 +20,6 @@ package org.archiviststoolkit.editor;
 
 import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.model.Repositories;
-import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.model.Deaccessions;
 
 import javax.swing.*;
@@ -30,6 +29,11 @@ import javax.swing.*;
  */
 
 public class DeaccessionsEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	/**
 	 * Default constructor.

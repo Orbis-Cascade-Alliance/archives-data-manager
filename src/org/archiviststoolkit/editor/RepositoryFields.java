@@ -38,6 +38,10 @@ import org.archiviststoolkit.exceptions.DuplicateLinkException;
 import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
 
 public class RepositoryFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected RepositoryFields() {
 		super();
@@ -712,7 +716,7 @@ public class RepositoryFields extends DomainEditorFields {
     private JLabel label18;
     private JTextField repositoryName17;
     private JLabel label19;
-    public JComboBox resourcesLanguageCode;
+    public JComboBox<?> resourcesLanguageCode;
     private JPanel repositoryStatistics;
     private JScrollPane scrollPane4;
     private DomainSortableTable statisticsTable;

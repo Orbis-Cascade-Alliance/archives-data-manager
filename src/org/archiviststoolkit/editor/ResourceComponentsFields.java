@@ -28,13 +28,11 @@ import javax.swing.border.*;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 import org.archiviststoolkit.structure.DefaultValues;
 import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
 import org.archiviststoolkit.dialog.ErrorDialog;
@@ -43,6 +41,11 @@ import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 
 public class ResourceComponentsFields extends ArchDescriptionFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any embedded resource component editor plugins
 
     // boolean to keep if tab zero was removed by a plugin. This needs to be
@@ -80,22 +83,6 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     private void insertInlineTagActionPerformed() {
         InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, resourcesTitle, this.getParentEditor());
     }
-
-    private void undoButtonActionPerformed() {
-        handleUndoButtonAction();
-    }
-
-    private void redoButtonActionPerformed() {
-        handleRedoButtonAction();
-    }
-
-//    public JButton getUndoButton() {
-//    	return undoButton;
-//    }
-//
-//    public JButton getRedoButton() {
-//    	return redoButton;
-//    }
 
     private void resourcesLevelActionPerformed() {
         setOtherLevelEnabledDisabled(resourcesLevel, label_otherLevel, resourcesOtherLevel);
@@ -241,7 +228,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
         scrollPane5 = new JScrollPane();
         repeatingDataTable = new DomainSortedTable(ArchDescriptionRepeatingData.class);
         panel15 = new JPanel();
-        addNoteEtcComboBox = new JComboBox();
+        addNoteEtcComboBox = new JComboBox<Object>();
         removeNotesEtcButton = new JButton();
         CellConstraints cc = new CellConstraints();
 
@@ -1093,7 +1080,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     private JPanel panel7;
     private JPanel panel3;
     private JLabel label_resourcesLevel;
-    public JComboBox resourcesLevel;
+    public JComboBox<?> resourcesLevel;
     private JPanel panel12;
     private JLabel label3;
     public JTextField resourcesDateBegin2;
@@ -1103,7 +1090,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     private JScrollPane scrollPane42;
     public JTextArea resourcesTitle;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
     private JPanel panel34;
     private JPanel panel35;
     private JPanel panel36;
@@ -1121,7 +1108,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     public JFormattedTextField resourcesBulkDateEnd;
     private JPanel panel9;
     private JLabel label_resourcesLanguageCode2;
-    public JComboBox resourcesLanguageCode;
+    public JComboBox<?> resourcesLanguageCode;
     private JPanel panel23;
     private JLabel label_resourcesLanguageNote2;
     private JScrollPane scrollPane423;
@@ -1136,7 +1123,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     private JLabel ExtentNumberLabel2;
     private JLabel label_resourcesExtentNumber;
     public JFormattedTextField resourcesExtentNumber;
-    public JComboBox extentType;
+    public JComboBox<?> extentType;
     private JLabel label_resourcesExtentDescription;
     private JScrollPane scrollPane422;
     public JTextArea resourcesExtentDescription;
@@ -1170,14 +1157,12 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
     private JScrollPane scrollPane5;
     private DomainSortedTable repeatingDataTable;
     private JPanel panel15;
-    private JComboBox addNoteEtcComboBox;
+    private JComboBox<Object> addNoteEtcComboBox;
     private JButton removeNotesEtcButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
-    private ButtonGroup addWhereButtonGroup;
-
-
-    public JComboBox getAddNoteEtcComboBox() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public JComboBox getAddNoteEtcComboBox() {
         return addNoteEtcComboBox;
     }
 
@@ -1261,7 +1246,7 @@ public class ResourceComponentsFields extends ArchDescriptionFields {
         if (plugins != null) {
             for (ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for (Object key : pluginPanels.keySet()) {
                     String panelName = (String) key;
                     JPanel pluginPanel = (JPanel) pluginPanels.get(key);

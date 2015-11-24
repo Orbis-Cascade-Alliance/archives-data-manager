@@ -19,17 +19,18 @@
 package org.archiviststoolkit.editor;
 
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.value.ValueHolder;
 import org.archiviststoolkit.model.Constants;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 
 public class ConstantsFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public ConstantsFields() {
 		super();
@@ -69,7 +70,7 @@ public class ConstantsFields extends DomainEditorFields {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	// Generated using JFormDesigner non-commercial license
 	private JLabel label1;
-	public JComboBox dateFormat;
+	public JComboBox<?> dateFormat;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
 	public Component getInitialFocusComponent() {

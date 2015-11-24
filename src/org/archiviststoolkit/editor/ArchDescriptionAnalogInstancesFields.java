@@ -19,19 +19,20 @@
 package org.archiviststoolkit.editor;
 
 import java.awt.*;
-import java.util.Vector;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.model.ArchDescriptionAnalogInstances;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainEditor;
-import org.archiviststoolkit.util.SequencedObjectsUtils;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class ArchDescriptionAnalogInstancesFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected ArchDescriptionAnalogInstancesFields(DomainEditor parent) {
 		super();
@@ -191,19 +192,19 @@ public class ArchDescriptionAnalogInstancesFields extends DomainEditorFields {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner non-commercial license
     private JLabel label_subjectTermType;
-    public JComboBox container1Type;
+    public JComboBox<?> container1Type;
     private JLabel label_subjectSource5;
     public JTextField containerLabel4;
     private JLabel label_subjectSource4;
     public JTextField containerLabel3;
     private JSeparator separator1;
     private JLabel label_subjectTermType2;
-    public JComboBox container2Type;
+    public JComboBox<?> container2Type;
     private JLabel label_subjectSource6;
     public JTextField containerLabel5;
     private JSeparator separator3;
     private JLabel label_subjectTermType3;
-    public JComboBox container3Type;
+    public JComboBox<?> container3Type;
     private JLabel label_subjectSource7;
     public JTextField containerLabel6;
     private JSeparator separator2;

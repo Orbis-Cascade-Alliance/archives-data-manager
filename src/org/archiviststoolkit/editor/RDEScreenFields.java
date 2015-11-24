@@ -47,6 +47,10 @@ import java.util.Vector;
 import java.util.Collections;
 
 public class RDEScreenFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	Vector<Options> optionList;
 	RDEScreen RDEModel;
@@ -56,7 +60,8 @@ public class RDEScreenFields extends DomainEditorFields {
 		initComponents();
 	}
 
-	private void initOptions(Class clazz) throws TableNotConfiguredException {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void initOptions(Class<?> clazz) throws TableNotConfiguredException {
 
 		optionList = new Vector<Options>();
 		for (ATFieldInfo fieldInfo: ATFieldInfo.getFieldsForRDE(clazz)) {
@@ -69,15 +74,6 @@ public class RDEScreenFields extends DomainEditorFields {
 		Collections.sort(optionList);
 
 		options.setModel(new DefaultComboBoxModel(optionList));
-	}
-
-	private void insertButtonActionPerformed() {
-		int selectedIndex = rdeScreenPanels.getSelectedRow();
-		if (selectedIndex == -1) {
-			JOptionPane.showMessageDialog(this, "You must select a panel to insert above.", "warning", JOptionPane.WARNING_MESSAGE);
-		} else {
-			addPanel(SequencedObjectsUtils.ADD_ABOVE_SELECTION);
-		}
 	}
 
 	private boolean duplicateCheckOkToAdd(Options selectedOption) {
@@ -270,7 +266,7 @@ public class RDEScreenFields extends DomainEditorFields {
         label2 = new JLabel();
         label3 = new JLabel();
         scrollPane2 = new JScrollPane();
-        options = new JList();
+        options = new JList<Options>();
         panel3 = new JPanel();
         addButton = new JButton();
         removeButton = new JButton();
@@ -443,7 +439,7 @@ public class RDEScreenFields extends DomainEditorFields {
     private JLabel label2;
     private JLabel label3;
     private JScrollPane scrollPane2;
-    private JList options;
+    private JList<Options> options;
     private JPanel panel3;
     private JButton addButton;
     private JButton removeButton;
@@ -478,7 +474,7 @@ public class RDEScreenFields extends DomainEditorFields {
 		return rdeScreenName;
 	}
 
-	private void addClassSpecificOptions(Class clazz) {
+	private void addClassSpecificOptions(Class<?> clazz) {
 		if (clazz == ResourcesComponents.class) {
 			optionList.add(new Options(RDEScreenPanels.PANEL_TYPE_NOTE));
 			optionList.add(new Options(RDEScreenPanels.PANEL_TYPE_EXTENT));
@@ -499,7 +495,7 @@ public class RDEScreenFields extends DomainEditorFields {
 		this.rdeScreenPanels = rdeScreenPanels;
 	}
 
-	private class Options implements Comparable{
+	public class Options implements Comparable<Object>{
 
 		private ATFieldInfo fieldInfo = null;
 		private String panelType;

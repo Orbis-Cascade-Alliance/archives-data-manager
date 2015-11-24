@@ -23,12 +23,15 @@ import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
-import org.archiviststoolkit.model.NameContactNotes;
 import org.archiviststoolkit.model.RepositoryNotes;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class RepositoryNoteFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public RepositoryNoteFields() {
 		super();
@@ -122,7 +125,7 @@ public class RepositoryNoteFields extends DomainEditorFields {
     public JTextField repositoryName;
     private JSeparator separator1;
     private JLabel label1;
-    public JComboBox nameDescriptionType;
+    public JComboBox<?> nameDescriptionType;
     private JLabel label14;
     private JScrollPane scrollPane1;
     public JTextArea noteText;

@@ -21,13 +21,15 @@ package org.archiviststoolkit.editor;
 import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.model.Bibliography;
 
-import javax.swing.*;
-
 /**
  * Editor for dealing with the contact domain object.
  */
 
 public class BibliographyEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.

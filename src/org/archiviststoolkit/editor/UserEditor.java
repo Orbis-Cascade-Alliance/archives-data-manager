@@ -23,12 +23,8 @@ package org.archiviststoolkit.editor;
 // Import Declarations
 //==============================================================================
 
-import javax.swing.*;
-
 import org.archiviststoolkit.mydomain.DomainEditor;
-import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.Users;
-import org.archiviststoolkit.swing.RecordNavigationButtons;
 
 import java.awt.*;
 
@@ -37,6 +33,10 @@ import java.awt.*;
  */
 
 public class UserEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.

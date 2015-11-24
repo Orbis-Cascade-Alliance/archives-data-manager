@@ -29,7 +29,6 @@ import javax.swing.border.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import com.centerkey.utils.BareBonesBrowserLaunch;
-import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.dialog.ResourceLookup;
@@ -46,6 +45,11 @@ import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 
 public class AccessionFields extends ArchDescriptionFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private ArrayList<ATPlugin> plugins = null; // stores any embedded editor plugins
 
 	public AccessionFields() {
@@ -102,7 +106,7 @@ public class AccessionFields extends ArchDescriptionFields {
 	}
 
 	private void changeRepositoryButtonActionPerformed() {
-		Vector repositories = Repositories.getRepositoryList();
+		Vector<?> repositories = Repositories.getRepositoryList();
 		Repositories currentRepostory = ((Accessions) this.getModel()).getRepository();
 		Accessions model = (Accessions) this.getModel();
         SelectFromList dialog = new SelectFromList(this.getParentEditor(), "Select a repository", repositories.toArray());
@@ -2303,7 +2307,7 @@ public class AccessionFields extends ArchDescriptionFields {
     private JButton removeResourceLink;
     private JPanel panel27;
     private JLabel label_resourceType;
-    public JComboBox resourceType;
+    public JComboBox<?> resourceType;
     private JLabel label_title;
     private JScrollPane scrollPane42;
     public JTextArea title;
@@ -2313,7 +2317,7 @@ public class AccessionFields extends ArchDescriptionFields {
     private JPanel panel21;
     private JLabel labelExtentNumber;
     public JFormattedTextField extentNumber;
-    public JComboBox extentType;
+    public JComboBox<?> extentType;
     private JLabel labelExtent;
     private JScrollPane scrollPane423;
     public JTextArea containerSummary;
@@ -2356,7 +2360,7 @@ public class AccessionFields extends ArchDescriptionFields {
     private JPanel panel28;
     private JPanel panel29;
     private JLabel label_acquisitionType;
-    public JComboBox acquisitionType;
+    public JComboBox<?> acquisitionType;
     private JLabel label_RetentionRule;
     private JScrollPane scrollPane4224;
     public JTextArea accessionTransactionNote;
@@ -2462,7 +2466,7 @@ public class AccessionFields extends ArchDescriptionFields {
     private JLabel ExtentNumberLabel4;
     private JLabel label_resourceType3;
     private JPanel panel3;
-    public JComboBox resourceType2;
+    public JComboBox<?> resourceType2;
     private JLabel label_resourceType4;
     public JTextField dateExpression5;
     private JLabel label_processingPlan;
@@ -2472,7 +2476,7 @@ public class AccessionFields extends ArchDescriptionFields {
     public JFormattedTextField dateProcessed3;
     private JLabel label_resourceType5;
     private JPanel panel1;
-    public JComboBox resourceType3;
+    public JComboBox<?> resourceType3;
     public JCheckBox cataloged2;
     private JLabel label_dateProcessed;
     public JFormattedTextField dateProcessed;
@@ -2598,7 +2602,7 @@ public class AccessionFields extends ArchDescriptionFields {
         if(plugins != null) {
             for(ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for(Object key : pluginPanels.keySet()) {
                     String panelName = (String)key;
                     JPanel pluginPanel = (JPanel)pluginPanels.get(key);

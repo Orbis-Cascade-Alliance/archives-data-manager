@@ -18,7 +18,6 @@
 
 package org.archiviststoolkit.editor;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.*;
@@ -30,17 +29,18 @@ import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
-import org.archiviststoolkit.util.SequencedObjectsUtils;
 import org.archiviststoolkit.util.InLineTagsUtils;
-import org.archiviststoolkit.dialog.ErrorDialog;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class BibliographyFields extends ArchDescriptionStructuredDataFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected BibliographyFields(DomainEditor parentEditor) {
 		super();
@@ -82,14 +82,6 @@ public class BibliographyFields extends ArchDescriptionStructuredDataFields {
 
 	private void insertInlineTagActionPerformed() {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, note,  this.getParentEditor());
-	}
-
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
-	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
 	}
 
 //	public JButton getUndoButton() {
@@ -371,7 +363,7 @@ public class BibliographyFields extends ArchDescriptionStructuredDataFields {
     private JScrollPane scrollPane1;
     public JTextArea note;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
     private JLabel label_subjectScopeNote2;
     private JScrollPane scrollPane2;
     public JTextArea ingestProblems;

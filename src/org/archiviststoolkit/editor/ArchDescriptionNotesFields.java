@@ -18,7 +18,6 @@
 
 package org.archiviststoolkit.editor;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.*;
@@ -42,9 +41,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
-import java.util.Set;
 
 public class ArchDescriptionNotesFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public ArchDescriptionNotesFields(DomainEditor parentEditor) {
 		super();
 		this.setParentEditor(parentEditor);
@@ -81,7 +84,7 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
 		}
 	}
 
-	protected void addRepeatingData(Class repeatingDataClass, String whereString) throws UnsupportedRepeatingDataTypeException {
+	protected void addRepeatingData(Class<?> repeatingDataClass, String whereString) throws UnsupportedRepeatingDataTypeException {
 		ArchDescriptionNotes archDescriptionModel = (ArchDescriptionNotes) super.getModel();
 
 		ArchDescriptionRepeatingData repeatingData = ArchDescriptionRepeatingData.getInstance(archDescriptionModel, repeatingDataClass);
@@ -160,7 +163,8 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
 
 	}
 
-	protected void setNotesEtcDropDownValues(Vector values) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void setNotesEtcDropDownValues(Vector<?> values) {
 		getNotesType().setModel(new DefaultComboBoxModel(values));
 	}
 
@@ -179,21 +183,6 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, noteContent, this.getParentEditor());
 	}
 
-
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
-	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
-	}
-
-	private void setUndoRedoWrapEnabled(boolean enabled) {
-//		undoButton.setEnabled(enabled);
-//		redoButton.setEnabled(enabled);
-		insertInlineTag.setEnabled(enabled);
-	}
-
 	private void noteContentFocusGained() {
 //		setUndoRedoWrapEnabled(true);
 	}
@@ -202,7 +191,7 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
 //		setUndoRedoWrapEnabled(false);
 	}
 
-	public JComboBox getNotesType() {
+	public JComboBox<?> getNotesType() {
 		return notesType;
 	}
 
@@ -266,7 +255,7 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
         label3 = new JLabel();
         persistentId = ATBasicComponentFactory.createTextField(detailsModel.getModel(ArchDescriptionRepeatingData.PROPERTYNAME_PERSISTENT_ID));
         label1 = new JLabel();
-        notesType = new JComboBox();
+        notesType = new JComboBox<Object>();
         label2 = new JLabel();
         title = ATBasicComponentFactory.createTextField(detailsModel.getModel(ArchDescriptionRepeatingData.PROPERTYNAME_TITLE));
         cardPane = new JPanel();
@@ -275,12 +264,12 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
         scrollPane1 = new JScrollPane();
         noteContent = ATBasicComponentFactory.createTextArea(detailsModel.getModel(ArchDescriptionNotes.PROPERTYNAME_ARCH_DESCRIPTION_NOTE_CONTENT), false);
         tagApplicatorPanel = new JPanel();
-        insertInlineTag = new JComboBox();
+        insertInlineTag = new JComboBox<Object>();
         multiPartNote = new JPanel();
         scrollPane6 = new JScrollPane();
         repeatingDataTable = new DomainSortedTable(ArchDescriptionRepeatingData.class);
         panel15 = new JPanel();
-        addPartComboBox = new JComboBox();
+        addPartComboBox = new JComboBox<String>();
         removePartButton = new JButton();
         CellConstraints cc = new CellConstraints();
 
@@ -561,7 +550,7 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
     private JLabel label3;
     public JTextField persistentId;
     private JLabel label1;
-    public JComboBox notesType;
+    public JComboBox<?> notesType;
     private JLabel label2;
     public JTextField title;
     private JPanel cardPane;
@@ -570,18 +559,19 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
     private JScrollPane scrollPane1;
     public JTextArea noteContent;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
     private JPanel multiPartNote;
     private JScrollPane scrollPane6;
     private DomainSortedTable repeatingDataTable;
     private JPanel panel15;
-    private JComboBox addPartComboBox;
+    private JComboBox<String> addPartComboBox;
     private JButton removePartButton;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 	private JPopupMenu repeatingDataPopupMenu;
 	protected ArchDescriptionRepeatingDataEditor dialogRepeatingData;
 	private DomainEditor notesEditor;
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		inSetModel = true;
 		super.setModel(model, progressPanel);
@@ -624,6 +614,7 @@ public class ArchDescriptionNotesFields extends DomainEditorFields {
 		return notesType;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void initMenus() {
 
 		Vector values = NoteEtcTypesUtils.getNotesEmbeddedTypesList();

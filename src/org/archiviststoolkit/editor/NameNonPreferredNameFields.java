@@ -21,13 +21,16 @@
 package org.archiviststoolkit.editor;
 
 import org.archiviststoolkit.mydomain.DomainEditorFields;
-import org.archiviststoolkit.model.Users;
-import org.archiviststoolkit.model.Names;
 import org.archiviststoolkit.model.NonPreferredNames;
 
 import javax.swing.*;
 
 public abstract class NameNonPreferredNameFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public NameNonPreferredNameFields() {
 		super();
 	}

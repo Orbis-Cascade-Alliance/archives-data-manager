@@ -22,13 +22,17 @@ import java.awt.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.model.Deaccessions;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class DeaccessionsFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public DeaccessionsFields() {
 		super();
 		initComponents();
@@ -197,7 +201,7 @@ public class DeaccessionsFields extends DomainEditorFields {
     private JPanel panel1;
     private JLabel label3;
     public JFormattedTextField extentNumber;
-    public JComboBox extentType;
+    public JComboBox<?> extentType;
     private JLabel label4;
     private JTextField repositoryName4;
     public JCheckBox rights;

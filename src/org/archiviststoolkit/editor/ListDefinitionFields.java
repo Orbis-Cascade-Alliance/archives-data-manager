@@ -23,7 +23,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
@@ -33,6 +32,11 @@ import org.archiviststoolkit.model.ListDefinitionItems;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class ListDefinitionFields extends ArchDescriptionStructuredDataFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected ListDefinitionFields(DomainEditor parentEditor) {
 		super();
 		this.setParentEditor(parentEditor);

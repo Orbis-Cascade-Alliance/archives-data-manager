@@ -24,19 +24,22 @@ import javax.swing.*;
 import javax.swing.event.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.PresentationModel;
 import org.archiviststoolkit.model.NonPreferredNames;
 import org.archiviststoolkit.model.BasicNames;
 import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.mydomain.DomainObject;
-import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class NameCorpNonPreferredFields extends NameNonPreferredNameFields {
-	public NameCorpNonPreferredFields(PresentationModel parentPresentationModel) {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public NameCorpNonPreferredFields(PresentationModel<DomainObject> parentPresentationModel) {
 		super();
 		this.parentPresentationModel = parentPresentationModel;
 		initComponents();
@@ -251,7 +254,7 @@ public class NameCorpNonPreferredFields extends NameNonPreferredNameFields {
     public JCheckBox namePersonalDirectOrder2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private PresentationModel parentPresentationModel;
+	private PresentationModel<DomainObject> parentPresentationModel;
 
 	public final void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		super.setModel(model, progressPanel);

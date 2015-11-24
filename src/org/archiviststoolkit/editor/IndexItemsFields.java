@@ -23,7 +23,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
@@ -33,6 +32,10 @@ import org.archiviststoolkit.util.ResourceUtils;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class IndexItemsFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public IndexItemsFields() {
 		super();
@@ -48,7 +51,7 @@ public class IndexItemsFields extends DomainEditorFields {
 	public void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		super.setModel(model, progressPanel);
 		IndexItems indexItem = (IndexItems)super.getModel();
-		reference.setModel(new DefaultComboBoxModel(ResourceUtils.getReferencesArray()));
+		reference.setModel(new DefaultComboBoxModel<Object>(ResourceUtils.getReferencesArray()));
 		int selectedIndex = ResourceUtils.getIndexById(indexItem.getReference());
 		if (selectedIndex >= 0) {
 			//add 1 to account for the blank at the top of the list			
@@ -75,7 +78,7 @@ public class IndexItemsFields extends DomainEditorFields {
         label_subjectScopeNote2 = new JLabel();
         type = ATBasicComponentFactory.createComboBox(detailsModel, IndexItems.PROPERTYNAME_ITEM_TYPE, IndexItems.class);
         label_subjectScopeNote3 = new JLabel();
-        reference = new JComboBox();
+        reference = new JComboBox<Object>();
         label_subjectScopeNote4 = new JLabel();
         referenceText = ATBasicComponentFactory.createTextField(detailsModel.getModel(IndexItems.PROPERTYNAME_REFERENCE_TEXT));
         CellConstraints cc = new CellConstraints();
@@ -170,9 +173,9 @@ public class IndexItemsFields extends DomainEditorFields {
     private JScrollPane scrollPane1;
     public JTextArea descritpion;
     private JLabel label_subjectScopeNote2;
-    public JComboBox type;
+    public JComboBox<?> type;
     private JLabel label_subjectScopeNote3;
-    public JComboBox reference;
+    public JComboBox<Object> reference;
     private JLabel label_subjectScopeNote4;
     public JTextField referenceText;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables

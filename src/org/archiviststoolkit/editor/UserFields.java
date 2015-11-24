@@ -20,26 +20,25 @@ package org.archiviststoolkit.editor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.security.NoSuchAlgorithmException;
-import java.util.Vector;
 import javax.swing.*;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.model.Repositories;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainObject;
-import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.util.SequencedObjectsUtils;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.dialog.ChangePasswordDialog;
 
 public class UserFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     protected UserFields() {
         super();
@@ -263,7 +262,7 @@ public class UserFields extends DomainEditorFields {
     private JLabel label16;
     private JFormattedTextField accessClass;
     private JLabel label142;
-    public JComboBox repository;
+    public JComboBox<?> repository;
     private JButton changePasswordButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 

@@ -29,25 +29,25 @@ import javax.swing.border.*;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
-import org.archiviststoolkit.dialog.ATFileChooser;
 import org.archiviststoolkit.dialog.ErrorDialog;
-import org.archiviststoolkit.exporter.EADExportHandler;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.swing.SelectFromList;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
 import org.archiviststoolkit.util.InLineTagsUtils;
 import org.archiviststoolkit.ApplicationFrame;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 import org.archiviststoolkit.plugin.ATPlugin;
-import ca.odell.glazedlists.swing.AutoCompleteSupport;
 
 public class ResourceFields extends ArchDescriptionFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any embedded resource editor plugin
 
 	public ResourceFields() {
@@ -66,8 +66,7 @@ public class ResourceFields extends ArchDescriptionFields {
 	}
 
 	private void changeRepositoryButtonActionPerformed() {
-		Vector repositories = Repositories.getRepositoryList();
-		ImageIcon icon = null;
+		Vector<?> repositories = Repositories.getRepositoryList();
 		Repositories currentRepostory = ((Resources) this.getModel()).getRepository();
 		Resources model = (Resources) this.getModel();
         SelectFromList dialog = new SelectFromList(this.getParentEditor(), "Select a repository", repositories.toArray());
@@ -119,22 +118,6 @@ public class ResourceFields extends ArchDescriptionFields {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, resourcesTitle, this.getParentEditor());
 	}
 
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
-	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
-	}
-
-//	public JButton getUndoButton() {
-//		return undoButton;
-//	}
-//
-//	public JButton getRedoButton() {
-//		return redoButton;
-//	}
-//
 	private void resourcesLevelActionPerformed() {
 		setOtherLevelEnabledDisabled(resourcesLevel, label_otherLevel, resourcesOtherLevel);
 	}
@@ -285,7 +268,7 @@ public class ResourceFields extends ArchDescriptionFields {
         scrollPane5 = new JScrollPane();
         repeatingDataTable = new DomainSortedTable(ArchDescriptionRepeatingData.class);
         panel14 = new JPanel();
-        addNoteEtcComboBox = new JComboBox();
+        addNoteEtcComboBox = new JComboBox<Object>();
         removeNotesEtcButton = new JButton();
         separator6 = new JSeparator();
         label_repositoryName3 = new JLabel();
@@ -1723,6 +1706,7 @@ public class ResourceFields extends ArchDescriptionFields {
 		instancesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public JComboBox getAddNoteEtcComboBox() {
 		return this.addNoteEtcComboBox;
 	}
@@ -1757,14 +1741,14 @@ public class ResourceFields extends ArchDescriptionFields {
     private JPanel panel16;
     private JPanel panel19;
     private JLabel label_resourcesLevel;
-    public JComboBox resourcesLevel;
+    public JComboBox<?> resourcesLevel;
     private JLabel label_otherLevel;
     public JTextField resourcesOtherLevel;
     private JLabel label_resourcesTitle;
     private JScrollPane scrollPane2;
     public JTextArea resourcesTitle;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
     private JPanel panel34;
     private JPanel panel35;
     private JPanel panel36;
@@ -1782,7 +1766,7 @@ public class ResourceFields extends ArchDescriptionFields {
     public JFormattedTextField resourcesBulkDateEnd;
     private JPanel panel1;
     private JLabel label_resourcesLanguageCode;
-    public JComboBox resourcesLanguageCode;
+    public JComboBox<?> resourcesLanguageCode;
     private JLabel label_resourcesLanguageNote;
     private JScrollPane scrollPane423;
     public JTextArea resourcesLanguageNote;
@@ -1809,7 +1793,7 @@ public class ResourceFields extends ArchDescriptionFields {
     private JPanel panel21;
     private JLabel label_resourcesExtentNumber;
     public JFormattedTextField resourcesExtentNumber;
-    public JComboBox extentType;
+    public JComboBox<?> extentType;
     private JLabel label_resourcesExtentDescription;
     private JScrollPane scrollPane422;
     public JTextArea containerSummary;
@@ -1844,7 +1828,7 @@ public class ResourceFields extends ArchDescriptionFields {
     private JScrollPane scrollPane5;
     private DomainSortedTable repeatingDataTable;
     private JPanel panel14;
-    private JComboBox addNoteEtcComboBox;
+    private JComboBox<Object> addNoteEtcComboBox;
     private JButton removeNotesEtcButton;
     private JSeparator separator6;
     private JLabel label_repositoryName3;
@@ -1875,7 +1859,7 @@ public class ResourceFields extends ArchDescriptionFields {
     private JScrollPane scrollPane47;
     public JTextArea author;
     private JLabel label11;
-    public JComboBox extentType2;
+    public JComboBox<?> extentType2;
     private JLabel label12;
     private JScrollPane scrollPane48;
     public JTextArea languageOfFindingAid;
@@ -1898,19 +1882,11 @@ public class ResourceFields extends ArchDescriptionFields {
     public JTextArea revisionDescription;
     private JLabel label18;
     private JPanel panel3;
-    public JComboBox extentType3;
+    public JComboBox<?> extentType3;
     private JLabel label_resourcesTitle3;
     private JScrollPane scrollPane44;
     public JTextArea sponsorNote2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
-
-//	protected DomainRelatedTableModel tableModelAccessionsResources;
-//	private ButtonGroup addWhereButtonGroup;
-//	EventList<String> languageCodes;
-	private AutoCompleteSupport support = null;
-	private ATFileChooser filechooser;
-	private EADExportHandler handler;
-	private Resources res;
 
 	public final void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		inSetModel = true;
@@ -1987,7 +1963,7 @@ public class ResourceFields extends ArchDescriptionFields {
         if(plugins != null) {
             for(ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for(Object key : pluginPanels.keySet()) {
                     String panelName = (String)key;
                     JPanel pluginPanel = (JPanel)pluginPanels.get(key);

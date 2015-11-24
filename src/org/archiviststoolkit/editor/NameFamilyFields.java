@@ -24,34 +24,30 @@ import javax.swing.*;
 import javax.swing.event.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.beans.BeanAdapter;
-import com.jgoodies.binding.value.ValueModel;
-import com.jgoodies.binding.adapter.Bindings;
-import com.jgoodies.binding.adapter.ComboBoxAdapter;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.binding.PresentationModel;
 import org.archiviststoolkit.model.Names;
-import org.archiviststoolkit.model.LookupList;
-import org.archiviststoolkit.model.ModelUtil;
-import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.mydomain.DomainObject;
-import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class NameFamilyFields extends NamePrimaryNameFields {
-	public NameFamilyFields(PresentationModel parentPresentationModel) {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public NameFamilyFields(PresentationModel<DomainObject> parentPresentationModel) {
 		this.parentPresentationModel = parentPresentationModel;
 		initComponents();
         initAccess();
 	}
 
-	public JComboBox getNameSource() {
+	public JComboBox<?> getNameSource() {
 		return nameSource;
 	}
 
-	public JComboBox getNameRule() {
+	public JComboBox<?> getNameRule() {
 		return nameRule;
 	}
 
@@ -262,9 +258,9 @@ public class NameFamilyFields extends NamePrimaryNameFields {
     private JLabel label_nameFamilyQualifier;
     public JTextField nameFamilyQualifier;
     private JLabel label_nameSource;
-    public JComboBox nameSource;
+    public JComboBox<?> nameSource;
     private JLabel label_nameRule;
-    public JComboBox nameRule;
+    public JComboBox<?> nameRule;
     private JSeparator separator3;
     private JPanel panel4;
     private JLabel label_sortName2;
@@ -272,7 +268,7 @@ public class NameFamilyFields extends NamePrimaryNameFields {
     public JCheckBox namePersonalDirectOrder2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private PresentationModel parentPresentationModel;
+	private PresentationModel<DomainObject> parentPresentationModel;
 
 	public final void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		super.setModel(model, progressPanel);

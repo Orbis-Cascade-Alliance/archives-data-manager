@@ -35,6 +35,10 @@ import java.awt.event.ActionEvent;
  */
 
 public class ArchDescriptionInstancesEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private DigitalObjectTreeViewer digitalEditorFields;
 	private ArchDescriptionAnalogInstancesFields analogEditorFields;

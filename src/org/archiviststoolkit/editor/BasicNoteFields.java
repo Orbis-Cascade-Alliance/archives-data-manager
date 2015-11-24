@@ -24,7 +24,6 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.mydomain.DomainObject;
@@ -32,10 +31,13 @@ import org.archiviststoolkit.model.ArchDescriptionNotes;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 import org.archiviststoolkit.util.InLineTagsUtils;
 
 public class BasicNoteFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected BasicNoteFields(DomainEditor parentEditor) {
 		super();
@@ -46,10 +48,6 @@ public class BasicNoteFields extends DomainEditorFields {
 
 	private void insertInlineTagActionPerformed() {
 		InLineTagsUtils.wrapInTagActionPerformed(insertInlineTag, noteContent,  this.getParentEditor());
-	}
-
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
 	}
 
 	/**
@@ -63,18 +61,6 @@ public class BasicNoteFields extends DomainEditorFields {
 		super.setModel(model, progressPanel);
 		inSetModel = false;
 	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
-	}
-
-//	public JButton getUndoButton() {
-//		return undoButton;
-//	}
-//
-//	public JButton getRedoButton() {
-//		return redoButton;
-//	}
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -156,7 +142,7 @@ public class BasicNoteFields extends DomainEditorFields {
     private JScrollPane scrollPane1;
     public JTextArea noteContent;
     private JPanel tagApplicatorPanel;
-    public JComboBox insertInlineTag;
+    public JComboBox<?> insertInlineTag;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
 	public Component getInitialFocusComponent() {

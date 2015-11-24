@@ -26,7 +26,6 @@ import javax.swing.event.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import com.jgoodies.binding.PresentationModel;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.Names;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
@@ -34,17 +33,22 @@ import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class NamePersonalFields extends NamePrimaryNameFields {
-	public NamePersonalFields(PresentationModel parentPresentationModel) {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public NamePersonalFields(PresentationModel<DomainObject> parentPresentationModel) {
 		this.parentPresentationModel = parentPresentationModel;
 		initComponents();
         initAccess();
 	}
 
-	public JComboBox getNameSource() {
+	public JComboBox<?> getNameSource() {
 		return nameSource;
 	}
 
-	public JComboBox getNameRule() {
+	public JComboBox<?> getNameRule() {
 		return nameRule;
 	}
 
@@ -456,9 +460,9 @@ public class NamePersonalFields extends NamePrimaryNameFields {
     private JLabel label_namePersonalFullerForm;
     public JTextField namePersonalFullerForm;
     private JLabel label_nameSource;
-    public JComboBox nameSource;
+    public JComboBox<?> nameSource;
     private JLabel label_nameRule;
-    public JComboBox nameRule;
+    public JComboBox<?> nameRule;
     public JCheckBox namePersonalDirectOrder;
     private JSeparator separator3;
     private JPanel panel4;
@@ -467,7 +471,7 @@ public class NamePersonalFields extends NamePrimaryNameFields {
     public JCheckBox namePersonalDirectOrder2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private PresentationModel parentPresentationModel;
+	private PresentationModel<DomainObject> parentPresentationModel;
 
 	public final void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		super.setModel(model, progressPanel);

@@ -20,24 +20,26 @@ package org.archiviststoolkit.editor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.*;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.model.*;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.swing.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
-import org.archiviststoolkit.util.SequencedObjectsUtils;
 import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 
 public class SubjectFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any embedded editor plugins
 
     public SubjectFields() {
@@ -262,9 +264,9 @@ public class SubjectFields extends DomainEditorFields {
     private JLabel label_subjectTerm;
     public JTextField subjectTerm;
     private JLabel label_subjectTermType;
-    public JComboBox subjectTermType;
+    public JComboBox<?> subjectTermType;
     private JLabel label_subjectSource;
-    public JComboBox subjectSource;
+    public JComboBox<?> subjectSource;
     private JLabel label_subjectScopeNote;
     private JScrollPane scrollPane1;
     public JTextArea subjectScopeNote;
@@ -314,7 +316,7 @@ public class SubjectFields extends DomainEditorFields {
         if(plugins != null) {
             for(ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for(Object key : pluginPanels.keySet()) {
                     String panelName = (String)key;
                     JPanel pluginPanel = (JPanel)pluginPanels.get(key);

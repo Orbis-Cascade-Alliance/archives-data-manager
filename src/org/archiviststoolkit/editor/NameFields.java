@@ -42,6 +42,11 @@ import org.archiviststoolkit.plugin.ATPlugin;
 import org.archiviststoolkit.plugin.ATPluginFactory;
 
 public class NameFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any embedded editor plugins
 
     public NameFields() {
@@ -776,7 +781,7 @@ public class NameFields extends DomainEditorFields {
     private JSeparator separator3;
     private JPanel descriptionPanel;
     private JLabel label_nameDescriptionNote2;
-    public JComboBox nameDescriptionType;
+    public JComboBox<?> nameDescriptionType;
     private JLabel label_nameDescriptionNote;
     private JScrollPane scrollPane2;
     public JTextArea nameDescriptionNote;
@@ -835,13 +840,6 @@ public class NameFields extends DomainEditorFields {
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
 
-    private ActionListener menuListener = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            JMenuItem selectedItem = (JMenuItem) e.getSource();
-            addNote(selectedItem.getText());
-        }
-    };
-
     protected ActionListener menuDeleteListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 			try {
@@ -860,7 +858,8 @@ public class NameFields extends DomainEditorFields {
     protected JPopupMenu insertContactNotePopUpMenu = new JPopupMenu();
     private Component currentPrimaryNamePanel;
 
-    public void setDetailsPanel(String nameType) {
+    @SuppressWarnings("unchecked")
+	public void setDetailsPanel(String nameType) {
 
         CellConstraints cc = new CellConstraints();
         detailsContainer.remove(currentPrimaryNamePanel);
@@ -969,7 +968,7 @@ public class NameFields extends DomainEditorFields {
         if(plugins != null) {
             for(ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for(Object key : pluginPanels.keySet()) {
                     String panelName = (String)key;
                     JPanel pluginPanel = (JPanel)pluginPanels.get(key);

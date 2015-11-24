@@ -26,17 +26,17 @@ package org.archiviststoolkit.editor;
 import javax.swing.*;
 
 import org.archiviststoolkit.mydomain.DomainEditor;
-import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.Subjects;
-import org.archiviststoolkit.structure.ATFieldInfo;
-
-import java.lang.reflect.Field;
 
 /**
  * Editor for dealing with the contact domain object.
  */
 
 public class SubjectEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.

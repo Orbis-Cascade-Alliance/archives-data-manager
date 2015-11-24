@@ -18,7 +18,6 @@
 
 package org.archiviststoolkit.editor;
 
-import com.jgoodies.binding.list.SelectionInList;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.*;
@@ -47,7 +46,10 @@ import java.util.Collections;
 import java.util.Vector;
 
 public class LookupListFields extends DomainEditorFields {
-
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public LookupListFields() {
 		super();
@@ -415,7 +417,7 @@ public class LookupListFields extends DomainEditorFields {
 		ArrayList<DomainObject> selectionList = listItems.getSelectedObjects();
 		if (listType == LookupListUtils.NONEDITABLE) {
 			//remove editable items as they were genereated from import
-			Vector temp = new Vector();
+			Vector<LookupListItems> temp = new Vector<LookupListItems>();
 			LookupListItems item;
 			for (Object o : selectionList) {
 				item = (LookupListItems) o;
@@ -436,7 +438,7 @@ public class LookupListFields extends DomainEditorFields {
 			for (Object o : selectionList) {
 				item = (LookupListItems) o;
 				if (!item.getEditable()) {
-					Vector temp = new Vector();
+					Vector<LookupListItems> temp = new Vector<LookupListItems>();
 					temp.add(item);
 					return temp.toArray();
 				}
@@ -743,12 +745,12 @@ public class LookupListFields extends DomainEditorFields {
     private JLabel label2;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	private SelectionInList selectionInListModel = new SelectionInList();
 	private int listType;
 	//	private InfiniteProgressPanel progressPanel = new InfiniteProgressPanel(this, "Dummy text");
 	private LookupList lookupListModel;
 	LookupListTableCellRenderer tableCellRenderer;
 
+	@SuppressWarnings("unchecked")
 	private void setListItems() {
 		lookupListModel = (LookupList) this.getModel();
 		ArrayList<LookupListItems> arrayList = new ArrayList<LookupListItems>(lookupListModel.getListItems());
@@ -792,11 +794,16 @@ public class LookupListFields extends DomainEditorFields {
 		return listName;
 	}
 
-	class ArrayListModel extends AbstractListModel {
+	class ArrayListModel extends AbstractListModel<Object> {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
-		private ArrayList data;
 
-		private ArrayListModel(ArrayList data) {
+		private ArrayList<?> data;
+
+		private ArrayListModel(ArrayList<?> data) {
 			this.data = data;
 		}
 

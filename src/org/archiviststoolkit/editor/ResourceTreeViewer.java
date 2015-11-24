@@ -67,6 +67,11 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class ResourceTreeViewer extends DomainEditorFields implements MouseListener {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any RDE plugins
     private HashMap<String, RDEPlugin> rdePlugins = null; // stores any panels from the RDE plugins
 	private static String ABOVE = "above";
@@ -442,6 +447,7 @@ public class ResourceTreeViewer extends DomainEditorFields implements MouseListe
 	}
 
 
+	@SuppressWarnings("unchecked")
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		// Generated using JFormDesigner non-commercial license
@@ -695,7 +701,7 @@ public class ResourceTreeViewer extends DomainEditorFields implements MouseListe
 	private JPanel panel2;
 	private JButton addChildButton;
 	private JButton addSiblingBelowButton;
-	private JComboBox rapidDataentryScreens;
+	private JComboBox<String> rapidDataentryScreens;
 	private JButton deleteComponentButton;
 	private JButton transferComponentsButton;
 	private JButton manageLocationsButton;
@@ -1169,7 +1175,7 @@ public class ResourceTreeViewer extends DomainEditorFields implements MouseListe
                 plugin.setEditorField(this);
 
                 // get the plugin panels which may be JPanels or even JDialogs
-                HashMap pluginPanels = plugin.getRapidDataEntryPlugins();
+                HashMap<?, ?> pluginPanels = plugin.getRapidDataEntryPlugins();
                 for (Object key : pluginPanels.keySet()) {
                     String panelName = (String) key;
                     RDEPlugin rdePlugin = (RDEPlugin) pluginPanels.get(key);

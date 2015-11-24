@@ -31,6 +31,10 @@ import java.util.Vector;
  */
 
 public class ArchDescriptionNotesEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     /**
      * Constructor.
@@ -58,7 +62,7 @@ public class ArchDescriptionNotesEditor extends DomainEditor {
 		this.repaint();
 	}
 
-	protected void setNotesEtcPopupValues(Vector values) {
+	protected void setNotesEtcPopupValues(Vector<?> values) {
 		((ArchDescriptionNotesFields)editorFields).setNotesEtcDropDownValues(values);
 	}
 }

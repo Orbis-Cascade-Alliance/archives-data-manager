@@ -44,6 +44,11 @@ import com.jgoodies.forms.layout.*;
 import com.jgoodies.forms.factories.FormFactory;
 
 public class DigitalObjectFields extends ArchDescriptionFields  {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private ArrayList<ATPlugin> plugins = null; // stores any embedded digital object editor plugins
 
     /**
@@ -170,7 +175,7 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
      * super users
      */
     private void changeRepositoryButtonActionPerformed() {
-        Vector repositories = Repositories.getRepositoryList();
+        Vector<?> repositories = Repositories.getRepositoryList();
 		Repositories currentRepostory = digitalObjectModel.getRepository();
         SelectFromList dialog = new SelectFromList(this.getParentEditor(), "Select a repository", repositories.toArray());
         dialog.setSelectedValue(currentRepostory);
@@ -277,7 +282,7 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
         scrollPane5 = new JScrollPane();
         notesTable = new DomainSortedTable(ArchDescriptionRepeatingData.class);
         panel14 = new JPanel();
-        addNoteEtcComboBox = new JComboBox();
+        addNoteEtcComboBox = new JComboBox<Object>();
         removeNoteButton = new JButton();
         CellConstraints cc = new CellConstraints();
 
@@ -1099,6 +1104,7 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
 		return notesTable;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public JComboBox getAddNoteEtcComboBox() {
 		return addNoteEtcComboBox;
 	}
@@ -1143,20 +1149,20 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
     private JPanel digitalObjectResourceRecordOnly;
     public JCheckBox restrictionsApply;
     private JLabel label_resourcesLanguageCode3;
-    public JComboBox objectType;
+    public JComboBox<?> objectType;
     private JLabel actuateLabel2;
     private JScrollPane scrollPane43;
     public JTextArea title2;
     private JLabel actuateLabel;
-    public JComboBox actuate;
+    public JComboBox<?> actuate;
     private JLabel showLabel;
-    public JComboBox show;
+    public JComboBox<?> show;
     private JPanel componentIDPanel;
     private JLabel componentLabel1;
     public JTextField dateExpression2;
     private JPanel panel5;
     private JLabel label_resourcesLanguageCode;
-    public JComboBox languageCode;
+    public JComboBox<?> languageCode;
     private JPanel repositoryPanel;
     private JLabel label_repositoryName;
     public JTextField repositoryName;
@@ -1187,7 +1193,7 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
     private JScrollPane scrollPane5;
     private DomainSortedTable notesTable;
     private JPanel panel14;
-    private JComboBox addNoteEtcComboBox;
+    private JComboBox<Object> addNoteEtcComboBox;
     private JButton removeNoteButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 
@@ -1202,8 +1208,6 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
     protected SortableTableModel sortableTableModelFileVersions = null;
 	protected DomainEditor dialogFileVersions;
 	private DigitalObjects digitalObjectModel;
-	private int selectedRowFileVersions;
-	private FileVersions currentFileVersion;
 
 	public final void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
         if (model.isNewRecord()) {
@@ -1351,7 +1355,7 @@ public class DigitalObjectFields extends ArchDescriptionFields  {
         if(plugins != null) {
             for(ATPlugin plugin : plugins) {
                 plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
+                HashMap<?, ?> pluginPanels = plugin.getEmbeddedPanels();
                 for(Object key : pluginPanels.keySet()) {
                     String panelName = (String)key;
                     JPanel pluginPanel = (JPanel)pluginPanels.get(key);

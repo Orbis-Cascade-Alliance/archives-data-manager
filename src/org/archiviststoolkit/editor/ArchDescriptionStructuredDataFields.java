@@ -33,6 +33,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public abstract class ArchDescriptionStructuredDataFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected abstract DomainSortedTable getItemsTable();
 
@@ -50,7 +54,7 @@ public abstract class ArchDescriptionStructuredDataFields extends DomainEditorFi
 		}
 	};
 
-	protected void handleTableMouseClicked(Class clazz) {
+	protected void handleTableMouseClicked(Class<?> clazz) {
 
 		int selectedRow = getItemsTable().getSelectedRow();
 		if (selectedRow != -1) {
@@ -86,7 +90,7 @@ public abstract class ArchDescriptionStructuredDataFields extends DomainEditorFi
 
 	protected void addItem(String whereString) throws UnsupportedRepeatingDataTypeException {
 
-		Class classOfNewItem;
+		Class<?> classOfNewItem;
 		if (this instanceof ChronologyFields) {
 			classOfNewItem = ChronologyItems.class;
 		} else if (this instanceof BibliographyFields) {

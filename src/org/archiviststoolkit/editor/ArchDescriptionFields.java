@@ -47,6 +47,10 @@ import java.util.Vector;
 import java.util.Collections;
 
 public abstract class ArchDescriptionFields extends DomainEditorFields implements SubjectEnabledEditorFields, NameEnabledEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String ADD_AT_BEGINNING = "Add at beginning";
 	public static final String ADD_BEFORE_SELECTION = "Add before selection";
@@ -136,7 +140,7 @@ public abstract class ArchDescriptionFields extends DomainEditorFields implement
 		return null;
 	}
 
-	public JComboBox getAddNoteEtcComboBox() {
+	public JComboBox<String> getAddNoteEtcComboBox() {
 		return null;
 	}
 
@@ -336,7 +340,7 @@ public abstract class ArchDescriptionFields extends DomainEditorFields implement
 		getRepeatingDataTable().updateCollection(((ArchDescription) super.getModel()).getRepeatingData());
 	}
 
-	protected void addRepeatingData(Class repeatingDataClass, NotesEtcTypes noteType, String whereString) throws UnsupportedRepeatingDataTypeException {
+	protected void addRepeatingData(Class<?> repeatingDataClass, NotesEtcTypes noteType, String whereString) throws UnsupportedRepeatingDataTypeException {
 
 		int selectedRow = getRepeatingDataTable().getSelectedRow();
 		ArchDescription archDescriptionModel = (ArchDescription) super.getModel();
@@ -406,6 +410,7 @@ public abstract class ArchDescriptionFields extends DomainEditorFields implement
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected void initMoreStuff(Vector values) {
 
 		repeatingDataPopupMenu = new JPopupMenu();
@@ -479,7 +484,7 @@ public abstract class ArchDescriptionFields extends DomainEditorFields implement
 		}
 	}
 
-	protected void setOtherLevelEnabledDisabled(JComboBox levelComboBox, JLabel otherLevelLable, JTextField otherLevelTextField) {
+	protected void setOtherLevelEnabledDisabled(JComboBox<?> levelComboBox, JLabel otherLevelLable, JTextField otherLevelTextField) {
 		if (levelComboBox.getSelectedItem() != null) {
 			String level = ((LookupListItems) levelComboBox.getSelectedItem()).getListItem();
 			if (level.equalsIgnoreCase(Resources.LEVEL_VALUE_OTHERLEVEL)) {

@@ -39,6 +39,11 @@ import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.util.LookupListUtils;
 
 public class ArchDescriptionNamesFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
     private Object oldFunction = null; // used to store the old function so it can be reset
 
 	public ArchDescriptionNamesFields() {
@@ -62,6 +67,7 @@ public class ArchDescriptionNamesFields extends DomainEditorFields {
         }
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void populateComboBoxes(String selectedFunction) {
 		if (selectedFunction.equalsIgnoreCase(ArchDescriptionNames.PROPERTYNAME_FUNCTION_SUBJECT)) {
 			form.setVisible(true);
@@ -110,9 +116,9 @@ public class ArchDescriptionNamesFields extends DomainEditorFields {
         // Generated using JFormDesigner non-commercial license
         sortNameDisplay = new JTextField();
         label_function = new JLabel();
-        function = new JComboBox();
+        function = new JComboBox<Object>();
         label_role = new JLabel();
-        role = new JComboBox();
+        role = new JComboBox<Object>();
         label_form = new JLabel();
         form = ATBasicComponentFactory.createComboBox(detailsModel, ArchDescriptionNames.PROPERTYNAME_FORM, ArchDescriptionNames.class, true);
         CellConstraints cc = new CellConstraints();
@@ -190,14 +196,14 @@ public class ArchDescriptionNamesFields extends DomainEditorFields {
     // Generated using JFormDesigner non-commercial license
     private JTextField sortNameDisplay;
     private JLabel label_function;
-    private JComboBox function;
+    private JComboBox<Object> function;
     private JLabel label_role;
-    private JComboBox role;
+    private JComboBox<Object> role;
     private JLabel label_form;
-    private JComboBox form;
+    private JComboBox<?> form;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 
-	Vector nameLinkFunctionvalues;
+	Vector<?> nameLinkFunctionvalues;
 
 	private void init(ArchDescriptionNames archDescriptionNamesModel) throws UnsupportedDomainObjectModelException {
 			if (archDescriptionNamesModel.getAccession() != null) {
@@ -232,6 +238,7 @@ public class ArchDescriptionNamesFields extends DomainEditorFields {
 	 *
 	 * @param model the model
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setModel(final DomainObject model, InfiniteProgressPanel progressPanel) {
 		super.setModel(model, progressPanel);
 		ArchDescriptionNames archDescriptionNamesModel = (ArchDescriptionNames)model;

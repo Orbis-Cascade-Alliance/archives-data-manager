@@ -6,8 +6,6 @@ package org.archiviststoolkit.editor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.*;
 import com.jgoodies.forms.factories.*;
@@ -27,14 +25,15 @@ import org.archiviststoolkit.dialog.DigitalObjectLookup;
 import org.archiviststoolkit.dialog.ErrorDialog;
 import org.archiviststoolkit.dialog.AccessionLookup;
 import org.archiviststoolkit.exceptions.ObjectNotRemovedException;
-import org.archiviststoolkit.plugin.ATPlugin;
-import org.archiviststoolkit.plugin.ATPluginFactory;
 
 /**
  * @author Nathan Stevens
  */
 public class AssessmentsFields extends DomainEditorFields {
-    private ArrayList<ATPlugin> plugins = null; // stores any embedded assessment editor plugins
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
     public AssessmentsFields() {
         super();
@@ -1482,60 +1481,5 @@ public class AssessmentsFields extends DomainEditorFields {
      */
     public DomainSortableTable getTableAssessmentsDigitalObjects() {
         return digitalObjectsTable;
-    }
-
-    /**
-     * Method that initializes any embedded plugins that would add an editor
-     */
-    private void initPlugins() {
-        plugins = ATPluginFactory.getInstance().getEmbeddedAssessmentEditorPlugins();
-        if(plugins != null) {
-            for(ATPlugin plugin : plugins) {
-                plugin.setEditorField(this);
-                HashMap pluginPanels = plugin.getEmbeddedPanels();
-                for(Object key : pluginPanels.keySet()) {
-                    String panelName = (String)key;
-                    JPanel pluginPanel = (JPanel)pluginPanels.get(key);
-
-                    // see where to add the tab and if to remove any tabs that are
-                    // already there
-                    if(panelName.indexOf("::") == -1) { // add it to end
-                        tabbedPane1.addTab(panelName, pluginPanel);
-                    } else { // adding table to specific location in tab
-                        // get tab placement information from the name string
-                        // panelPlacementInfo[0] = panel name
-                        // panelPlacementInfo[1] = panel index
-                        // panelPlacementInfo[2] = yes if to replace the panel already there,
-                        //                         no to just insert at the index
-                        String[] panelPlacementInfo = panelName.split("::");
-                        try {
-                            int index  = Integer.parseInt(panelPlacementInfo[1]);
-
-                            // see whether to remove the index already there
-                            if(panelPlacementInfo[2].equalsIgnoreCase("yes")) {
-                                tabbedPane1.remove(index);
-                            }
-
-                            // now insert the panel at the location specified by the index
-                            tabbedPane1.insertTab(panelPlacementInfo[0], null, pluginPanel, "", index);
-
-                        } catch(NumberFormatException nfe) {
-                            System.out.println("Invalid tab index for the plugin panel named " + panelPlacementInfo[2]);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Method set the model for any plugins loaded
-     */
-    private void setPluginModel() {
-        if(plugins != null) {
-            for(ATPlugin plugin : plugins) {
-                plugin.setModel(getModel(), null);
-            }
-        }
     }
 }

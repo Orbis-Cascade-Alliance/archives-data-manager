@@ -22,7 +22,6 @@ import java.awt.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.model.Locations;
 import org.archiviststoolkit.model.Users;
 import org.archiviststoolkit.model.Repositories;
@@ -33,6 +32,11 @@ import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class LocationFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LocationFields() {
 		super();
 		initComponents();
@@ -316,7 +320,7 @@ public class LocationFields extends DomainEditorFields {
     private JLabel label9;
     public JTextField barcode;
     private JLabel label10;
-    public JComboBox repository;
+    public JComboBox<?> repository;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
     private JTextField repositoryTextField = new JTextField();
 

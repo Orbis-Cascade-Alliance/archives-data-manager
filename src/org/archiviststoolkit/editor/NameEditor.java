@@ -23,11 +23,6 @@ package org.archiviststoolkit.editor;
 // Import Declarations
 //==============================================================================
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.ResourceBundle;
-import java.lang.reflect.Method;
-
 import javax.swing.*;
 
 import org.archiviststoolkit.mydomain.*;
@@ -40,6 +35,10 @@ import org.archiviststoolkit.swing.InfiniteProgressPanel;
  */
 
 public class NameEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected StandardPanel namePersonPanel;
 	protected StandardPanel nameFamilyPanel;

@@ -18,7 +18,6 @@
 
 package org.archiviststoolkit.editor;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.forms.factories.Borders;
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.*;
@@ -34,7 +33,6 @@ import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +42,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ChronologyFields extends ArchDescriptionStructuredDataFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected ChronologyFields(DomainEditor parentEditor) {
 		super();
@@ -84,14 +86,6 @@ public class ChronologyFields extends ArchDescriptionStructuredDataFields {
 
     public JButton getAddItemButton() {
     	return addItemButton;
-    }
-
-    private void undoButtonActionPerformed() {
-    	handleUndoButtonAction();
-    }
-
-    private void redoButtonActionPerformed() {
-    	handleRedoButtonAction();
     }
 
 //    public JButton getUndoButton() {

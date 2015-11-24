@@ -27,7 +27,6 @@ import org.archiviststoolkit.model.RDEScreenPanelItems;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.mydomain.DomainSortableTable;
-import org.archiviststoolkit.mydomain.DomainSortedTable;
 import org.archiviststoolkit.structure.ATFieldInfo;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 
@@ -37,6 +36,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class RDEScreenPanelFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public RDEScreenPanelFields() {
 		super();

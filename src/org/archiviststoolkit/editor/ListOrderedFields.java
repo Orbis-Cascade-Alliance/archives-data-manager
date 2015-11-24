@@ -23,16 +23,19 @@ import java.awt.event.*;
 import javax.swing.*;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import org.archiviststoolkit.mydomain.*;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.model.ListOrdered;
 import org.archiviststoolkit.model.ListOrderedItems;
 import org.archiviststoolkit.structure.ATFieldInfo;
-import org.archiviststoolkit.structure.InLineTags;
 
 public class ListOrderedFields extends ArchDescriptionStructuredDataFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected ListOrderedFields(DomainEditor parentEditor) {
 		super();
 		this.setParentEditor(parentEditor);
@@ -77,22 +80,6 @@ public class ListOrderedFields extends ArchDescriptionStructuredDataFields {
 	public JButton getAddItemButton() {
 		return addItemButton;
 	}
-
-	private void undoButtonActionPerformed() {
-		handleUndoButtonAction();
-	}
-
-	private void redoButtonActionPerformed() {
-		handleRedoButtonAction();
-	}
-
-//	public JButton getUndoButton() {
-//		return undoButton;
-//	}
-//
-//	public JButton getRedoButton() {
-//		return redoButton;
-//	}
 
 	private void initComponents() {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -246,7 +233,7 @@ public class ListOrderedFields extends ArchDescriptionStructuredDataFields {
     private JLabel label_subjectTerm;
     public JTextField title;
     private JLabel label_subjectScopeNote3;
-    public JComboBox unitType;
+    public JComboBox<?> unitType;
     private JLabel label_subjectScopeNote2;
     private JScrollPane scrollPane2;
     public JTextArea ingestProblems;

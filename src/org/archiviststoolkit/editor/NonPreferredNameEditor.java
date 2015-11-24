@@ -37,8 +37,12 @@ import com.jgoodies.binding.value.ValueHolder;
  */
 
 public class NonPreferredNameEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
-	public PresentationModel detailsModel = new PresentationModel(new ValueHolder(null, true));
+	public PresentationModel<DomainObject> detailsModel = new PresentationModel<DomainObject>(new ValueHolder(null, true));
 
 	private NamePersonalNonPreferredFields personalNameFields = null;
 	private NameCorpNonPreferredFields corporateNameFields;

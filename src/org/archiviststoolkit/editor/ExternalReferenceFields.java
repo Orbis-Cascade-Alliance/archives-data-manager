@@ -20,12 +20,10 @@ package org.archiviststoolkit.editor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Vector;
 import javax.swing.*;
 
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.centerkey.utils.BareBonesBrowserLaunch;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
 import org.archiviststoolkit.mydomain.DomainEditor;
@@ -34,6 +32,10 @@ import org.archiviststoolkit.swing.ATBasicComponentFactory;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 public class ExternalReferenceFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected ExternalReferenceFields(DomainEditor parentEditor) {
 		super();
@@ -144,9 +146,9 @@ public class ExternalReferenceFields extends DomainEditorFields {
     private JLabel label2;
     public JTextField href;
     private JLabel actuateLabel;
-    public JComboBox actuate;
+    public JComboBox<?> actuate;
     private JLabel showLabel;
-    public JComboBox show;
+    public JComboBox<?> show;
     private JButton openInBrowser;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 

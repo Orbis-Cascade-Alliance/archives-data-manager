@@ -20,7 +20,6 @@
 
 package org.archiviststoolkit.editor;
 
-import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.mydomain.DomainSortableTable;
 import org.archiviststoolkit.model.NameEnabledModel;
 

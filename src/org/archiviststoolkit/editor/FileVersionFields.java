@@ -19,17 +19,13 @@
 package org.archiviststoolkit.editor;
 
 import java.awt.event.*;
-import com.jgoodies.forms.layout.*;
 import org.archiviststoolkit.mydomain.DomainEditorFields;
-import org.archiviststoolkit.mydomain.DomainEditor;
 import org.archiviststoolkit.model.FileVersions;
 import org.archiviststoolkit.swing.ATBasicComponentFactory;
-import org.archiviststoolkit.util.SequencedObjectsUtils;
 import org.archiviststoolkit.structure.ATFieldInfo;
 
 import javax.swing.*;
 
-import com.jgoodies.binding.adapter.BasicComponentFactory;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -39,9 +35,12 @@ import com.jgoodies.forms.factories.FormFactory;
 import com.centerkey.utils.BareBonesBrowserLaunch;
 
 import java.awt.*;
-import java.util.Vector;
 
 public class FileVersionFields extends DomainEditorFields {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	protected FileVersionFields() {
 		super();
@@ -148,11 +147,11 @@ public class FileVersionFields extends DomainEditorFields {
     private JLabel label_subjectTerm;
     public JTextField uri;
     private JLabel label_subjectTermType;
-    public JComboBox useStatement;
+    public JComboBox<?> useStatement;
     private JLabel actuateLabel;
-    public JComboBox actuate;
+    public JComboBox<?> actuate;
     private JLabel showLabel;
-    public JComboBox show;
+    public JComboBox<?> show;
     private JButton button1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 

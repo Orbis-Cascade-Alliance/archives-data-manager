@@ -23,11 +23,9 @@ package org.archiviststoolkit.editor;
 // Import Declarations
 //==============================================================================
 
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
 import org.archiviststoolkit.mydomain.DomainEditor;
-import org.archiviststoolkit.mydomain.DomainObject;
 import org.archiviststoolkit.model.NameContactNotes;
 
 /**
@@ -35,6 +33,10 @@ import org.archiviststoolkit.model.NameContactNotes;
  */
 
 public class NameContactNoteEditor extends DomainEditor {
+	/**
+	 * Change this if methods or fields are added or removed or their types/parameters changed.
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.
