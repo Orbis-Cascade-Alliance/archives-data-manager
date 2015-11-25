@@ -21,7 +21,6 @@ org.archiviststoolkit.exporter;
 
 import java.io.File;
 
-import java.sql.SQLException;
 import java.util.Vector;
 
 import org.archiviststoolkit.ApplicationFrame;
@@ -65,7 +64,6 @@ public class MARCExportHandler implements Runnable {
     }
 
     public void run() {
-        MARCExport marc = new MARCExport();
     }
 
     public void export(File exportFile, Vector<DomainObject> resources, 

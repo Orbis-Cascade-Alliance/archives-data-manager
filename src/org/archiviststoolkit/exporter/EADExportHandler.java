@@ -20,7 +20,6 @@ org.archiviststoolkit.exporter;
 
 import java.io.File;
 
-import java.sql.SQLException;
 import java.util.Vector;
 
 import org.archiviststoolkit.ApplicationFrame;
@@ -62,7 +61,6 @@ public class EADExportHandler implements Runnable {
     }
 
     public void run() {
-        EADExport ead = new EADExport();
     }
 
     public void export(File exportFile, Vector<DomainObject> resources, 

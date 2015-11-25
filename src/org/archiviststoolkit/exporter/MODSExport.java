@@ -81,11 +81,11 @@ public class MODSExport {
     boolean internalOnly;
     boolean standalone;
     
-    private JAXBElement getModsElement(DigitalObjects digitalObject) {
+    private JAXBElement<?> getModsElement(DigitalObjects digitalObject) {
         obj = new ObjectFactory();
         ModsType modsType = obj.createModsType();
-        JAXBElement mods = obj.createMods(modsType);
-        List modsGroup = modsType.getModsGroup();
+        JAXBElement<?> mods = obj.createMods(modsType);
+        List<Object> modsGroup = modsType.getModsGroup();
         getModsElements(digitalObject, modsGroup);
         if(standalone){
             for(DigitalObjects dig:digitalObject.getDigitalObjectChildren()){
@@ -99,7 +99,7 @@ public class MODSExport {
         obj = new ObjectFactory();
         RelatedItemType relatedItem = obj.createRelatedItemType();
         relatedItem.setRiType("constituent");
-        List modsGroup = relatedItem.getModsGroup();
+        List<Object> modsGroup = relatedItem.getModsGroup();
         getModsElements(digitalObject, modsGroup);
         for(DigitalObjects dig:digitalObject.getDigitalObjectChildren()){
             modsGroup.add(getRelatedElement(dig));
@@ -117,7 +117,7 @@ public class MODSExport {
         this.internalOnly = internalOnly;
         this.standalone=standalone;
         obj = new ObjectFactory();
-        JAXBElement mods  = getModsElement(digitalObject);
+        JAXBElement<?> mods  = getModsElement(digitalObject);
         
         try {
             context = JAXBContext.newInstance("org.archiviststoolkit.structure.MODS");
@@ -159,7 +159,7 @@ public class MODSExport {
         try {
             context = 
                 JAXBContext.newInstance("org.archiviststoolkit.structure.MODS");
-            JAXBElement mods  = getModsElement(digitalObject);
+            JAXBElement<?> mods  = getModsElement(digitalObject);
             StringWriter sw = new StringWriter();
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.FALSE);
@@ -184,12 +184,13 @@ public class MODSExport {
             return true;
         else return false;
     }
-    public List getModsElements(DigitalObjects digitalObject, List modsGroup) {
+	@SuppressWarnings("unchecked")
+	public List<Object> getModsElements(DigitalObjects digitalObject, List<Object> modsGroup) {
 
         if(StringHelper.isNotEmpty(digitalObject.getTitle())){
             TitleInfoType titleInfo = obj.createTitleInfoType();
             modsGroup.add(titleInfo);
-            JAXBElement title = 
+            JAXBElement<String> title = 
                 obj.createBaseTitleInfoTypeTitle(digitalObject.getTitle());
                 titleInfo.getTitleOrSubTitleOrPartNumber().add(title);
         }
@@ -229,7 +230,7 @@ public class MODSExport {
         
         if (containsValue(digitalObject.getDateExpression())) {
             dateType.setValue(digitalObject.getDateExpression());
-            JAXBElement dateCreated = 
+            JAXBElement<?> dateCreated = 
                 obj.createOriginInfoTypeDateCreated(dateType);
             originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             makeOriginInfo=true;
@@ -239,7 +240,7 @@ public class MODSExport {
             dateType = obj.createDateType();
             dateType.setPoint("start");
             dateType.setValue(digitalObject.getDateBegin() + "");
-            JAXBElement dateCreated = 
+            JAXBElement<?> dateCreated = 
                 obj.createOriginInfoTypeDateCreated(dateType);
             originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             makeOriginInfo=true;
@@ -250,7 +251,7 @@ public class MODSExport {
             dateType = obj.createDateType();
             dateType.setPoint("end");
             dateType.setValue(digitalObject.getDateEnd() + "");
-            JAXBElement dateCreated = 
+            JAXBElement<?> dateCreated = 
                 obj.createOriginInfoTypeDateCreated(dateType);
             originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             makeOriginInfo=true;
@@ -282,7 +283,7 @@ public class MODSExport {
         }
     }
 
-    private void handleFileVersions(Set<FileVersions> fileVersions,List modsGroup){
+    private void handleFileVersions(Set<FileVersions> fileVersions,List<Object> modsGroup){
         for(FileVersions fileVersion:fileVersions){
             IdentifierType identifier = obj.createIdentifierType();
             if(containsValue(fileVersion.getUri()))
@@ -294,7 +295,7 @@ public class MODSExport {
                 modsGroup.add(identifier);
         }
     }
-    private void handleNotes(Set<ArchDescriptionNotes> repeatingData, List modsGroup) {
+    private void handleNotes(Set<ArchDescriptionNotes> repeatingData, List<Object> modsGroup) {
         PhysicalDescriptionType physDesc = obj.createPhysicalDescriptionType();
         boolean pdesc = false;
        
@@ -372,7 +373,7 @@ public class MODSExport {
                 noteM.setValue(note.getContent());
                 modsGroup.add(noteM);
             } else if (isNoteTitle(note, "Dimensions note")) {
-                JAXBElement extent = 
+                JAXBElement<?> extent = 
                     obj.createPhysicalDescriptionTypeExtent(note.getContent());
                 physDesc.getFormOrReformattingQualityOrInternetMediaType().add(extent);
                 if (!pdesc)
@@ -459,7 +460,7 @@ public class MODSExport {
         }
     }
 
-    private void createRelatedItemforResource(DigitalObjects dig, List modsGroup) {
+    private void createRelatedItemforResource(DigitalObjects dig, List<Object> modsGroup) {
         if(dig.getDigitalInstance()==null)
             return;
         Resources resource = dig.getDigitalInstance().getResource();
@@ -494,7 +495,7 @@ public class MODSExport {
             modsGroup.add(relatedItem);
             if (containsValue(resource.getTitle())) {
                 TitleInfoType titleInfo = obj.createTitleInfoType();
-                JAXBElement title = 
+                JAXBElement<String> title = 
                     obj.createBaseTitleInfoTypeTitle(resource.getTitle());
                 titleInfo.getTitleOrSubTitleOrPartNumber().add(title);
                 relatedItem.getModsGroup().add(titleInfo);
@@ -506,7 +507,7 @@ public class MODSExport {
 
             if (containsValue(resource.getDateExpression())) {
                 dateType.setValue(resource.getDateExpression());
-                JAXBElement dateCreated = 
+                JAXBElement<?> dateCreated = 
                     obj.createOriginInfoTypeDateCreated(dateType);
                 originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             }
@@ -515,7 +516,7 @@ public class MODSExport {
                 dateType = obj.createDateType();
                 dateType.setPoint("start");
                 dateType.setValue(resource.getDateBegin() + "");
-                JAXBElement dateCreated = 
+                JAXBElement<?> dateCreated = 
                     obj.createOriginInfoTypeDateCreated(dateType);
                 originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             }
@@ -524,7 +525,7 @@ public class MODSExport {
                 dateType = obj.createDateType();
                 dateType.setPoint("end");
                 dateType.setValue(resource.getDateEnd() + "");
-                JAXBElement dateCreated = 
+                JAXBElement<?> dateCreated = 
                     obj.createOriginInfoTypeDateCreated(dateType);
                 originInfo.getPlaceOrPublisherOrDateIssued().add(dateCreated);
             }
@@ -567,7 +568,7 @@ public class MODSExport {
     }
 
     private void handleNames(Set<ArchDescriptionNames> anames, 
-                             List modsGroup) {
+                             List<Object> modsGroup) {
         for (ArchDescriptionNames aname: anames) {
             // update to map if (aname.getNameLinkFunction().equals("Creator") ||
             // update   aname.getNameLinkFunction().equals("Source")) {
@@ -578,7 +579,7 @@ public class MODSExport {
 
             else if (aname.getNameLinkFunction().equals("Subject")) {
                 SubjectType subjectType = new SubjectType();
-                JAXBElement topic = obj.createSubjectTypeTopic(aname.getForm());
+                JAXBElement<?> topic = obj.createSubjectTypeTopic(aname.getForm());
                 NameType name = buildName(aname);
                 subjectType.getTopicOrGeographicOrTemporal().add(obj.createSubjectTypeName(name));
                 if(StringHelper.isNotEmpty(aname.getForm()))
@@ -604,7 +605,7 @@ public class MODSExport {
     }
 
     private void handleSubject(Set<ArchDescriptionSubjects> aSubjects, 
-                               List modsGroup) {
+                               List<Object> modsGroup) {
         for (ArchDescriptionSubjects aSubject: aSubjects) {
             String subjectAbbrev = LookupListUtils.getLookupListCodeFromItem(Subjects.class,"subjectSource",aSubject.getSubjectSource());
             if(StringHelper.isEmpty(subjectAbbrev))
@@ -800,11 +801,11 @@ public class MODSExport {
         }
 
         if(StringHelper.isNotEmpty(atName.getQualifier())){
-            JAXBElement description = obj.createNameTypeDescription(atName.getQualifier());
+            JAXBElement<?> description = obj.createNameTypeDescription(atName.getQualifier());
             name.getNamePartOrDisplayFormOrAffiliation().add(description);
         }
         if(StringHelper.isNotEmpty(atName.getSortName())){      
-            JAXBElement displayForm = obj.createNameTypeDisplayForm(atName.getSortName());
+            JAXBElement<?> displayForm = obj.createNameTypeDisplayForm(atName.getSortName());
             name.getNamePartOrDisplayFormOrAffiliation().add(displayForm);
         }
         return name;

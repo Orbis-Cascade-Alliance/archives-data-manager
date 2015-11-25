@@ -55,10 +55,6 @@ public class MARCBatchExportHandler implements Runnable {
     }
 
     public void run() {
-        MARCExport marc = new MARCExport();
-        //marc.convertDBRecordToFile(resource, file, null,true);
-
-
     }
 
     public void export(File exportFile, Vector<DomainObject> resources, 

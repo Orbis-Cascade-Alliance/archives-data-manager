@@ -25,7 +25,6 @@ import org.archiviststoolkit.importer.ImportExportLogDialog;
 import org.archiviststoolkit.model.DigitalObjects;
 import org.archiviststoolkit.swing.ExportOptionsMARC;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
-import org.archiviststoolkit.swing.ExportOptionsMETS;
 
 import org.archiviststoolkit.util.MyTimer;
 import org.archiviststoolkit.util.StringHelper;
@@ -33,7 +32,6 @@ import org.archiviststoolkit.util.StringHelper;
 public class MODSExportHandler implements Runnable {
     private File file = null;
     private ExportOptionsMARC exportOptions;
-    private DigitalObjects digitalObject;
 
     public MODSExportHandler(ExportOptionsMARC exportOptions) {
         super();
@@ -50,19 +48,16 @@ public class MODSExportHandler implements Runnable {
                                      DigitalObjects digitalObject) {
 
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         new Thread(this).start();
         return (true);
     }
 
     public void run() {
-        MODSExport mods = new MODSExport();
     }
 
     public void export(File exportFile, DigitalObjects digitalObject, 
                        InfiniteProgressPanel progressPanel) {
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         MODSExport mods = new MODSExport();
         StringBuffer message = new StringBuffer();
         try {
@@ -120,9 +115,6 @@ public class MODSExportHandler implements Runnable {
                 if(progressPanel.isProcessCancelled()) {
                     return;
                 }
-
-                // set the digital object
-                this.digitalObject = digitalObject;
 
                 // set the file name of this digital object
                 if(StringHelper.isNotEmpty(digitalObject.getMetsIdentifier())){

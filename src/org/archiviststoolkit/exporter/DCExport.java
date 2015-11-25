@@ -63,11 +63,12 @@ public class DCExport {
         }
         //System.out.println(xml);
     }
-    public String convertDBRecordToXML(DigitalObjects digitalObject,boolean internalOnly,boolean standalone){
+    @SuppressWarnings("rawtypes")
+	public String convertDBRecordToXML(DigitalObjects digitalObject,boolean internalOnly,boolean standalone){
         ObjectFactory obj =new ObjectFactory();
-        Vector<JAXBElement> elements = new Vector();
+        Vector<JAXBElement> elements = new Vector<JAXBElement>();
         ElementType etype = new ElementType();
-        JAXBElement type;
+        JAXBElement<?> type;
         this.internalOnly = internalOnly;
         if(digitalObject.getTitle()!=null && digitalObject.getTitle().length()>0){
         etype.setValue(StringHelper.tagRemover(digitalObject.getTitle()));
@@ -136,7 +137,7 @@ public class DCExport {
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FRAGMENT,Boolean.FALSE);
             m.setProperty( Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.FALSE );
-            for(JAXBElement element:elements)
+            for(JAXBElement<?> element:elements)
             {
                 sw = new StringWriter();
                 m.marshal(element,sw);
@@ -155,7 +156,8 @@ public class DCExport {
         }    
     }
 
-    private void setCreators(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setCreators(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionNames name:digitalObjects.getNames())
         {
@@ -164,13 +166,14 @@ public class DCExport {
             {
                 ElementType etype = new ElementType();
                 etype.setValue(StringHelper.tagRemover(name.getSortName()));
-                JAXBElement type = obj.createCreator(etype);       
+                JAXBElement<?> type = obj.createCreator(etype);       
                 elements.add(type);        
             }
         }
     }
     
-    private void setNameSubjects(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setNameSubjects(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionNames name:digitalObjects.getNames())
         {
@@ -179,13 +182,14 @@ public class DCExport {
             {
                 ElementType etype = new ElementType();
                 etype.setValue(StringHelper.tagRemover(name.getSortName()));
-                JAXBElement type = obj.createSubject(etype);       
+                JAXBElement<?> type = obj.createSubject(etype);       
                 elements.add(type);        
             }
         }
     }
 
-    private void setSubjects(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setSubjects(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionSubjects subject:digitalObjects.getSubjects())
         {
@@ -197,13 +201,14 @@ public class DCExport {
             {
                 ElementType etype = new ElementType();
                 etype.setValue(StringHelper.tagRemover(subject.getSubjectTerm()));
-                JAXBElement type = obj.createSubject(etype);       
+                JAXBElement<?> type = obj.createSubject(etype);       
                 elements.add(type);        
             }
         }
     }    
 
-    private void setCoverage(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setCoverage(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionSubjects subject:digitalObjects.getSubjects())
         {
@@ -212,13 +217,14 @@ public class DCExport {
             {
                 ElementType etype = new ElementType();
                 etype.setValue(StringHelper.tagRemover(subject.getSubjectTerm()));
-                JAXBElement type = obj.createCoverage(etype);       
+                JAXBElement<?> type = obj.createCoverage(etype);       
                 elements.add(type);        
             }
         }
     }
 
-    private void setType(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setType(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionSubjects subject:digitalObjects.getSubjects())
         {
@@ -227,16 +233,17 @@ public class DCExport {
             {
                 ElementType etype = new ElementType();
                 etype.setValue(StringHelper.tagRemover(subject.getSubjectTerm()));
-                JAXBElement type = obj.createType(etype);       
+                JAXBElement<?> type = obj.createType(etype);       
                 elements.add(type);        
             }
         }
     }
 
-    private void setDescription(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setDescription(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         ElementType etype;
-        JAXBElement type;
+        JAXBElement<?> type;
         // updateMap for(ArchDescriptionSubjects subject:digitalObjects.getSubjects())
         // updateMap {
             // updateMap String typeS = subject.getSubject().getSubjectTermType();
@@ -261,10 +268,11 @@ public class DCExport {
             elements.add(type); 
         }
     }
-    private void setNoteDescription(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setNoteDescription(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         ElementType etype;
-        JAXBElement type;
+        JAXBElement<?> type;
         for(ArchDescriptionRepeatingData repeatingData:digitalObjects.getRepeatingData())
         {
             if(repeatingData instanceof ArchDescriptionNotes)
@@ -295,7 +303,8 @@ public class DCExport {
             elements.add(type);
         }*/
     }
-    private void setRights(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setRights(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionRepeatingData repeatingData:digitalObjects.getRepeatingData())
         {
@@ -309,13 +318,14 @@ public class DCExport {
                     && (!status)){
                     ElementType etype = new ElementType();
                     etype.setValue(StringHelper.tagRemover(repeatingData.getContent()));
-                    JAXBElement type = obj.createRights(etype);       
+                    JAXBElement<?> type = obj.createRights(etype);       
                     elements.add(type);        
                 }
             }
         }
     }
-    private void setFormat(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setFormat(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionRepeatingData repeatingData:digitalObjects.getRepeatingData())
         {
@@ -330,13 +340,14 @@ public class DCExport {
                    repeatingData.getType().equalsIgnoreCase("Physical Facet note")) && (!status)){
                     ElementType etype = new ElementType();
                     etype.setValue(StringHelper.tagRemover(repeatingData.getContent()));
-                    JAXBElement type = obj.createFormat(etype);       
+                    JAXBElement<?> type = obj.createFormat(etype);       
                     elements.add(type);        
                 }
             }
         }
     }
-    private void setSource(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setSource(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(ArchDescriptionRepeatingData repeatingData:digitalObjects.getRepeatingData())
         {
@@ -348,14 +359,15 @@ public class DCExport {
                 if((repeatingData.getType().equalsIgnoreCase("Existence and Location of Originals note")||repeatingData.getType().equalsIgnoreCase("Immediate Source of Acquisition note")) && (!status)){
                     ElementType etype = new ElementType();
                     etype.setValue(StringHelper.tagRemover(repeatingData.getContent()));
-                    JAXBElement type = obj.createSource(etype);       
+                    JAXBElement<?> type = obj.createSource(etype);       
                     elements.add(type);        
                 }
             }
         }
     }
 
-    private void setIdentifiers(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj)
+    @SuppressWarnings("rawtypes")
+	private void setIdentifiers(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj)
     {
         for(DigitalObjects digitalObject:digitalObjects.getDigitalObjectChildren())
         {
@@ -365,9 +377,10 @@ public class DCExport {
         }
     }
 
-    private void handleFileVersions(Vector elements, FileVersions fv,ObjectFactory obj){
+    @SuppressWarnings("rawtypes")
+	private void handleFileVersions(Vector<JAXBElement> elements, FileVersions fv,ObjectFactory obj){
         ElementType eType = new ElementType();;
-        JAXBElement type;
+        JAXBElement<?> type;
         String value=null;
         String use = "";
         use = fv.getUseStatement();
@@ -381,10 +394,11 @@ public class DCExport {
        }
     }
     
-    private void setRelation(Vector elements, DigitalObjects digitalObjects, ObjectFactory obj, boolean standalone)
+    @SuppressWarnings("rawtypes")
+	private void setRelation(Vector<JAXBElement> elements, DigitalObjects digitalObjects, ObjectFactory obj, boolean standalone)
     {
         ElementType etype;
-        JAXBElement type;
+        JAXBElement<?> type;
         for(ArchDescriptionRepeatingData repeatingData:digitalObjects.getRepeatingData())
         {
             if(repeatingData instanceof ArchDescriptionNotes)
@@ -423,9 +437,10 @@ public class DCExport {
     
     }
 
-    private void handleChildNodes(Vector elements,DigitalObjects dig,ObjectFactory obj){
+    @SuppressWarnings("rawtypes")
+	private void handleChildNodes(Vector<JAXBElement> elements,DigitalObjects dig,ObjectFactory obj){
         ElementType etype;
-        JAXBElement type;    
+        JAXBElement<?> type;    
         for(DigitalObjects digObj:dig.getDigitalObjectChildren()){
             String value = StringHelper.tagRemover((digObj.getTitle()));
             etype = new ElementType();

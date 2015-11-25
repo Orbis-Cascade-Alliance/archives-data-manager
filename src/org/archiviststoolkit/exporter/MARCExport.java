@@ -61,7 +61,7 @@ public class MARCExport {
         initialize();
         suppressInternalOnly = internal;
         CollectionType collectionType = obj.createCollectionType();
-        JAXBElement collection = obj.createCollection(collectionType);
+        JAXBElement<?> collection = obj.createCollection(collectionType);
         RecordType record = obj.createRecordType();
         collectionType.getRecord().add(record);
         setLeader(obj, record, resource);
@@ -143,7 +143,7 @@ public class MARCExport {
         initialize();
         suppressInternalOnly = internal;
         CollectionType collectionType = obj.createCollectionType();
-        JAXBElement collection = obj.createCollection(collectionType);
+        JAXBElement<?> collection = obj.createCollection(collectionType);
         RecordType record = obj.createRecordType();
         collectionType.getRecord().add(record);
         setLeaderD(obj, record, resource);
@@ -382,7 +382,8 @@ public class MARCExport {
 
     }
 
-    private void set351(RecordType record, Resources resource) {
+    @SuppressWarnings("unchecked")
+	private void set351(RecordType record, Resources resource) {
         DataFieldType dataField = new DataFieldType();
         dataField.setTag("351");
         Set<ArchDescriptionNotes> notes = 
@@ -398,7 +399,8 @@ public class MARCExport {
 
     }
 
-    private void set500(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set500(RecordType record, ArchDescription resource) {
         int d=0;
         
         Set<ArchDescriptionNotes> notes = 
@@ -478,7 +480,8 @@ public class MARCExport {
 
     }
 
-    private void set506(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set506(RecordType record, ArchDescription resource) {
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
         for (ArchDescriptionNotes adrd: notes) {
@@ -492,7 +495,8 @@ public class MARCExport {
         }
     }
 
-    private void set511(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set511(RecordType record, ArchDescription resource) {
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
         for (ArchDescriptionNotes adrd: notes) {
@@ -508,7 +512,8 @@ public class MARCExport {
         }
     }
 
-    private void set520(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set520(RecordType record, ArchDescription resource) {
 
 
         Set<ArchDescriptionNotes> notes = 
@@ -525,7 +530,8 @@ public class MARCExport {
         }
     }
 
-    private void set524(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set524(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -543,7 +549,8 @@ public class MARCExport {
 
     }
 
-    private void set535(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set535(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -564,7 +571,8 @@ public class MARCExport {
 
     }
 
-    private void set540(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set540(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -583,7 +591,8 @@ public class MARCExport {
 
     }
 
-    private void set541(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set541(RecordType record, ArchDescription resource) {
         DataFieldType dataField;
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -606,7 +615,8 @@ public class MARCExport {
 
     }
 
-    private void set544(RecordType record, ArchDescription resource) {
+    @SuppressWarnings("unchecked")
+	private void set544(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -623,6 +633,7 @@ public class MARCExport {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void set545(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
@@ -642,6 +653,7 @@ public class MARCExport {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void set546(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
@@ -670,6 +682,7 @@ public class MARCExport {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void set561(RecordType record, ArchDescription resource) {
 
         Set<ArchDescriptionNotes> notes = 
@@ -692,6 +705,7 @@ public class MARCExport {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void set583(RecordType record, Resources resource) {
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);
@@ -712,6 +726,7 @@ public class MARCExport {
 
     }
 
+    @SuppressWarnings("unchecked")
     private void set584(RecordType record, Resources resource) {
         Set<ArchDescriptionNotes> notes = 
             resource.getRepeatingData(ArchDescriptionNotes.class);

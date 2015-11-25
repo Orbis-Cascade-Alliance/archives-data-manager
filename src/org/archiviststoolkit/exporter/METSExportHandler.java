@@ -35,7 +35,6 @@ import javax.swing.*;
 public class METSExportHandler implements Runnable {
     private File file = null;
     private ExportOptionsMETS exportOptions;
-    private DigitalObjects digitalObject;
 
     public METSExportHandler(ExportOptionsMETS exportOptions) {
         super();
@@ -52,22 +51,16 @@ public class METSExportHandler implements Runnable {
                                      DigitalObjects digitalObject) {
 
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         new Thread(this).start();
         return (true);
     }
 
     public void run() {
-        METSExport mets = new METSExport();
-        //mets.convertDBRecordToFile(digitalObject, file, null, true);
-
-
     }
 
     public void export(File exportFile, DigitalObjects digitalObject, 
                        InfiniteProgressPanel progressPanel) {
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         METSExport mets = new METSExport();
         String metadataType = this.exportOptions.metadataTypeToInclude();
         boolean internalOnly = this.exportOptions.suppressInternalOnly();
@@ -143,9 +136,6 @@ public class METSExportHandler implements Runnable {
                 if(progressPanel.isProcessCancelled()) {
                     return;
                 }
-
-                // set the digital object
-                this.digitalObject = digitalObject;
 
                 // set the file name of this digital object
                 if(StringHelper.isNotEmpty(digitalObject.getMetsIdentifier())){

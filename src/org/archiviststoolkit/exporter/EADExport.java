@@ -39,7 +39,6 @@ import javax.xml.bind.Marshaller;
 
 import javax.xml.bind.Unmarshaller;
 
-import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 
 import org.archiviststoolkit.importer.EADHelper;
@@ -203,7 +202,7 @@ public class EADExport {
                                        boolean internalOnly,
                                        boolean includeDaos, boolean suppressNameSpace, boolean useDOIDAsHREF) {
 
-        this.useDOIDAsHREF = useDOIDAsHREF;
+        EADExport.useDOIDAsHREF = useDOIDAsHREF;
 
         try {
             if (context == null) {
@@ -242,7 +241,7 @@ public class EADExport {
                                       boolean internalOnly, boolean numberedCs, 
                                       boolean includeDaos, boolean useDOIDAsHREF) throws Exception{
 
-        this.useDOIDAsHREF = useDOIDAsHREF;
+        EADExport.useDOIDAsHREF = useDOIDAsHREF;
 
         try {
             context = 
@@ -290,19 +289,20 @@ public class EADExport {
         }
     }
 
-    public Ead convertResourceToEadElement(Resources resource, 
+    @SuppressWarnings("unchecked")
+	public Ead convertResourceToEadElement(Resources resource, 
                                            InfiniteProgressPanel progressPanel, 
                                            boolean internalOnly, 
                                            boolean numberedCs, 
                                            boolean includeDaos) {
         progressPanel.setTextLine("Exporting Resource to EAD XML...", 2);
-        this.numberedCs = numberedCs;
-        this.suppressElements = internalOnly;
-        this.includeDaos = includeDaos;
+        EADExport.numberedCs = numberedCs;
+        EADExport.suppressElements = internalOnly;
+        EADExport.includeDaos = includeDaos;
         ob = new ObjectFactory();
 
         Ead ead = ob.createEad();
-        List didChildren = new ArrayList();
+        List<Object> didChildren = new ArrayList<Object>();
         Archdesc archDesc = new Archdesc();
         String level = resource.getLevel();
         if (StringHelper.isNotEmpty(level)) {
@@ -340,12 +340,14 @@ public class EADExport {
         return ead;
     }
 
-    private void setProperty(List list, String value) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setProperty(List list, String value) {
         if (value != null && value.length() > 0)
             list.add(value);
     }
 
-    private void setProperty(List list, Object object, List list2) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setProperty(List list, Object object, List list2) {
         if (list == null || list2 == null || object == null)
             return;
         if (list2.size() > 0)
@@ -380,7 +382,7 @@ public class EADExport {
         Date date = new Date();
         date.getContent().add(sdf.format(new java.util.Date()));
 
-        JAXBElement je = ob.createCreationDate(date);
+        JAXBElement<?> je = ob.createCreationDate(date);
         creation.getContent().add(je);
 
         profileDesc.setCreation(creation);
@@ -501,14 +503,10 @@ public class EADExport {
             titleStmt.setSponsor(sponsor);
         }
 
-        P p;
         if (resource.getEditionStatement().length() > 0) {
             Editionstmt editionStmt = new Editionstmt();
-            p = new P();
-            //p.getContent().add(resource.getEditionStatement());
             handlePElements(resource.getEditionStatement(), 
                             editionStmt.getEditionOrP());
-            //editionStmt.getEditionOrP().add(p);
             fileDesc.setEditionstmt(editionStmt);
         }
 
@@ -600,7 +598,8 @@ public class EADExport {
 
     }
 
-    private void setDidChildren(ResourcesCommon resource, List didChildren) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void setDidChildren(ResourcesCommon resource, List<Object> didChildren) {
         //Unittitle utitle = new Unittitle();
         String title = "";
         title = resource.getTitle();
@@ -725,14 +724,14 @@ public class EADExport {
         }
     }    
     private void handleDigitalObjects(Set<ArchDescriptionDigitalInstances> instances, 
-                                      List archDescOrC) {
+                                      List<Object> archDescOrC) {
         for (ArchDescriptionDigitalInstances instance: instances) {
             if (instance.getDigitalObject() != null)
                 handleDigitalObjects(instance.getDigitalObject(), archDescOrC);
         }
     }
 
-    private void handleDigitalObjects(DigitalObjects dig, List archDescOrC) {
+    private void handleDigitalObjects(DigitalObjects dig, List<Object> archDescOrC) {
         if (dig.getMetsIdentifier() == null)
             System.out.println("METSID == null");
 
@@ -889,9 +888,10 @@ public class EADExport {
 
     }
 
-    private void handleNotesInArchdesc(ArchDescriptionNotes note, 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void handleNotesInArchdesc(ArchDescriptionNotes note, 
                                        Object object, List newNote, 
-                                       List archDescChildren, Head h, 
+                                       List<Object> archDescChildren, Head h, 
                                        boolean suppressElements) {
 
 
@@ -958,16 +958,16 @@ public class EADExport {
         
     }
 
-    private void handleMultipartText(Object obj, List list, 
+    private void handleMultipartText(Object obj, List<Object> list, 
                                      ArchDescriptionRepeatingData adrd, 
-                                     List archDescChildren) {
+                                     List<Object> archDescChildren) {
         handlePElements(adrd.getContent(), list);
 
     }
 
-    private void handleMultipartListdef(Object obj, List list, 
+    private void handleMultipartListdef(Object obj, List<Object> list, 
                                         ArchDescriptionRepeatingData adrd, 
-                                        List archDescChildren) {
+                                        List<Object> archDescChildren) {
         org.archiviststoolkit.structure.EAD.List lisT = 
             new org.archiviststoolkit.structure.EAD.List();
         ListDefinition listDef = (ListDefinition)adrd;
@@ -1000,9 +1000,9 @@ public class EADExport {
             list.add(lisT);
     }
 
-    private void handleMultipartListord(Object obj, List list, 
+    private void handleMultipartListord(Object obj, List<Object> list, 
                                         ArchDescriptionRepeatingData adrd, 
-                                        List archDescChildren) {
+                                        List<Object> archDescChildren) {
         org.archiviststoolkit.structure.EAD.List lisT = 
             new org.archiviststoolkit.structure.EAD.List();
         ListOrdered listOrd = (ListOrdered)adrd;
@@ -1028,9 +1028,9 @@ public class EADExport {
             list.add(lisT);
     }
 
-    private void handleMultipartChronlist(Object obj, List list, 
+    private void handleMultipartChronlist(Object obj, List<Object> list, 
                                           ArchDescriptionRepeatingData adrd, 
-                                          List archDescChildren) {
+                                          List<Object> archDescChildren) {
         ChronologyList chronology = (ChronologyList)adrd;
         Chronlist chronList = new Chronlist();
         Chronitem chronItem = new Chronitem();
@@ -1081,8 +1081,8 @@ public class EADExport {
     }
 
     
-    private Set sortSet(Set set){
-        TreeSet itemsOrdered = new TreeSet();
+    private Set<Object> sortSet(Set<?> set){
+        TreeSet<Object> itemsOrdered = new TreeSet<Object>();
         for(Object item:set){
         //TODO - look into adding each items as its type rather than as Object
         //TODO - then on retrieval we don't have to cast back to actual type
@@ -1092,8 +1092,8 @@ public class EADExport {
     }
 
 
-    private void handleNotes(ArchDescriptionNotes note, List archDescChildren, 
-                             List didChildren) {
+    private void handleNotes(ArchDescriptionNotes note, List<Object> archDescChildren, 
+                             List<Object> didChildren) {
 
         String noteType = note.getNotesEtcType().getNotesEtcName();
         String noteContent = note.getNoteContent();
@@ -1203,7 +1203,7 @@ public class EADExport {
             //dimensionsChildren = dimensions.getContent();
             //dimensionsChildren.add(noteContent);
             
-            JAXBElement je = ob.createPhysdescDimensions(dimensions);
+            JAXBElement<?> je = ob.createPhysdescDimensions(dimensions);
 
 
 
@@ -1348,7 +1348,7 @@ public class EADExport {
             //List physfacetChildren = null;
             //physfacetChildren = physfacet.getContent();
             //physfacetChildren.add(noteContent);
-            JAXBElement je = ob.createPhysdescPhysfacet(physfacet);
+            JAXBElement<?> je = ob.createPhysdescPhysfacet(physfacet);
             physDesc.getContent().add(je);
             if (!suppressElements || !note.getInternalOnly())
                 didChildren.add(physDesc);
@@ -1391,7 +1391,7 @@ public class EADExport {
     }
 
 
-    private void handleBibliography(List archDescChildren, Bibliography bib, boolean suppressElements) {
+    private void handleBibliography(List<Object> archDescChildren, Bibliography bib, boolean suppressElements) {
 
         	
     	org.archiviststoolkit.structure.EAD.Bibliography eadBib = 
@@ -1434,7 +1434,7 @@ public class EADExport {
     }
 
     private void handleNotesEtc(Set<ArchDescriptionRepeatingData> archDescriptionNotes, 
-                                List archDescChildren, List didChildren) {
+                                List<Object> archDescChildren, List<Object> didChildren) {
         for (ArchDescriptionRepeatingData repeatingData: 
              archDescriptionNotes) {
             if (repeatingData instanceof ArchDescriptionNotes) {
@@ -1452,7 +1452,7 @@ public class EADExport {
     private Object mapTypeToObject(String type) {
         if (type == null || type.length() == 0)
             return null;
-        HashMap map = new HashMap();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("Corporate Name", new Corpname());
         map.put("Family Name", new Famname());
         map.put("Function", new Function());        
@@ -1468,7 +1468,7 @@ public class EADExport {
 
     }
 
-    private void handleIndex(List archDescChildren, Index index, boolean suppressElements) {
+    private void handleIndex(List<Object> archDescChildren, Index index, boolean suppressElements) {
         org.archiviststoolkit.structure.EAD.Index indeX = 
             new org.archiviststoolkit.structure.EAD.Index();
         
@@ -1485,7 +1485,6 @@ public class EADExport {
         Indexentry indexEntry = new Indexentry();
         //h.getContent().add(index.getTitle());
         
-        Persname p = new Persname();
         if (StringHelper.isNotEmpty(index.getTitle())){
             h = (Head)buildNode(index.getTitle(),"head",Head.class);
         	indeX.setHead(h);
@@ -1559,7 +1558,7 @@ public class EADExport {
     }
 
     private void handleControlAccess(ResourcesCommon resource, 
-                                     List archDescOrCChildren, Did did) {
+                                     List<Object> archDescOrCChildren, Did did) {
         Controlaccess controlAccess = new Controlaccess();
         Set<ArchDescriptionNames> names = resource.getNamesForPrinting();
         for (ArchDescriptionNames name: names) {
@@ -1575,7 +1574,7 @@ public class EADExport {
     }
 
     private void setSubject(ArchDescriptionSubjects archSubject, 
-                            List controlAccessChildren) {
+                            List<Object> controlAccessChildren) {
         String termType = archSubject.getSubject().getSubjectTermType();
         String term = archSubject.getSubjectTerm();
         String origsource = archSubject.getSubjectSource();
@@ -1620,7 +1619,7 @@ public class EADExport {
     }
 
     private void setName(ArchDescriptionNames adName, 
-                         List controlAccessChildren, Did did) {
+                         List<Object> controlAccessChildren, Did did) {
 
         // this is intentional; AT role = EAD function; (not EAD role)
         //String role = adName.getNameLinkFunction();
@@ -1696,19 +1695,13 @@ public class EADExport {
     }
 
     private void handlePElements(String noteContent, 
-                                 List scopeContentChildren) {
-        List pChildren = null;
-        String charr = "";
+                                 List<Object> scopeContentChildren) {
         String eChar = "\n\n";
         String pString[] = noteContent.split(eChar);
-        String elemString = "";
         P p = new P();
-        int e = 0;
         //System.out.println("P Contents");
         for (int a = 0; a < pString.length; a++) {
             p = new P();
-            pChildren = p.getContent();
-            elemString = pString[a];
             //e = charr.length();
             //pChildren.add(elemString.substring(e,pString[a].length()));
             //System.out.println("p content = "+pString[a]);
@@ -1718,53 +1711,6 @@ public class EADExport {
         }
         return;
     }
-
-    private P buildPNode(String content) {
-        try {
-            StringReader sr = new StringReader(content);
-            Object o = context.createUnmarshaller().unmarshal(sr);
-            return (P)o;
-
-        } catch (JAXBException jabe) {
-            jabe.printStackTrace();
-            System.out.println("Content = " + content);
-            return new P();
-        }
-    }
-
-    private Unittitle buildTitleNode(String content) {
-        try {
-            StringReader sr = 
-                new StringReader("<unittitle xmlns=\"urn:isbn:1-931666-22-9\">" + 
-                                 content + "</unittitle>");
-            Unmarshaller un = context.createUnmarshaller();
-            un.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
-            JAXBElement<Unittitle> o = 
-                un.unmarshal(new StreamSource(sr), Unittitle.class);
-            //System.out.println(context.toString());
-            return o.getValue();
-
-        } catch (JAXBException jabe) {
-            jabe.printStackTrace();
-            System.out.println("TitleExc = " + content);
-            return new Unittitle();
-        }
-    }
-
-    /*Object buildNode(String content,String elementNamez) {
-        try {
-            StringReader sr = new StringReader("<author>"+content+"</author>");
-            Unmarshaller un = context.createUnmarshaller();
-            JAXBElement o = context.createUnmarshaller().unmarshal(new StreamSource(sr),Object.class);
-            //Author auth = o.getValue();
-            return o.getValue();
-
-        } catch (JAXBException jabe) {
-            jabe.printStackTrace();
-            System.out.println("Title = " + content);
-            return new Object();
-        }
-    }*/
 
     private String addXlinkNamespace(String content){
     	//content = CharacterConvert.replaceAttribute(content, "linktype", "ns2:type");
@@ -1777,7 +1723,7 @@ public class EADExport {
     	return content;
     }
     
-    private Object buildNode(String content, String tagName, Class clazz) {
+    private Object buildNode(String content, String tagName, Class<?> clazz) {
         try {
         	context.toString();
         	content = StringHelper.cleanUpWhiteSpace(content);
@@ -1792,7 +1738,7 @@ public class EADExport {
                                  content + "</" + tagName + ">");
             Unmarshaller unmarshaller = context.createUnmarshaller();
             unmarshaller.setSchema(null);
-        	JAXBElement o = 
+        	JAXBElement<?> o = 
         		unmarshaller.unmarshal(new StreamSource(sr), 
                                                        clazz);
             return o.getValue();
@@ -1810,29 +1756,13 @@ public class EADExport {
         }
     }
 
-
-    private Bibref buildBibrefNode(String content) {
-        try {
-            StringReader sr = 
-                new StringReader("<bibref>" + content + "</bibref>");
-            Object o = context.createUnmarshaller().unmarshal(sr);
-            return (Bibref)o;
-
-        } catch (JAXBException jabe) {
-            jabe.printStackTrace();
-            System.out.println("Bibref = " + content);
-            return new Bibref();
-        }
-    }
-
-
     private void buildResourceComponentElements(Resources resource, 
                                                 Archdesc archDesc,
 												InfiniteProgressPanel progressPanel) {
-        List archDescChildren = archDesc.getMDescFull();
+        List<Object> archDescChildren = archDesc.getMDescFull();
         C c = new C();
         Dsc dsc = new Dsc();
-        List dscChildren = null;
+        List<Object> dscChildren = null;
         archDescChildren.add(dsc);
         SortedSet<ResourcesComponents> resourcesComponents = 
             resource.getResourcesComponents();
@@ -1870,7 +1800,8 @@ public class EADExport {
 
     }
 
-    private void buildResourceComponentElement(ResourcesComponents resourceComponent, 
+    @SuppressWarnings("unchecked")
+	private void buildResourceComponentElement(ResourcesComponents resourceComponent, 
                                                C c,
 											   InfiniteProgressPanel progressPanel) {
 
@@ -1887,9 +1818,9 @@ public class EADExport {
         }
 
         c.setId(resourceComponent.getPersistentId().toString());
-        List cChildren = c.getTheadAndC();
+        List<Object> cChildren = c.getTheadAndC();
         Did did = new Did();
-        List didChildren = did.getMDid();
+        List<Object> didChildren = did.getMDid();
         setDidChildren(resourceComponent, didChildren);
         c.setDid(did);
         handleNotesEtc(resourceComponent.getRepeatingData(), c.getMDescFull(), 
@@ -1929,7 +1860,8 @@ public class EADExport {
     }
 
 
-    private void buildResourceComponentElement(ResourcesComponents resourceComponent, 
+    @SuppressWarnings("unchecked")
+	private void buildResourceComponentElement(ResourcesComponents resourceComponent, 
                                                Object c,
 											   InfiniteProgressPanel progressPanel) {
 
@@ -1938,8 +1870,8 @@ public class EADExport {
         }
 
         String level = resourceComponent.getLevel();
-        List cChildren = null;
-        List cContent = null;
+        List<Object> cChildren = null;
+        List<Object> cContent = null;
         Did did = new Did();
         Object temp = new Object();
         int lev = 1;
@@ -2102,7 +2034,7 @@ public class EADExport {
         if(resourceComponent.getInternalOnly()){
             EADHelper.setProperty(c, "audience", "internal", null);
         }
-        List didChildren = did.getMDid();
+        List<Object> didChildren = did.getMDid();
         setDidChildren(resourceComponent, didChildren);
         handleNotesEtc(resourceComponent.getRepeatingData(), cContent, 
                        didChildren);
@@ -2118,19 +2050,7 @@ public class EADExport {
  
         Set<ResourcesComponents> resourcesComponents = 
             resourceComponent.getResourcesComponents();
-        boolean in = false;
         for (ResourcesComponents resourcesComponent: resourcesComponents) {
-//            System.out.println("status  = "+resourceComponent.getInternalOnly());
-
-            /*if ((!suppressElements) || 
-                (!resourceComponent.getInternalOnly())) {
-                if (!in) {
-                    in = true;
-                }
-            }*/
-            
-
-            
             Object newC = null;
             String name;
             if (lev < 10)
@@ -2138,7 +2058,7 @@ public class EADExport {
             else
                 name = "org.archiviststoolkit.structure.EAD." + "C" + lev;
             try {
-                Class a = Class.forName(name);
+                Class<?> a = Class.forName(name);
                 newC = a.newInstance();
             } catch (ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
@@ -2158,7 +2078,7 @@ public class EADExport {
     }
 
     private void handleContainers(Set<ArchDescriptionAnalogInstances> instances, 
-                                  List didChildren) {
+                                  List<Object> didChildren) {
 
         for (ArchDescriptionAnalogInstances instance: instances) {
             String parentId = "cid" + instance.getIdentifier().toString();

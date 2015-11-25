@@ -49,8 +49,6 @@ import java.util.*;
 import org.archiviststoolkit.model.DigitalObjects;
 import org.archiviststoolkit.model.FileVersions;
 import org.archiviststoolkit.model.Resources;
-import org.archiviststoolkit.model.ResourcesComponents;
-import org.archiviststoolkit.structure.DC.ElementType;
 import org.archiviststoolkit.swing.InfiniteProgressPanel;
 import org.archiviststoolkit.util.StringHelper;
 //import edu.harvard.hul.ois.mets.File;
@@ -59,7 +57,6 @@ import org.archiviststoolkit.util.StringHelper;
 public class METSExport {
     private String metadataType;
     private InfiniteProgressPanel progressPanel;
-    private int order = 1;
     private boolean debug = false;
     private int pOrder = 0;
 
@@ -73,10 +70,10 @@ public class METSExport {
         return resource;
     }
 
-    public void convertDBRecordToFile(DigitalObjects digitalObject, java.io.File outputFile, InfiniteProgressPanel progressPanel, boolean internalOnly, String metadataType) throws IOException, MetsException {
+    @SuppressWarnings("unchecked")
+	public void convertDBRecordToFile(DigitalObjects digitalObject, java.io.File outputFile, InfiniteProgressPanel progressPanel, boolean internalOnly, String metadataType) throws IOException, MetsException {
         this.metadataType = metadataType;
         this.progressPanel = progressPanel;
-        ElementType etype = new ElementType();
         Mets mets = new Mets();
         mets.setOBJID(digitalObject.getMetsIdentifier());
         mets.setTYPE(digitalObject.getObjectType());
@@ -119,7 +116,7 @@ public class METSExport {
         metsHdr.getContent().add(agent);
         mets.getContent().add(metsHdr);
 
-        Vector idsNotUsed = new Vector();
+        Vector<Long> idsNotUsed = new Vector<Long>();
         buildDmdSec(digitalObject, mets, internalOnly, idsNotUsed);
 
 
@@ -128,7 +125,7 @@ public class METSExport {
         edu.harvard.hul.ois.mets.File file = null;
         FLocat fLocat = null;
 
-        HashMap useTypes = new HashMap();
+        HashMap<String, Vector<FileVersions>> useTypes = new HashMap<String, Vector<FileVersions>>();
         StructMap lstructMap = new StructMap();
         lstructMap.setTYPE("logical");
         Div ldiv = new Div();
@@ -155,7 +152,7 @@ public class METSExport {
             in = true;
             fileGrp = new FileGrp();
             fileGrp.setUSE(key);
-            Vector<FileVersions> fileVersions = (Vector) useTypes.get(key);
+            Vector<FileVersions> fileVersions = useTypes.get(key);
             for (FileVersions fileVersion : fileVersions) {
                 //in=true;
                 file = new edu.harvard.hul.ois.mets.File();
@@ -208,7 +205,8 @@ public class METSExport {
         }
     }
 
-    private void buildDmdSec(DigitalObjects digitalObject, Mets mets, boolean internalOnly, Vector idsNotUsed) {
+    @SuppressWarnings("unchecked")
+	private void buildDmdSec(DigitalObjects digitalObject, Mets mets, boolean internalOnly, Vector<Long> idsNotUsed) {
         DmdSec dmdSec = new DmdSec();
         dmdSec.setID("dm" + digitalObject.getDigitalObjectId());
         MdWrap mdWrap = new MdWrap();
@@ -250,7 +248,8 @@ public class METSExport {
 
 
     //private void handleStructMapL()
-    private void handleFileSec(DigitalObjects digitalObject, HashMap useTypes, Div lDiv, Div pDiv, Vector idsNotUsed, int order) {
+    @SuppressWarnings("unchecked")
+	private void handleFileSec(DigitalObjects digitalObject, HashMap<String, Vector<FileVersions>> useTypes, Div lDiv, Div pDiv, Vector<Long> idsNotUsed, int order) {
         if (order == 0) {
             lDiv.setORDER(1);
             if (!idsNotUsed.contains(digitalObject.getDigitalObjectId()))
@@ -307,9 +306,9 @@ public class METSExport {
             pDiv2.getContent().add(fptr2);
 
             String use = fileVersion.getUseStatement();
-            Vector dos = (Vector) useTypes.get(use);
+            Vector<FileVersions> dos = useTypes.get(use);
             if (dos == null) {
-                dos = new Vector();
+                dos = new Vector<FileVersions>();
                 dos.add(fileVersion);
                 useTypes.put(use, dos);
             } else {

@@ -32,7 +32,6 @@ import org.archiviststoolkit.util.StringHelper;
 public class DCExportHandler implements Runnable {
     private File file = null;
     private ExportOptionsMARC exportOptions;
-    private DigitalObjects digitalObject;
 
     public DCExportHandler(ExportOptionsMARC exportOptions) {
         super();
@@ -49,20 +48,17 @@ public class DCExportHandler implements Runnable {
                                      DigitalObjects digitalObject) {
 
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         new Thread(this).start();
         return (true);
     }
 
     public void run() {
-        DCExport dc = new DCExport();
     }
 
     public void export(File exportFile, DigitalObjects digitalObject, 
                        InfiniteProgressPanel progressPanel) {
         StringBuffer message = new StringBuffer();
         this.file = exportFile;
-        this.digitalObject = digitalObject;
         DCExport dc = new DCExport();
         try {
             ApplicationFrame.getInstance().getTimer().reset();
@@ -119,9 +115,6 @@ public class DCExportHandler implements Runnable {
                 if(progressPanel.isProcessCancelled()) {
                     return;
                 }
-
-                // set the digital object
-                this.digitalObject = digitalObject;
 
                 // set the file name of this digital object
                 if(StringHelper.isNotEmpty(digitalObject.getMetsIdentifier())){
